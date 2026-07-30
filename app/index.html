@@ -365,10 +365,11 @@ function renderHome(){
       </div>`;
   } else {
     // Planning / Countdown
-    el.innerHTML=`
-      <div class="boarding-pass">
-        <div class="main"><div class="day-badge upcoming">${c?c.d+'d '+c.h+'h':'Upcoming'}</div>
-        <div style="font-size:22px;font-weight:700;margin:4px 0">${c?'until tournament':'Tournament Ahead'}</div>
+    el.innerHTML=` 
+    <div class="boarding-pass">
+      <div class="main"><div class="day-badge upcoming">${c?c.d+'d '+c.h+'h':'Upcoming'}</div>
+      <div style="font-size:48px;font-weight:700;letter-spacing:-2px;line-height:1.1;margin:4px 0">${c?c.d:'--'}<span style="font-size:18px;font-weight:400;opacity:.6"> Days</span></div>
+      <div class="vs">Until Tournament</div>
         <div class="vs">${D.tournament.shortName||D.tournament.name} · ${D.venue.name}</div>
         <div class="details" style="margin-top:8px">
           <div class="detail-chip"><i class="ti ti-calendar-event"></i>${D.tournament.dates.start}—${D.tournament.dates.end}</div>
@@ -382,8 +383,8 @@ function renderHome(){
         <i class="ti ti-arrow-right arrow"></i>
       </div>
       <div class="action-grid">
-        <button class="act-btn" onclick="go('pack')"><i class="ti ti-backpack"></i>Start Packing</button>
-        <button class="act-btn primary" onclick="go('venue')"><i class="ti ti-map-pin"></i>View Venue</button>
+        <button class="act-btn" onclick="go('pack')"><i class="ti ti-backpack"></i>Open Checklist</button>
+        <button class="act-btn primary" onclick="go('venue')"><i class="ti ti-map-pin"></i>Navigate to Venue</button>
       </div>
       <div class="section-title">At a Glance</div>
       <div class="card compact" onclick="showSheet('weather')"><i class="ti ti-cloud-rain" style="color:var(--y);font-size:18px"></i><span>${D.weather.summary||'No forecast yet'}</span><i class="ti ti-chevron-right" style="margin-left:auto;color:var(--t2)"></i></div>
@@ -430,7 +431,7 @@ function renderGames(){
   document.getElementById('gteam').textContent=D.team.name;
   const el=document.getElementById('gamesContent');
   if(!D.games||D.games.length===0){
-    el.innerHTML=`<div class="card" style="text-align:center;padding:32px"><i class="ti ti-clock-hour-9" style="font-size:32px;color:var(--y)"></i><h3 style="margin:8px 0 4px">Schedule Pending</h3><p class="help-text">${D.scheduleExpected}</p></div>`;return;
+    el.innerHTML=`<div class="card" style="text-align:center;padding:32px"><i class="ti ti-ball-soccer" style="font-size:48px;color:var(--y);opacity:.4"></i><h3 style="margin:8px 0 4px">Schedule Releases Soon</h3><p class="help-text">${D.scheduleExpected}. Check back then for game times, fields, and opponents.</p></div>`;return;
   }
   el.innerHTML=D.games.map((g,i)=>{
     const cls=i===0?'game-card next':g.status==='Complete'?'game-card past':'game-card';
@@ -513,7 +514,7 @@ function renderPack(){
   el.innerHTML=`
     <div style="text-align:center;margin:0 0 12px">
       <div class="progress-ring"><div class="val">${pct}%</div></div>
-      <p style="font-size:12px;color:var(--t2)">${done} of ${total} items packed</p>
+      <p style="font-size:12px;color:var(--t2)"><strong>${total} Items</strong> · ${done} Packed</p>
       <button class="act-btn" style="margin:8px auto 0;font-size:10px;padding:6px 16px" onclick="resetPack()">Reset All</button>
     </div>
     ${g.map(gr=>`
