@@ -291,7 +291,8 @@ function renderHome(){
   const p=phase(),el=document.getElementById('homeContent'),c=cd();
   document.getElementById('tname').textContent=D.tournament.name+' · '+D.tournament.dates.start+'—'+D.tournament.dates.end;
   const ph=phases[p];
-  document.getElementById('pdot').className='dot '+ph.dot;
+  const dot=document.querySelector('.top-strip .dot');
+  if(dot)dot.className='dot '+ph.dot;
   document.getElementById('plabel').textContent=ph.label;
 
   if(p==='gameday'&&D.games?.length>0){
