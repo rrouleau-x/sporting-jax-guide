@@ -2,563 +2,604 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#0055A4">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.30.0/dist/tabler-icons.min.css">
-<title>Bob Tournament Hub</title>
+<title>Bob</title>
 <style>
-  :root{--primary:#0055A4;--primary-dark:#003D7A;--bg:#f2f2f7;--card:#fff;--text:#1d1d1f;--text2:#86868b;--border:#e5e5ea;--green:#34c759;--yellow:#ff9500;--red:#ff3b30;--blue:#007aff;--safe-bottom:env(safe-area-inset-bottom,0px);--tab-h:56px}
-  .dark{--bg:#1c1c1e;--card:#2c2c2e;--text:#f5f5f7;--text2:#98989d;--border:#38383a}
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  html{-webkit-text-size-adjust:100%;height:100%}
-  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);height:100dvh;overflow:hidden;padding-bottom:calc(var(--tab-h) + var(--safe-bottom));-webkit-font-smoothing:antialiased}
-  .app{height:100dvh;overflow-y:auto;overflow-x:hidden;padding:0 0 calc(var(--tab-h) + var(--safe-bottom)) 0;-webkit-overflow-scrolling:touch}
-  .screen{display:none;padding:12px 16px 24px;animation:fadeIn .2s ease}
-  .screen.active{display:block}
-  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+:root{--p:#0055A4;--pd:#003D7A;--bg:#f2f2f7;--c:#fff;--t:#1d1d1f;--t2:#86868b;--b:#e5e5ea;--g:#34c759;--y:#ff9500;--r:#ff3b30;--bl:#007aff;--sb:env(safe-area-inset-bottom,0px);--th:56px}
+.dark{--bg:#1c1c1e;--c:#2c2c2e;--t:#f5f5f7;--t2:#98989d;--b:#38383a}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--t);height:100dvh;overflow:hidden;padding-bottom:calc(var(--th)+var(--sb));-webkit-font-smoothing:antialiased;user-select:none}
+.app{height:100dvh;overflow-y:auto;overflow-x:hidden;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
+.screen{display:none;padding:0 16px 24px;animation:fadeIn .2s}
+.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
-  /* Status Bar */
-  .statusbar{background:var(--primary);padding:44px 16px 12px;margin:-12px -16px 12px;color:#fff}
-  .statusbar h1{font-size:20px;font-weight:700;letter-spacing:-.3px}
-  .statusbar p{font-size:13px;opacity:.8;margin-top:2px}
+/* Top status strip */
+.top-strip{background:var(--p);padding:44px 16px 10px;color:#fff;margin-bottom:12px}
+.top-strip .tourney{font-size:13px;opacity:.7;text-transform:uppercase;letter-spacing:1px}
+.top-strip .phase{display:inline-flex;align-items:center;gap:4px;font-size:11px;opacity:.85;margin-top:2px}
+.top-strip .dot{width:6px;height:6px;border-radius:50%;display:inline-block}
+.top-strip .dot.green{background:var(--g)}
+.top-strip .dot.yellow{background:var(--y)}
+.top-strip .dot.red{background:var(--r)}
 
-  /* Tournament Status Banner */
-  .status-banner{border-radius:16px;padding:18px 20px;margin-bottom:12px;color:#fff;border:none}
-  .status-banner.planning{background:linear-gradient(135deg,#0055A4,#003D7A)}
-  .status-banner.gameday{background:linear-gradient(135deg,#34c759,#1a8a3a)}
-  .status-banner.delay{background:linear-gradient(135deg,#ff3b30,#b71c1c)}
-  .status-banner.post{background:linear-gradient(135deg,#5856d6,#3634a3)}
-  .status-banner .phase{font-size:11px;text-transform:uppercase;letter-spacing:1px;opacity:.7;margin-bottom:2px}
-  .status-banner .title{font-size:22px;font-weight:700;letter-spacing:-.5px}
-  .status-banner .sub{font-size:13px;opacity:.85;margin-top:2px}
-  .status-banner .action{display:inline-block;margin-top:10px;padding:8px 18px;background:rgba(255,255,255,.2);border-radius:20px;font-size:13px;font-weight:600;backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.15)}
+/* Giant next game boarding pass */
+.boarding-pass{border-radius:16px;overflow:hidden;margin-bottom:12px;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.boarding-pass .main{background:#1c1c1e;color:#fff;padding:20px 20px 16px;position:relative}
+.boarding-pass .main::after{content:'';position:absolute;left:20px;right:20px;bottom:0;height:2px;background:repeating-linear-gradient(90deg,transparent,transparent 6px,#444 6px,#444 8px)}
+.boarding-pass .day-badge{display:inline-block;padding:3px 10px;border-radius:10px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.boarding-pass .day-badge.today{background:var(--g);color:#fff}
+.boarding-pass .day-badge.upcoming{background:rgba(255,255,255,.15);color:rgba(255,255,255,.7)}
+.boarding-pass .time{font-size:40px;font-weight:700;letter-spacing:-1.5px;line-height:1}
+.boarding-pass .vs{font-size:16px;font-weight:400;color:rgba(255,255,255,.6);margin:6px 0}
+.boarding-pass .opp{font-size:18px;font-weight:600}
+.boarding-pass .details{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.boarding-pass .detail-chip{display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:14px;font-size:11px;background:rgba(255,255,255,.1)}
+.boarding-pass .detail-chip i{font-size:13px;opacity:.7}
+.boarding-pass .secondary{background:#2c2c2e;padding:12px 20px;display:flex;justify-content:space-between;align-items:center}
+.boarding-pass .secondary span{font-size:12px;color:rgba(255,255,255,.5)}
+.boarding-pass .nav-btn{display:flex;align-items:center;gap:4px;padding:8px 16px;border-radius:20px;background:var(--p);color:#fff;font-size:12px;font-weight:600;border:none;cursor:pointer}
+.boarding-pass .expand-section{display:none;background:#2c2c2e;padding:0 20px 16px;border-top:1px solid #3a3a3c}
+.boarding-pass .expand-section.open{display:block}
+.boarding-pass .expand-item{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #3a3a3c;font-size:12px;color:rgba(255,255,255,.7);cursor:pointer}
+.boarding-pass .expand-item:last-child{border:none}
+.boarding-pass .expand-item i{font-size:14px;color:rgba(255,255,255,.4);width:18px}
+.boarding-pass .tap-expand{text-align:center;padding:6px;color:rgba(255,255,255,.3);font-size:11px;cursor:pointer}
 
-  /* Cards */
-  .card{background:var(--card);border-radius:14px;padding:16px;margin-bottom:10px;border:1px solid var(--border);transition:transform .15s}
-  .card:active{transform:scale(.98)}
-  .card-title{font-size:13px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+/* Morning greeting */
+.greeting{background:linear-gradient(135deg,#0055A4,#003D7A);border-radius:16px;padding:16px 20px;color:#fff;margin-bottom:12px}
+.greeting .hello{font-size:11px;text-transform:uppercase;opacity:.7;letter-spacing:1px;margin-bottom:2px}
+.greeting .main-info{font-size:20px;font-weight:700;margin-bottom:6px}
+.greeting .sub-info{font-size:12px;opacity:.85;line-height:1.5}
+.greeting .quick-stats{display:flex;gap:16px;margin-top:8px}
+.greeting .stat{font-size:12px;opacity:.8}
+.greeting .stat strong{opacity:1;font-size:14px}
 
-  /* Next Game */
-  .next-game-card{background:var(--card);border-radius:14px;padding:16px;margin-bottom:10px;border-left:4px solid var(--green);border:1px solid var(--border);border-left-width:4px}
-  .next-game-card .opponent{font-size:18px;font-weight:700}
-  .next-game-card .meta{font-size:13px;color:var(--text2);margin-top:4px;line-height:1.6}
-  .next-game-card .badge{display:inline-block;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:600}
-  .badge.green{background:#e8f8e8;color:#1a7d36}
-  .badge.yellow{background:#fff3d4;color:#8a6900}
+/* Next Action */
+.next-action{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;background:var(--c);border:1px solid var(--b);margin-bottom:12px}
+.next-action i{font-size:18px;color:var(--p)}
+.next-action .label{font-size:10px;text-transform:uppercase;color:var(--t2);letter-spacing:.5px}
+.next-action .text{font-size:14px;font-weight:600}
+.next-action .arrow{color:var(--t2);margin-left:auto;font-size:16px}
 
-  /* Action Grid */
-  .action-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
-  .action-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:14px 8px;border-radius:12px;border:none;background:var(--card);color:var(--text);font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border);-webkit-tap-highlight-color:transparent;transition:all .15s}
-  .action-btn:active{transform:scale(.96)}
-  .action-btn i{font-size:22px;color:var(--primary)}
-  .action-btn.primary{background:var(--primary);color:#fff;border-color:var(--primary)}
-  .action-btn.primary i{color:#fff}
+/* Section titles */
+.section-title{font-size:13px;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;margin-top:14px}
 
-  /* Schedule */
-  .game-card{padding:14px 16px;margin-bottom:8px;border-left:4px solid var(--green);position:relative}
-  .game-card.pending{border-left-color:var(--yellow);opacity:.7}
-  .game-card.next{background:#f0faf0;border-left-color:var(--green);border-width:4px}
-  .game-card.past{opacity:.5;border-left-color:var(--text2)}
-  .game-card .time{font-size:20px;font-weight:700;color:var(--primary)}
-  .game-card .time.pending{color:var(--yellow)}
-  .game-card .opp{font-size:15px;font-weight:600}
-  .game-card .details{font-size:12px;color:var(--text2);margin-top:4px;line-height:1.5}
+/* Timeline */
+.timeline{padding:0}
+.timeline .day{display:flex;align-items:flex-start;gap:12px;padding:8px 0;border-left:2px solid var(--b);margin-left:6px;position:relative}
+.timeline .day:last-child{border-left-color:transparent}
+.timeline .day .marker{width:14px;height:14px;border-radius:50%;background:var(--c);border:2px solid var(--b);position:absolute;left:-8px;top:50%;transform:translateY(-50%);z-index:1;margin-top:0}
+.timeline .day.completed .marker{background:var(--g);border-color:var(--g)}
+.timeline .day.completed .marker::after{content:'✓';font-size:8px;color:#fff;font-weight:700}
+.timeline .day.current .marker{background:var(--p);border-color:var(--p);box-shadow:0 0 0 4px rgba(0,85,164,.2)}
+.timeline .day .content{flex:1;padding-bottom:12px}
+.timeline .day .day-label{font-size:11px;text-transform:uppercase;color:var(--t2);letter-spacing:.5px;margin-bottom:2px}
+.timeline .day .items{font-size:13px;line-height:1.6}
+.timeline .day .items .done{color:var(--t2);text-decoration:line-through}
+.timeline .day .items .next{color:var(--p);font-weight:600}
+.timeline .day .items .pending{color:var(--t2)}
 
-  /* Pending State */
-  .pending-card{text-align:center;padding:28px 16px;background:var(--card);border-radius:14px;border:1px dashed var(--border)}
-  .pending-card i{font-size:32px;color:var(--yellow);margin-bottom:6px}
-  .pending-card h3{font-size:15px;font-weight:600;margin-bottom:4px}
-  .pending-card p{font-size:13px;color:var(--text2)}
+/* Cards */
+.card{background:var(--c);border-radius:14px;padding:14px;margin-bottom:10px;border:1px solid var(--b)}
+.card.compact{padding:10px 14px;display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.card.tappable{cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .15s}
+.card.tappable:active{transform:scale(.98)}
 
-  /* Accordion */
-  .accordion{border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:8px;background:var(--card)}
-  .accordion-h{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;cursor:pointer;border:none;background:none;width:100%;font-size:14px;font-weight:600;color:var(--text);-webkit-tap-highlight-color:transparent}
-  .accordion-h i{transition:transform .2s;color:var(--text2)}
-  .accordion-h.open i{transform:rotate(180deg)}
-  .accordion-b{display:none;padding:0 16px 14px;font-size:13px;color:var(--text2);line-height:1.6}
-  .accordion-b.open{display:block}
+/* Action grid */
+.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.act-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 8px;border-radius:12px;border:none;background:var(--c);color:var(--t);font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--b);-webkit-tap-highlight-color:transparent}
+.act-btn i{font-size:18px;color:var(--p)}
+.act-btn.primary{background:var(--p);color:#fff;border-color:var(--p)}
+.act-btn.primary i{color:#fff}
 
-  /* Checklist */
-  .check-group{margin-bottom:12px}
-  .check-group h3{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
-  .check-item{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--card);border-radius:8px;margin-bottom:3px;border:1px solid var(--border);cursor:pointer;-webkit-tap-highlight-color:transparent}
-  .check-item .box{width:20px;height:20px;border-radius:5px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
-  .check-item .box.checked{background:var(--green);border-color:var(--green)}
-  .check-item .box.checked i{color:#fff;font-size:12px}
-  .check-item .label{font-size:13px;flex:1}
-  .check-item .label.done{text-decoration:line-through;color:var(--text2)}
-  .check-item .rec{font-size:10px;color:var(--text2);padding:1px 6px;border-radius:6px;background:var(--bg)}
-  .check-progress{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:12px;color:var(--text2)}
-  .check-bar{flex:1;height:6px;border-radius:3px;background:var(--border);overflow:hidden}
-  .check-bar-fill{height:100%;border-radius:3px;background:var(--green);transition:width .3s}
+/* Games list */
+.game-card{padding:14px 16px;margin-bottom:8px;border-radius:14px;background:var(--c);border:1px solid var(--b);cursor:pointer;transition:.15s}
+.game-card:active{transform:scale(.98)}
+.game-card .time{font-size:22px;font-weight:700;color:var(--p)}
+.game-card.next{border-left:4px solid var(--g);border-left-width:4px}
+.game-card.past{opacity:.5}
+.game-card .opp{font-size:15px;font-weight:600}
+.game-card .det{font-size:11px;color:var(--t2);margin-top:2px}
+.game-card.expand{padding-bottom:12px}
 
-  /* Updates */
-  .update-card{padding:12px 14px;border-left:3px solid var(--blue);margin-bottom:6px;border-radius:0 10px 10px 0}
-  .update-card .h{display:flex;justify-content:space-between;align-items:center;margin-bottom:2px}
-  .update-card .time{font-size:10px;color:var(--text2)}
-  .update-card .title{font-size:13px;font-weight:600}
-  .update-card .desc{font-size:12px;color:var(--text2);margin-top:2px}
-  .update-card.alert{border-left-color:var(--red);background:#fef2f2}
-  .update-card.alert .title{color:var(--red)}
-  .update-card.warning{border-left-color:var(--yellow);background:#fff8e7}
-  .update-card.success{border-left-color:var(--green);background:#f0faf0}
-  .update-tag{display:inline-block;padding:1px 8px;border-radius:8px;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
-  .update-tag.action{background:var(--red);color:#fff}
-  .update-tag.info{background:var(--blue);color:#fff}
-  .update-tag.update{background:var(--yellow);color:#fff}
+/* Venue - interactive */
+.venue-map{border-radius:12px;overflow:hidden;border:1px solid var(--b)}
+.venue-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:8px;background:#e8e8ea}
+.venue-grid .field{aspect-ratio:1;border-radius:8px;background:var(--c);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--t2);cursor:pointer;border:2px solid transparent;transition:.15s}
+.venue-grid .field.active{border-color:var(--p);background:#e8f0fe;color:var(--p)}
+.venue-grid .field.turf{background:#f0faf0;font-size:9px}
+.venue-grid .field.turf::after{content:'TURF';font-size:7px;color:var(--g);font-weight:600}
+.field-info{display:none;padding:12px}
+.field-info.show{display:block}
+.field-info .amenity{display:flex;align-items:center;gap:6px;padding:4px 0;font-size:11px;color:var(--t2)}
 
-  /* Venue */
-  .venue-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
-  .venue-item:last-child{border:none}
-  .venue-item i{font-size:18px;color:var(--primary);width:22px;text-align:center}
-  .venue-item .i{flex:1}
-  .venue-item .i .n{font-size:13px;font-weight:600}
-  .venue-item .i .d{font-size:12px;color:var(--text2)}
-  .venue-item .btn{padding:5px 10px;border-radius:7px;border:none;background:var(--primary);color:#fff;font-size:11px;font-weight:600;cursor:pointer}
+/* Checklist */
+.check-group{margin-bottom:10px}
+.check-group h4{font-size:11px;font-weight:600;text-transform:uppercase;color:var(--t2);letter-spacing:.5px;margin-bottom:4px}
+.check-item{display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--c);border-radius:8px;margin-bottom:2px;border:1px solid var(--b);cursor:pointer}
+.check-item .cb{width:18px;height:18px;border-radius:4px;border:2px solid var(--b);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.15s}
+.check-item .cb.checked{background:var(--g);border-color:var(--g)}
+.check-item .cb.checked::after{content:'✓';font-size:10px;color:#fff;font-weight:700}
+.check-item .label{font-size:12px;flex:1}
+.check-item .label.done{text-decoration:line-through;color:var(--t2)}
+.check-item .tag{font-size:9px;padding:1px 6px;border-radius:6px;background:var(--bg);color:var(--t2)}
+.progress-ring{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;position:relative}
+.progress-ring::before{content:'';position:absolute;inset:0;border-radius:50%;border:4px solid var(--b)}
+.progress-ring .val{font-size:22px;font-weight:700;color:var(--g)}
 
-  /* More menu */
-  .more-item{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);cursor:pointer;-webkit-tap-highlight-color:transparent}
-  .more-item:last-child{border:none}
-  .more-item i{font-size:20px;color:var(--primary);width:24px}
-  .more-item .i{flex:1}
-  .more-item .i .n{font-size:14px;font-weight:600}
-  .more-item .i .d{font-size:11px;color:var(--text2)}
-  .more-item .arrow{color:var(--text2);font-size:16px}
+/* More */
+.more-item{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--b);cursor:pointer;background:var(--c)}
+.more-item:last-child{border:none}
+.more-item i{font-size:18px;color:var(--p);width:22px}
+.more-item .lbl{flex:1;font-size:14px;font-weight:500}
+.more-item .sub{font-size:11px;color:var(--t2);margin-top:1px}
+.more-item .arr{color:var(--t2)}
 
-  /* Bottom Tabs */
-  .tabs{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--card);border-top:1px solid var(--border);display:flex;padding:4px 0 calc(4px + var(--safe-bottom));backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
-  .tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;border:none;background:none;color:var(--text2);font-size:10px;font-weight:500;padding:3px 0;cursor:pointer;transition:color .15s;-webkit-tap-highlight-color:transparent}
-  .tab i{font-size:22px;transition:color .15s}
-  .tab.active,.tab.active i{color:var(--primary)}
-  .tab.active{font-weight:600}
-  .tab .dot{width:5px;height:5px;border-radius:50%;background:var(--red);position:absolute;top:2px;right:-1px}
+/* Search */
+.search-bar{display:flex;align-items:center;gap:8px;padding:8px 14px;background:var(--bg);border-radius:10px;margin-bottom:12px;border:1px solid var(--b)}
+.search-bar i{color:var(--t2)}
+.search-bar input{border:none;background:none;flex:1;font-size:14px;color:var(--t);outline:none}
 
-  /* Contact card */
-  .contact-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
-  .contact-row:last-child{border:none}
-  .contact-row .role{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);margin-bottom:1px}
-  .contact-row .name{font-size:14px;font-weight:600}
-  .contact-row .desc{font-size:11px;color:var(--text2)}
-  .contact-row i{font-size:18px;color:var(--primary);margin-top:2px;width:20px}
+/* Updates */
+.update-row{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--b);font-size:12px}
+.update-row .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.update-row .dot.alert{background:var(--r)}
+.update-row .dot.info{background:var(--bl)}
+.update-row .dot.warn{background:var(--y)}
+.update-row .time{font-size:10px;color:var(--t2);white-space:nowrap;margin-top:1px;min-width:70px}
+.update-row .text{flex:1}
+.update-row .text .title{font-weight:600;font-size:13px}
+.update-row .text .desc{color:var(--t2);margin-top:1px}
 
-  /* Modal/Sheet */
-  .sheet-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.4)}
-  .sheet-overlay.open{display:block}
-  .sheet{position:fixed;bottom:0;left:0;right:0;z-index:201;background:var(--card);border-radius:16px 16px 0 0;padding:20px 20px calc(20px + var(--safe-bottom));transform:translateY(100%);transition:transform .3s ease;max-height:80vh;overflow-y:auto}
-  .sheet.open{transform:translateY(0)}
-  .sheet .handle{width:36px;height:4px;border-radius:2px;background:var(--border);margin:0 auto 16px}
+/* Sheet */
+.sheet-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.4)}
+.sheet-overlay.on{display:block}
+.sheet{position:fixed;bottom:0;left:0;right:0;z-index:201;background:var(--c);border-radius:16px 16px 0 0;padding:20px 20px calc(20px+var(--sb));transform:translateY(100%);transition:transform .3s;max-height:80vh;overflow-y:auto}
+.sheet.on{transform:translateY(0)}
+.sheet .handle{width:36px;height:4px;border-radius:2px;background:var(--b);margin:0 auto 14px}
 
-  .text-sm{font-size:13px}.text-xs{font-size:11px}.text-muted{color:var(--text2)}.font-bold{font-weight:700}
-  .flex{display:flex}.flex-1{flex:1}.gap-2{gap:8px}.gap-1{gap:4px}.items-center{align-items:center}.text-center{text-align:center}
-  .mt-2{margin-top:8px}.mt-3{margin-top:12px}.mb-2{margin-bottom:8px}.mb-1{margin-bottom:4px}</style>
+/* Bottom tabs */
+.tabs{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--c);border-top:1px solid var(--b);display:flex;padding:4px 0 calc(4px+var(--sb))}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;border:none;background:none;color:var(--t2);font-size:10px;font-weight:500;padding:3px 0;cursor:pointer}
+.tab i{font-size:22px}
+.tab.active,.tab.active i{color:var(--p)}
+.tab.active{font-weight:600}
+
+/* Contact rows */
+.c-row{display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid var(--b);font-size:12px}
+.c-row:last-child{border:none}
+.c-row i{font-size:16px;color:var(--p);margin-top:1px;width:20px}
+.c-row .who{font-weight:600}
+.c-row .why{color:var(--t2);font-size:10px;text-transform:uppercase;letter-spacing:.5px}
+
+.help-text{font-size:11px;color:var(--t2);text-align:center;padding:8px}
+
+@media(prefers-color-scheme:dark){body.dark{--bg:#1c1c1e;--c:#2c2c2e;--t:#f5f5f7;--t2:#98989d;--b:#38383a}}</style>
 </head>
 <body>
 
-<!-- SHEET -->
-<div class="sheet-overlay" id="sheetOverlay" onclick="closeSheet()"></div>
-<div class="sheet" id="sheet">
-  <div class="handle"></div>
-  <div id="sheetContent"></div>
-</div>
+<div class="sheet-overlay" id="ov" onclick="closeSheet()"></div>
+<div class="sheet" id="sh"><div class="handle"></div><div id="sc"></div></div>
 
 <div class="app" id="app">
-  <!-- HOME -->
-  <div class="screen active" id="screen-home">
-    <div class="statusbar"><h1 id="tournamentName">Tournament Hub</h1><p id="tournamentDates">Loading...</p></div>
-    <div id="statusBanner"></div>
-    <div id="nextGameSection"></div>
-    <div class="action-grid" id="quickActions"></div>
-    <div id="homeCards"></div>
-    <div id="contactSection"></div>
+<!-- HOME -->
+<div class="screen active" id="scr-home">
+  <div class="top-strip">
+    <div class="tourney" id="tname">Tournament Hub</div>
+    <div class="phase"><span class="dot" id="pdot"></span> <span id="plabel">Loading...</span></div>
   </div>
+  <div id="homeContent"></div>
+</div>
 
-  <!-- SCHEDULE -->
-  <div class="screen" id="screen-schedule">
-    <div class="statusbar"><h1>Schedule</h1><p id="scheduleTeamLabel">Loading...</p></div>
-    <div id="scheduleContent"></div>
-  </div>
+<!-- GAMES -->
+<div class="screen" id="scr-games">
+  <div class="top-strip"><div class="tourney">Schedule</div><div class="phase" id="gteam">Savannah United</div></div>
+  <div id="gamesContent"></div>
+</div>
 
-  <!-- VENUE -->
-  <div class="screen" id="screen-venue">
-    <div class="statusbar"><h1>Venue & Maps</h1><p id="venueName">Loading...</p></div>
-    <div class="card" id="venueContent"></div>
-    <div class="card"><div class="card-title">Venue Rules</div><div id="venueRules"></div></div>
-  </div>
+<!-- VENUE -->
+<div class="screen" id="scr-venue">
+  <div class="top-strip"><div class="tourney">Venue</div><div class="phase" id="vname">Veterans Park</div></div>
+  <div id="venueContent"></div>
+</div>
 
-  <!-- CHECKLIST -->
-  <div class="screen" id="screen-checklist">
-    <div class="statusbar"><h1>Packing Checklist</h1><p>Check off as you pack</p></div>
-    <div id="checklistProgress"></div>
-    <div style="display:flex;gap:8px;margin-bottom:10px">
-      <button class="action-btn" style="flex:1;padding:8px" onclick="resetChecklist()"><i class="ti ti-refresh"></i>Reset</button>
-    </div>
-    <div id="checklistContent"></div>
-  </div>
+<!-- PACK -->
+<div class="screen" id="scr-pack">
+  <div class="top-strip"><div class="tourney">Packing</div><div class="phase">Check off as you pack</div></div>
+  <div id="packContent"></div>
+</div>
 
-  <!-- MORE -->
-  <div class="screen" id="screen-more">
-    <div class="statusbar"><h1>More</h1><p>Everything else you need</p></div>
-    <div class="card" style="padding:0">
-      <div class="more-item" onclick="showMoreSheet('updates')"><i class="ti ti-bell"></i><div class="i"><div class="n">Updates</div><div class="d">Live notifications & announcements</div></div><span class="arrow">›</span></div>
-      <div class="more-item" onclick="showMoreSheet('hotels')"><i class="ti ti-building"></i><div class="i"><div class="n">Hotels</div><div class="d">Stay-to-Play & nearby options</div></div><span class="arrow">›</span></div>
-      <div class="more-item" onclick="showMoreSheet('rules')"><i class="ti ti-book"></i><div class="i"><div class="n">Rules & Tiebreakers</div><div class="d">Tournament rules and scoring</div></div><span class="arrow">›</span></div>
-      <div class="more-item" onclick="showMoreSheet('weather')"><i class="ti ti-cloud-rain"></i><div class="i"><div class="n">Weather Details</div><div class="d">Full forecast and heat planning</div></div><span class="arrow">›</span></div>
-      <div class="more-item" onclick="showMoreSheet('contacts')"><i class="ti ti-phone"></i><div class="i"><div class="n">All Contacts</div><div class="d">Coach, manager, tournament director</div></div><span class="arrow">›</span></div>
-      <div class="more-item" onclick="showMoreSheet('resources')"><i class="ti ti-building-store"></i><div class="i"><div class="n">Nearby Resources</div><div class="d">Stores, food, pharmacy</div></div><span class="arrow">›</span></div>
-      <div class="more-item" onclick="showMoreSheet('about')"><i class="ti ti-info-circle"></i><div class="i"><div class="n">About</div><div class="d">Version, updates, support</div></div><span class="arrow">›</span></div>
-    </div>
+<!-- MORE -->
+<div class="screen" id="scr-more">
+  <div class="top-strip"><div class="tourney">More</div><div class="phase">Everything else</div></div>
+  <div class="card" style="padding:8px 12px;margin-bottom:12px">
+    <div class="search-bar"><i class="ti ti-search"></i><input type="text" placeholder="Search everything..." oninput="doSearch(this.value)"></div>
+    <div id="searchResults" style="display:none;max-height:200px;overflow-y:auto"></div>
   </div>
+  <div class="card" style="padding:0;overflow:hidden;margin-bottom:4px" id="moreList">
+    <div class="more-item" onclick="showSheet('updates')"><i class="ti ti-bell"></i><div class="lbl"><span class="lbl">Updates</span><div class="sub">Announcements & alerts</div></div><i class="ti ti-chevron-right arr"></i></div>
+    <div class="more-item" onclick="showSheet('hotels')"><i class="ti ti-building"></i><div class="lbl"><span class="lbl">Hotels</span><div class="sub">Stay-to-Play & nearby</div></div><i class="ti ti-chevron-right arr"></i></div>
+    <div class="more-item" onclick="showSheet('rules')"><i class="ti ti-book"></i><div class="lbl"><span class="lbl">Rules & Tiebreakers</span><div class="sub">Tournament rules</div></div><i class="ti ti-chevron-right arr"></i></div>
+    <div class="more-item" onclick="showSheet('weather')"><i class="ti ti-cloud-rain"></i><div class="lbl"><span class="lbl">Weather Details</span><div class="sub">Forecast & planning</div></div><i class="ti ti-chevron-right arr"></i></div>
+    <div class="more-item" onclick="showSheet('contacts')"><i class="ti ti-phone"></i><div class="lbl"><span class="lbl">Contacts</span><div class="sub">Who to call for what</div></div><i class="ti ti-chevron-right arr"></i></div>
+    <div class="more-item" onclick="showSheet('resources')"><i class="ti ti-building-store"></i><div class="lbl"><span class="lbl">Nearby Resources</span><div class="sub">Stores, food, pharmacy</div></div><i class="ti ti-chevron-right arr"></i></div>
+    <div class="more-item" onclick="showSheet('about')"><i class="ti ti-info-circle"></i><div class="lbl"><span class="lbl">About</span><div class="sub">Prepared with Bob</div></div><i class="ti ti-chevron-right arr"></i></div>
+  </div>
+</div>
 </div>
 
 <!-- TABS -->
 <nav class="tabs">
-  <button class="tab active" data-s="home"><i class="ti ti-home" style="position:relative"><span class="dot" id="updateDot" style="display:none"></span></i>Home</button>
-  <button class="tab" data-s="schedule"><i class="ti ti-calendar-week"></i>Schedule</button>
-  <button class="tab" data-s="venue"><i class="ti ti-map-2"></i>Venue</button>
-  <button class="tab" data-s="checklist"><i class="ti ti-checklist"></i>Checklist</button>
-  <button class="tab" data-s="more"><i class="ti ti-dots-grid"></i>More</button>
+  <button class="tab active" data-scr="home" style="position:relative"><i class="ti ti-home"></i>Home</button>
+  <button class="tab" data-scr="games"><i class="ti ti-trophy"></i>Games</button>
+  <button class="tab" data-scr="venue"><i class="ti ti-map-pin"></i>Venue</button>
+  <button class="tab" data-scr="pack"><i class="ti ti-backpack"></i>Pack</button>
+  <button class="tab" data-scr="more"><i class="ti ti-dots-grid"></i>More</button>
 </nav>
 
 <script>
-// ===== STATE =====
-let data = null;
+let D=null,S='home',T='home';
+const phases={planning:{label:'Planning Mode',dot:'green',cls:'planning'},
+  countdown:{label:'Countdown',dot:'green',cls:'planning'},
+  gameday:{label:'Game Day',dot:'green',cls:'gameday'},
+  between:{label:'Between Games',dot:'green',cls:'gameday'},
+  delay:{label:'Weather Delay',dot:'red',cls:'delay'},
+  complete:{label:'Tournament Complete',dot:'yellow',cls:'complete'}};
 
-// ===== NAV =====
-function go(s) {
+function go(s){S=s;T=s;
   document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-  document.getElementById(`screen-${s}`).classList.add('active');
-  document.querySelector(`.tab[data-s="${s}"]`).classList.add('active');
-  document.getElementById('app').scrollTop = 0;
+  document.getElementById('scr-'+s).classList.add('active');
+  document.querySelector('.tab[data-scr="'+s+'"]').classList.add('active');
+  document.getElementById('app').scrollTop=0;
 }
-document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>go(t.dataset.s)));
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>go(t.dataset.scr)));
 
-function openSheet(html) {
-  document.getElementById('sheetContent').innerHTML = html;
-  document.getElementById('sheet').classList.add('open');
-  document.getElementById('sheetOverlay').classList.add('open');
+function phase(){
+  if(!D)return'planning';
+  const n=new Date(),s=new Date(D.tournament.dates.start),e=new Date(D.tournament.dates.end+'T23:59:59');
+  if(n>e)return'complete';
+  if(n>=s&&n<=e)return D.updates?.some(u=>u.type==='alert')?'delay':'gameday';
+  const d=s-n;return d<5*864e5?'countdown':'planning';
 }
-function closeSheet() {
-  document.getElementById('sheet').classList.remove('open');
-  document.getElementById('sheetOverlay').classList.remove('open');
-}
-
-// ===== COUNTDOWN =====
-function countdown() {
-  if(!data) return;
-  const s=new Date(data.tournament.dates.start), n=new Date(), d=s-n;
-  if(d<=0&&n<=new Date(data.tournament.dates.end+'T23:59:59')) return null;
-  if(d<=0) return {d:0,h:0,m:0};
-  return {d:Math.floor(d/864e5),h:Math.floor((d%864e5)/36e5),m:Math.floor((d%36e5)/6e4)};
+function cd(){
+  if(!D)return null;
+  const s=new Date(D.tournament.dates.start),n=new Date(),d=s-n;
+  if(d<=0)return null;
+  return{d:Math.floor(d/864e5),h:Math.floor((d%864e5)/36e5),m:Math.floor((d%36e5)/6e4)};
 }
 
-// ===== TOURNAMENT PHASE =====
-function getPhase() {
-  if(!data) return 'planning';
-  const n=new Date(), s=new Date(data.tournament.dates.start), e=new Date(data.tournament.dates.end+'T23:59:59');
-  if(n>e) return 'post';
-  if(n>=s&&n<=e) return data.updates&&data.updates.some(u=>u.type==='alert')?'delay':'gameday';
-  return 'planning';
-}
+function renderHome(){
+  const p=phase(),el=document.getElementById('homeContent'),c=cd();
+  document.getElementById('tname').textContent=D.tournament.name+' · '+D.tournament.dates.start+'—'+D.tournament.dates.end;
+  const ph=phases[p];
+  document.getElementById('pdot').className='dot '+ph.dot;
+  document.getElementById('plabel').textContent=ph.label;
 
-// ===== STATUS BANNER =====
-function renderBanner() {
-  const el=document.getElementById('statusBanner'), phase=getPhase();
-  if(phase==='gameday'&&data.games&&data.games.length>0){
-    const g=data.games[0];
-    el.innerHTML=`<div class="status-banner gameday">
-      <div class="phase">NEXT GAME</div>
-      <div class="title">${g.opponent||'TBD'}</div>
-      <div class="sub">${g.time||'TBD'} · Field ${g.field||'TBD'}<br>Arrive ${g.arrival||'45 min before'} · ${g.uniform||'Uniform TBD'}</div>
-      <div class="action" onclick="window.open('${data.venue.mapsUrl}','_blank')"><i class="ti ti-navigation" style="font-size:14px;margin-right:4px"></i> Navigate to Venue</div>
-    </div>`;return;
-  }
-  if(phase==='delay'){
-    const alert=data.updates.find(u=>u.type==='alert');
-    el.innerHTML=`<div class="status-banner delay">
-      <div class="phase">⏸ ${alert?alert.title:'PLAY SUSPENDED'}</div>
-      <div class="title" style="font-size:18px">${alert?alert.description:'Weather delay in effect'}</div>
-      <div class="sub">Check Updates tab for latest</div>
-    </div>`;return;
-  }
-  if(phase==='post'){
-    el.innerHTML=`<div class="status-banner post">
-      <div class="phase">TOURNAMENT COMPLETE</div>
-      <div class="title" style="font-size:18px">Great weekend, Savannah United!</div>
-      <div class="sub">Thanks for a great tournament. Check back for next event.</div>
-    </div>`;return;
-  }
-  // Planning mode
-  const cd=countdown();
-  el.innerHTML=`<div class="status-banner planning">
-    <div class="phase">${data.tournament.shortName||data.tournament.name}</div>
-    <div class="title">${cd?`${cd.d}d ${cd.h}h until kickoff`:'Planning Mode'}</div>
-    <div class="sub">Schedule expected ${data.scheduleExpected}. Your next action: confirm availability and book lodging.</div>
-    <div class="action" onclick="go('checklist')"><i class="ti ti-checklist" style="font-size:14px;margin-right:4px"></i> Start Packing</div>
-  </div>`;
-}
-
-// ===== NEXT GAME =====
-function renderNextGame() {
-  const el=document.getElementById('nextGameSection'), phase=getPhase();
-  if(phase==='gameday'||(data.games&&data.games.length>0)){
-    const g=data.games[0]||{};
-    el.innerHTML=`<div class="next-game-card">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start">
-        <div><div class="opponent">${g.opponent||'vs TBD'}</div>
-        <div class="meta"><strong>${g.time||'Time TBD'}</strong> · Field ${g.field||'TBD'}<br>Arrive ${g.arrival||'45 min before'} · ${g.uniform||''}</div></div>
-        <span class="badge ${g.status==='Confirmed'?'green':'yellow'}">${g.status||'Pending'}</span>
+  if(p==='gameday'&&D.games?.length>0){
+    const g=D.games[0];
+    el.innerHTML=`
+      <div class="boarding-pass">
+        <div class="main">
+          <div class="day-badge today">Today</div>
+          <div class="time">${g.time||'TBD'}</div>
+          <div class="vs">vs</div>
+          <div class="opp">${g.opponent||'TBD'}</div>
+          <div class="details">
+            <div class="detail-chip"><i class="ti ti-map-pin"></i>Field ${g.field||'TBD'}</div>
+            <div class="detail-chip"><i class="ti ti-clock"></i>Arrive ${g.arrival||'45m before'}</div>
+            <div class="detail-chip"><i class="ti ti-shirt"></i>${g.uniform||'TBD'}</div>
+          </div>
+        </div>
+        <div class="secondary">
+          <span>Tap for more info</span>
+          <button class="nav-btn" onclick="window.open('${D.venue.mapsUrl}','_blank')"><i class="ti ti-navigation"></i>Navigate</button>
+        </div>
+        <div class="expand-section" id="exp">
+          <div class="expand-item" onclick="window.open('${D.venue.fields.map}','_blank')"><i class="ti ti-fence"></i>Field Map</div>
+          <div class="expand-item" onclick="showSheet('weather')"><i class="ti ti-cloud-rain"></i>Weather: ${D.weather.summary||'No forecast'}</div>
+          <div class="expand-item" onclick="go('venue')"><i class="ti ti-car"></i>Parking: ${D.venue.parking||'Free on-site'}</div>
+          <div class="expand-item" onclick="go('venue')"><i class="ti ti-toilet"></i>Restrooms near field</div>
+          <div class="expand-item" onclick="showSheet('contacts')"><i class="ti ti-phone"></i>Coach Contact</div>
+        </div>
+        <div class="tap-expand" onclick="toggleExpand()">Show all ▼</div>
       </div>
-      ${g.field?'<div style="margin-top:8px"><button class="action-btn primary" style="padding:10px;font-size:12px;flex-direction:row" onclick="showFieldMap()"><i class="ti ti-map-2"></i> Open Field Map</button></div>':''}
-    </div>`;return;
+      <div class="greeting">
+        <div class="hello">Good Morning</div>
+        <div class="main-info">Leave in ${leaveTime(g)} minutes</div>
+        <div class="sub-info">Traffic looks normal. Weather ${D.weather.summary||'upper 90s'}. ${g.uniform||'Blue jerseys'}.</div>
+        <div class="quick-stats">
+          <div class="stat"><strong>${g.field||'TBD'}</strong><br>Field</div>
+          <div class="stat"><strong>${g.arrival||'7:15'}</strong><br>Arrive</div>
+          <div class="stat"><strong>${g.time||'8:00'}</strong><br>Kickoff</div>
+        </div>
+      </div>
+      <div class="next-action" onclick="window.open('${D.venue.mapsUrl}','_blank')">
+        <i class="ti ti-navigation"></i>
+        <div><div class="label">Next Action</div><div class="text">Leave by ${g.arrival||'7:15 AM'}</div></div>
+        <i class="ti ti-arrow-right arrow"></i>
+      </div>
+      <div class="section-title">Timeline</div>
+      <div class="card">${timeline()}</div>
+      <div class="section-title">What's Next</div>
+      ${nextGames()}`;
+
+    // Also render games page
+    renderGames();
+  } else if(p==='delay'){
+    const a=D.updates?.find(u=>u.type==='alert');
+    el.innerHTML=`
+      <div class="boarding-pass" style="background:linear-gradient(135deg,#b71c1c,#d32f2f)">
+        <div class="main"><div class="day-badge" style="background:rgba(255,255,255,.3)">ALERT</div>
+        <div class="time" style="font-size:18px">${a?.title||'Lightning Delay'}</div>
+        <div class="vs">${a?.description||'Play suspended. Remain in vehicles.'}</div>
+        <div class="details" style="margin-top:8px"><div class="detail-chip"><i class="ti ti-clock"></i>Next update: ${a?.nextUpdate||'TBD'}</div></div></div>
+        <div class="secondary" style="background:rgba(0,0,0,.2)"><span>${a?.posted||'Coach Update'}</span><button class="nav-btn" style="background:rgba(255,255,255,.2)" onclick="go('games')">Schedule</button></div>
+      </div>
+      <div class="section-title">Updates</div>`;
+  } else if(p==='complete'){
+    el.innerHTML=`
+      <div class="boarding-pass" style="background:linear-gradient(135deg,#5856d6,#3634a3)">
+        <div class="main" style="text-align:center"><div class="day-badge" style="background:rgba(255,255,255,.3)">COMPLETE</div>
+        <div style="font-size:28px;font-weight:700;margin:8px 0">Great Weekend!</div>
+        <div class="vs">Thanks for a great tournament, Savannah United.</div></div>
+        <div class="secondary" style="background:rgba(0,0,0,.2);text-align:center;justify-content:center"><span>Check back for the next event</span></div>
+      </div>`;
+  } else {
+    // Planning / Countdown
+    el.innerHTML=`
+      <div class="boarding-pass">
+        <div class="main"><div class="day-badge upcoming">${c?c.d+'d '+c.h+'h':'Upcoming'}</div>
+        <div style="font-size:22px;font-weight:700;margin:4px 0">${c?'until tournament':'Tournament Ahead'}</div>
+        <div class="vs">${D.tournament.shortName||D.tournament.name} · ${D.venue.name}</div>
+        <div class="details" style="margin-top:8px">
+          <div class="detail-chip"><i class="ti ti-calendar-event"></i>${D.tournament.dates.start}—${D.tournament.dates.end}</div>
+          <div class="detail-chip"><i class="ti ti-map-pin"></i>${D.venue.address.split(',')[0]}</div>
+        </div></div>
+        <div class="secondary"><span>Schedule: ${D.scheduleExpected}</span><button class="nav-btn" onclick="go('pack')">Start Packing</button></div>
+      </div>
+      <div class="next-action" onclick="showSheet('hotels')">
+        <i class="ti ti-building"></i>
+        <div><div class="label">Next Action</div><div class="text">Book hotel on GotSport</div></div>
+        <i class="ti ti-arrow-right arrow"></i>
+      </div>
+      <div class="action-grid">
+        <button class="act-btn" onclick="go('pack')"><i class="ti ti-backpack"></i>Start Packing</button>
+        <button class="act-btn primary" onclick="go('venue')"><i class="ti ti-map-pin"></i>View Venue</button>
+      </div>
+      <div class="section-title">At a Glance</div>
+      <div class="card compact" onclick="showSheet('weather')"><i class="ti ti-cloud-rain" style="color:var(--y);font-size:18px"></i><span>${D.weather.summary||'No forecast yet'}</span><i class="ti ti-chevron-right" style="margin-left:auto;color:var(--t2)"></i></div>
+      <div class="card compact" onclick="showSheet('hotels')"><i class="ti ti-building" style="color:var(--p);font-size:18px"></i><span>${D.hotels.official[0]?.name||'Hotel info'}: ${D.hotels.official[0]?.rate||''} · ${D.hotels.official[0]?.drive||''}</span><i class="ti ti-chevron-right" style="margin-left:auto;color:var(--t2)"></i></div>
+      <div class="card compact" onclick="showSheet('contacts')"><i class="ti ti-phone" style="color:var(--r);font-size:18px"></i><span>Need help? Coach: ${D.contacts.coach?.name}, Manager: ${D.contacts.manager?.name}</span><i class="ti ti-chevron-right" style="margin-left:auto;color:var(--t2)"></i></div>`;
   }
-  el.innerHTML='';
 }
 
-// ===== QUICK ACTIONS =====
-function renderActions() {
-  const el=document.getElementById('quickActions');
-  el.innerHTML=`
-    <button class="action-btn" onclick="go('schedule')"><i class="ti ti-calendar-week"></i>View Schedule</button>
-    <button class="action-btn primary" onclick="go('venue')"><i class="ti ti-navigation"></i>Navigate to Venue</button>
-    <button class="action-btn" onclick="showHotels()"><i class="ti ti-building"></i>Book Hotel</button>
-    <button class="action-btn" onclick="go('checklist')"><i class="ti ti-checklist"></i>Start Packing</button>`;
+function leaveTime(g){
+  if(!g||!g.arrival) return '';
+  const [h,m]=g.arrival.split(':').map(Number);
+  const now=new Date(), target=new Date(now);target.setHours(h||7,m||15,0,0);
+  return Math.round((target-now)/60000).toString();
+}
+function toggleExpand(){document.getElementById('exp').classList.toggle('open')}
+
+function timeline(){
+  const items=[
+    {day:'Friday Aug 21',done:true,items:['Travel to Jax','Hotel check-in','Early bedtime']},
+    {day:'Saturday Aug 22',done:D.games?.length>0&&D.games[0].status==='Complete',current:true,items:D.games?.length>0?['Leave: '+D.games[0].arrival,'Game 1: '+D.games[0].time+' vs '+D.games[0].opponent,'Lunch break','Game 2']:['Schedule pending']},
+    {day:'Sunday Aug 23',done:false,items:D.games?.length>1?['Game 3','Possible final','Drive home']:['Knockout rounds','Drive home']}
+  ];
+  return items.map((d,i)=>`
+    <div class="day ${d.done?'completed':d.current?'current':''}">
+      <div class="marker"></div>
+      <div class="content">
+        <div class="day-label">${d.day}</div>
+        <div class="items">${d.items.map((item,j)=>`<div class="${d.done?'done':(d.current&&j===0)?'next':'pending'}">○ ${item}</div>`).join('')}</div>
+      </div>
+    </div>`).join('');
+}
+function nextGames(){
+  if(!D.games||D.games.length<2) return '<div class="card"><p class="help-text">Schedule not yet released</p></div>';
+  return D.games.slice(1,4).map(g=>`
+    <div class="card compact">
+      <span style="font-weight:700;font-size:15px;min-width:50px">${g.time||'TBD'}</span>
+      <span style="flex:1">${g.opponent||'TBD'}</span>
+      <span style="font-size:11px;color:var(--t2)">Field ${g.field||'--'}</span>
+    </div>`).join('');
 }
 
-// ===== HOME CARDS =====
-function renderHomeCards() {
-  const el=document.getElementById('homeCards');
-  el.innerHTML=`
-    <div class="card"><div class="card-title"><i class="ti ti-cloud-rain" style="font-size:14px;margin-right:4px"></i>Weather</div>
-      <p class="text-sm">${data.weather.summary||'No forecast yet'}</p>
-      <p class="text-xs text-muted mt-2">${data.weather.details||'Typical late-August conditions'}</p>
-    </div>
-    <div class="card"><div class="card-title"><i class="ti ti-users" style="font-size:14px;margin-right:4px"></i>Coach Update</div>
-      <p class="text-sm text-muted">${data.updates&&data.updates.length>0?data.updates[data.updates.length-1].description:'No new updates yet. Check back closer to game day.'}</p>
-    </div>`;
-}
-
-// ===== CONTACTS =====
-function renderContacts() {
-  const el=document.getElementById('contactSection');
-  const tm=data.contacts.teamManagers||[];
-  el.innerHTML=`<div class="card">
-    <div class="card-title"><i class="ti ti-phone" style="font-size:14px;margin-right:4px"></i>Quick Contacts</div>
-    <div class="contact-row">
-      <i class="ti ti-message-user"></i>
-      <div><div class="role">Team questions</div><div class="name">${data.contacts.manager.name}</div><div class="desc">Parent Manager</div></div>
-    </div>
-    <div class="contact-row">
-      <i class="ti ti-ball-soccer"></i>
-      <div><div class="role">Soccer questions</div><div class="name">${data.contacts.coach.name}</div><div class="desc">Head Coach</div></div>
-    </div>
-    ${tm.map(m=>`<div class="contact-row">
-      <i class="ti ti-users"></i>
-      <div><div class="role">Team Manager</div><div class="name">${m.name}</div><div class="desc">${m.phone?'<a href="tel:'+m.phone+'" style="color:var(--primary)">'+m.phone+'</a>':''}</div></div>
-    </div>`).join('')}
-    <div class="contact-row" style="opacity:.6">
-      <i class="ti ti-shield"></i>
-      <div><div class="role">Tournament administration (manager use)</div><div class="name">${data.contacts.tournamentDirector?data.contacts.tournamentDirector.email:'Tournament Director'}</div></div>
-    </div>
-  </div>`;
-}
-
-// ===== SCHEDULE =====
-function renderSchedule() {
-  const el=document.getElementById('scheduleContent');
-  document.getElementById('scheduleTeamLabel').textContent=data?data.team.name:'';
-  if(!data||data.scheduleStatus==='pending'){
-    el.innerHTML=`<div class="pending-card"><i class="ti ti-clock-hour-9"></i><h3>Schedule Not Yet Released</h3><p>${data?data.scheduleExpected:'Expected 1-2 weeks before tournament via GotSport'}</p></div>`;
-    return;
+// === GAMES ===
+function renderGames(){
+  document.getElementById('gteam').textContent=D.team.name;
+  const el=document.getElementById('gamesContent');
+  if(!D.games||D.games.length===0){
+    el.innerHTML=`<div class="card" style="text-align:center;padding:32px"><i class="ti ti-clock-hour-9" style="font-size:32px;color:var(--y)"></i><h3 style="margin:8px 0 4px">Schedule Pending</h3><p class="help-text">${D.scheduleExpected}</p></div>`;return;
   }
-  el.innerHTML=data.games.map((g,i)=>{
+  el.innerHTML=D.games.map((g,i)=>{
     const cls=i===0?'game-card next':g.status==='Complete'?'game-card past':'game-card';
-    return `<div class="${cls}">
+    return `<div class="${cls}" onclick="expandGame(this)">
       <div style="display:flex;justify-content:space-between;align-items:baseline">
         <span class="time">${g.time||'TBD'}</span>
-        <span style="font-size:11px;color:var(--text2);margin:0 4px">vs</span>
+        <span style="font-size:12px;color:var(--t2);margin:0 6px">vs</span>
         <span class="opp">${g.opponent||'TBD'}</span>
       </div>
-      <div class="details">Field ${g.field||'TBD'} · Arrive ${g.arrival||'TBD'} · ${g.uniform||''}</div>
-      ${g.field?`<div style="margin-top:4px"><button class="action-btn" style="padding:4px 10px;font-size:10px;flex-direction:row;display:inline-flex" onclick="showFieldMap()"><i class="ti ti-map-2"></i> Field Map</button></div>`:''}
-      ${i<data.games.length-1?`<div style="margin-top:6px;font-size:11px;color:var(--yellow);background:#fff8e7;padding:4px 8px;border-radius:6px">${gapTime(data.games[i],data.games[i+1])}</div>`:''}
+      <div class="det">Field ${g.field||'TBD'} · Arrive ${g.arrival||'TBD'} · ${g.uniform||''}</div>
+      <div class="expand-section" style="display:none;margin-top:8px;padding-top:8px;border-top:1px solid var(--b)">
+        <div class="expand-item" onclick="window.open('${D.venue.mapsUrl}','_blank')"><i class="ti ti-navigation"></i>Directions to venue</div>
+        <div class="expand-item" onclick="window.open('${D.venue.fields.map}','_blank')"><i class="ti ti-fence"></i>Field map</div>
+        <div class="expand-item" onclick="showSheet('weather')"><i class="ti ti-cloud-rain"></i>Weather</div>
+        <div class="expand-item" onclick="go('venue')"><i class="ti ti-toilet"></i>Facilities near field</div>
+      </div>
     </div>`;
   }).join('');
 }
+function expandGame(card){
+  const exp=card.querySelector('.expand-section');
+  exp.style.display=exp.style.display==='none'?'block':'none';
+}
 
-function gapTime(g1,g2){return `${g2.time||'Next'}: ${gapMin(g1.time,g2.time)} min between games`}
-function gapMin(t1,t2){return'~'+Math.round(Math.random()*120+60)}
-
-// ===== VENUE =====
-function renderVenue() {
-  const el=document.getElementById('venueContent'), v=data.venue;
-  document.getElementById('venueName').textContent=v.name;
+// === VENUE ===
+function renderVenue(){
+  document.getElementById('vname').textContent=D.venue.name;
+  const el=document.getElementById('venueContent');
+  const v=D.venue;
   el.innerHTML=`
-    <div class="venue-item"><i class="ti ti-map-pin"></i><div class="i"><div class="n">${v.name}</div><div class="d">${v.address}</div></div>
-      <button class="btn" onclick="window.open('${v.mapsUrl}','_blank')">Go</button></div>
-    <div class="venue-item"><i class="ti ti-car"></i><div class="i"><div class="n">Parking</div><div class="d">${v.parking}</div></div></div>
-    <div class="venue-item"><i class="ti ti-fence"></i><div class="i"><div class="n">Fields</div><div class="d">${v.fields.count} total · ${v.fields.surface} · Fields 1-4 near main lot, 5-6 back</div></div>
-      <button class="btn" onclick="window.open('${v.fields.map}','_blank')">Map</button></div>
-    <div class="venue-item"><i class="ti ti-building-store"></i><div class="i"><div class="n">Concessions</div><div class="d">On-site · Lines long at peak</div></div></div>
-    <div class="venue-item"><i class="ti ti-toilet"></i><div class="i"><div class="n">Restrooms</div><div class="d">Multiple locations</div></div></div>`;
-
-  // Venue rules
-  const r=data.venueRules, re=document.getElementById('venueRules');
-  if(r){
-    re.innerHTML=`<div style="font-size:12px;line-height:1.7">
-      <p class="mb-1"><strong>Tents/Canopies:</strong> ${r.tents}</p>
-      <p class="mb-1"><strong>Pets:</strong> ${r.pets}</p>
-      <p class="mb-1"><strong>Food/Coolers:</strong> ${r.foodCooler}</p>
-      <p class="mb-1"><strong>Chairs:</strong> ${r.chairs}</p>
-      <p class="mb-1"><strong>Alcohol:</strong> ${r.alcohol}</p>
-      <p><strong>Smoking:</strong> ${r.smoking}</p>
-    </div>`;
-  } else {
-    re.innerHTML='<p class="text-sm text-muted">Venue rules not yet confirmed.</p>';
-  }
+    <div class="venue-map">
+      <div class="venue-grid">
+        ${Array.from({length:6},(_,i)=>{
+          const isTurf=i===5;
+          return `<div class="field ${isTurf?'turf':''}" onclick="selectField(${i+1})">F${i+1}${isTurf?'<br>TURF':''}</div>`;
+        }).join('')}
+      </div>
+      <div class="field-info" id="finfo">
+        <p class="help-text">Tap a field to see nearby amenities</p>
+      </div>
+    </div>
+    <div style="margin-top:12px">
+      <div class="card compact" onclick="window.open('${v.mapsUrl}','_blank')"><i class="ti ti-navigation"></i><span style="flex:1">Directions to ${v.name}</span><i class="ti ti-arrow-right arr"></i></div>
+      <div class="card compact" onclick="window.open('${v.fields.map}','_blank')"><i class="ti ti-fence"></i><span style="flex:1">Official Field Map</span><i class="ti ti-arrow-right arr"></i></div>
+      <div class="card compact"><i class="ti ti-car"></i><span>${v.parking}</span></div>
+      <div class="card compact"><i class="ti ti-building-store"></i><span>Concessions on-site</span></div>
+    </div>
+    <div class="section-title">Venue Rules</div>
+    <div class="card" style="font-size:12px;line-height:1.7" id="vrules"></div>`;
+  const vr=D.venueRules;
+  document.getElementById('vrules').innerHTML=vr?`<p><strong>Tents/Canopies:</strong> ${vr.tents}</p><p><strong>Pets:</strong> ${vr.pets}</p><p><strong>Food/Coolers:</strong> ${vr.foodCooler}</p><p><strong>Chairs:</strong> ${vr.chairs}</p><p><strong>Alcohol:</strong> ${vr.alcohol}</p><p><strong>Smoking:</strong> ${vr.smoking}</p>`:'<p class="help-text">Venue rules not yet confirmed</p>';
+}
+function selectField(n){
+  document.querySelectorAll('.venue-grid .field').forEach(f=>f.classList.remove('active'));
+  document.querySelectorAll('.venue-grid .field')[Math.min(n-1,5)].classList.add('active');
+  const info={
+    1:'Bathrooms: west end · Shade: limited · Parking: Main Lot',
+    2:'Bathrooms: west end · Concessions: nearby · Team tent area',
+    3:'Bathrooms: central pavilion · Concessions: right there · AED on site',
+    4:'Bathrooms: central pavilion · Shade: good · Closest to entrance',
+    5:'Bathrooms: east end · Parking: Overflow lot · Bring canopy',
+    6:'Bathrooms: clubhouse · 50 acres complex · 🏟 Natural turf fields'
+  };
+  document.getElementById('finfo').innerHTML=`<p style="font-weight:600;margin-bottom:4px;font-size:13px">Field ${n}</p>
+    <div class="amenity"><i class="ti ti-toilet"></i> ${info[n]||'Facilities nearby'}</div>`;
+  document.getElementById('finfo').classList.add('show');
 }
 
-// ===== CHECKLIST =====
-function renderChecklist() {
-  const el=document.getElementById('checklistContent'), prog=document.getElementById('checklistProgress');
-  if(!data) return;
-  const groups=[
-    {k:'Required — Player',icon:'ti-shirt-sport',items:data.checklist.player,req:true},
-    {k:'Recommended — Weather',icon:'ti-sun',items:data.checklist.weather,req:false},
-    {k:'Recommended — Parent',icon:'ti-users',items:data.checklist.parent,req:false},
-    {k:'Required — Emergency',icon:'ti-ambulance',items:data.checklist.emergency,req:true}
+// === PACK ===
+function renderPack(){
+  const el=document.getElementById('packContent'),g=[
+    {k:'Required — Player',items:D.checklist.player,req:true},
+    {k:'Recommended — Weather',items:D.checklist.weather,req:false},
+    {k:'Recommended — Parent',items:D.checklist.parent,req:false},
+    {k:'Required — Emergency',items:D.checklist.emergency,req:true}
   ];
-  let total=0, done=0;
-  groups.forEach(g=>g.items.forEach(item=>{
-    const id=item.replace(/[^a-z0-9]/gi,'_'); total++;
-    if(localStorage.getItem('ck_'+id)==='true') done++;
-  }));
-  prog.innerHTML=`<div class="check-progress"><span>${done} of ${total} packed</span><div class="check-bar"><div class="check-bar-fill" style="width:${total?Math.round(done/total*100):0}%"></div></div></div>`;
-  el.innerHTML=groups.map(g=>`
-    <div class="check-group"><h3><i class="ti ${g.icon}" style="font-size:13px;margin-right:3px"></i> ${g.k}</h3>
-      ${g.items.map(item=>{
-        const id=item.replace(/[^a-z0-9]/gi,'_');
-        const ch=localStorage.getItem('ck_'+id)==='true';
-        return `<div class="check-item" onclick="tog('${id}')">
-          <div class="box ${ch?'checked':''}"><i class="ti ti-check"></i></div>
-          <span class="label ${ch?'done':''}">${item}</span>
-          ${!g.req?'<span class="rec">optional</span>':''}
-        </div>`;
-      }).join('')}
-    </div>`).join('');
+  let total=0,done=0;
+  g.forEach(gr=>gr.items.forEach(item=>{total++;if(localStorage.getItem('ck_'+item.replace(/[^a-z0-9]/gi,'_'))==='true')done++;}));
+  const pct=total?Math.round(done/total*100):0;
+  el.innerHTML=`
+    <div style="text-align:center;margin:0 0 12px">
+      <div class="progress-ring"><div class="val">${pct}%</div></div>
+      <p style="font-size:12px;color:var(--t2)">${done} of ${total} items packed</p>
+      <button class="act-btn" style="margin:8px auto 0;font-size:10px;padding:6px 16px" onclick="resetPack()">Reset All</button>
+    </div>
+    ${g.map(gr=>`
+      <div class="check-group"><h4>${gr.k}</h4>
+        ${gr.items.map(item=>{
+          const id=item.replace(/[^a-z0-9]/gi,'_'),ch=localStorage.getItem('ck_'+id)==='true';
+          return `<div class="check-item" onclick="tog('${id}')">
+            <div class="cb ${ch?'checked':''}"></div><span class="label ${ch?'done':''}">${item}</span>
+            ${!gr.req?'<span class="tag">optional</span>':''}
+          </div>`;
+        }).join('')}
+      </div>`).join('')}`;
 }
-function tog(id){localStorage.setItem('ck_'+id,localStorage.getItem('ck_'+id)==='true'?'false':'true');renderChecklist();}
-function resetChecklist(){if(confirm('Reset all checklist items?')){localStorage.clear();renderChecklist();}}
+function tog(id){localStorage.setItem('ck_'+id,localStorage.getItem('ck_'+id)==='true'?'false':'true');renderPack();}
+function resetPack(){if(confirm('Reset checklist?')){localStorage.clear();renderPack();}}
 
-// ===== MORE SHEETS =====
-function showMoreSheet(section){
-  if(!data) return;
-  let html='';
+// === MORE SHEETS ===
+function showSheet(section){
+  let h='';
   if(section==='updates'){
-    if(!data.updates||data.updates.length===0){
-      html=`<h3 style="margin-bottom:12px">Updates</h3><p class="text-sm text-muted text-center" style="padding:20px">No updates yet. Schedule changes, field updates, and coach messages will appear here.</p>`;
-    } else {
-      html=`<h3 style="margin-bottom:12px">Updates</h3>${data.updates.map(u=>`
-        <div class="update-card ${u.type||''}">
-          <div class="h"><span class="update-tag ${u.type==='alert'?'action':u.type==='warning'?'update':'info'}">${u.type||'info'}</span><span class="time">${u.time||''}</span></div>
-          <div class="title">${u.title}</div>
-          <div class="desc">${u.description}${u.posted?'<br><span class="text-xs text-muted">Posted by '+u.posted+'</span>':''}</div>
-        </div>`).join('')}
-        ${data.updates.some(u=>u.actionRequired)?'<p class="text-sm text-muted mt-2"><i class="ti ti-alert-triangle" style="color:var(--red)"></i> Action required on some items</p>':''}`;
-    }
+    if(!D.updates||!D.updates.length) h=`<h3 style="margin-bottom:12px">Updates</h3><p class="help-text" style="padding:20px">No updates yet. Messages and alerts will appear here.</p>`;
+    else h=`<h3 style="margin-bottom:12px">Updates</h3>`+D.updates.map(u=>`<div class="update-row"><div class="dot ${u.type==='alert'?'alert':u.type==='warning'?'warn':'info'}"></div><span class="time">${u.time||''}</span><div class="text"><div class="title">${u.title}</div><div class="desc">${u.description}${u.posted?' · '+u.posted:''}</div></div></div>`).join('');
   }
   if(section==='hotels'){
-    const h=data.hotels;
-    html=`<h3 style="margin-bottom:8px">Official — Stay-to-Play Compliant</h3>
-      <p class="text-xs text-muted mb-2">These hotels satisfy the tournament housing requirement. No exception needed.</p>
-      ${h.official.map(o=>`
-        <div style="padding:10px;background:var(--bg);border-radius:8px;margin-bottom:6px">
-          <span style="font-weight:600">${o.name}</span> <span style="font-size:10px;color:var(--text2)">${o.chain}</span><br>
-          <span style="font-size:12px">${o.rate} · ${o.drive} · ${o.rooms} rooms</span>
-          ${o.bestValue?'<br><span style="font-size:11px;color:var(--green);font-weight:600">⭐ Best Value</span>':''}
-        </div>`).join('')}
-      <h3 style="margin:14px 0 8px">Non-Official (Not on GotSport)</h3>
-      ${h.nonOfficial.map(o=>`
-        <div style="padding:8px;background:var(--bg);border-radius:8px;margin-bottom:4px">
-          <span style="font-weight:600">${o.name}</span> <span style="font-size:12px">· ${o.drive}</span><br>
-          <span style="font-size:11px;color:var(--text2)">${o.note}</span>
-        </div>`).join('')}
-      <p class="text-xs text-muted mt-2" style="color:var(--red)">Do not book non-official until manager confirms proximity exception.</p>
-      <div style="margin-top:10px"><button class="action-btn primary" style="padding:10px;font-size:12px;flex-direction:row" onclick="window.open('${h.portal}','_blank')"><i class="ti ti-external-link"></i> Book on GotSport</button></div>`;
+    const ht=D.hotels;
+    h=`<h3 style="margin-bottom:8px">Official — Stay-to-Play Compliant</h3><p class="help-text" style="text-align:left;margin-bottom:8px">These hotels satisfy the tournament housing requirement.</p>
+      ${ht.official.map(o=>`<div style="padding:10px;background:var(--bg);border-radius:8px;margin-bottom:6px"><span style="font-weight:600">${o.name}</span><span style="font-size:10px;color:var(--t2)"> ${o.chain}</span><br><span style="font-size:11px">${o.rate} · ${o.drive} · ${o.rooms} rooms</span>${o.bestValue?'<br><span style="font-size:10px;color:var(--g);font-weight:600">⭐ Best Value</span>':''}</div>`).join('')}
+      <h3 style="margin:14px 0 8px">Non-Official</h3>${ht.nonOfficial.map(o=>`<div style="padding:8px;background:var(--bg);border-radius:8px;margin-bottom:4px"><span style="font-weight:600;font-size:12px">${o.name}</span><span style="font-size:11px"> · ${o.drive}</span><br><span style="font-size:10px;color:var(--text2)">${o.note}</span></div>`).join('')}
+      <p class="help-text" style="color:var(--r);text-align:left">Do not book non-official until manager confirms proximity exception.</p>
+      <div style="margin-top:10px"><button class="act-btn primary" style="padding:10px;font-size:12px" onclick="window.open('${ht.portal}','_blank')"><i class="ti ti-external-link"></i>Book on GotSport</button></div>`;
   }
   if(section==='rules'){
-    html=`<h3 style="margin-bottom:8px">Tournament Rules</h3>
-      ${data.rules.keyRules.map(r=>`
-        <div style="display:flex;padding:4px 0;border-bottom:1px solid var(--border);font-size:12px">
-          <span style="font-weight:600;min-width:90px">${r.label}</span>
-          <span style="color:var(--text2)">${r.value}</span>
-        </div>`).join('')}
-      <h4 style="margin:12px 0 6px;font-size:13px">Tiebreakers</h4>
-      ${data.rules.tiebreakers.map((t,i)=>`
-        <div style="display:flex;gap:4px;padding:2px 0;font-size:12px;color:var(--text2)">
-          <span style="font-weight:700;color:#5856d6;min-width:14px">${i+1}</span><span>${t}</span>
-        </div>`).join('')}
-      <div style="margin-top:10px"><button class="action-btn" style="padding:8px;font-size:11px;flex-direction:row" onclick="window.open('${data.rules.fullLink}','_blank')"><i class="ti ti-external-link"></i> Full Rules</button></div>`;
+    h=`<h3 style="margin-bottom:8px">Tournament Rules</h3>
+      ${D.rules.keyRules.map(r=>`<div style="display:flex;padding:4px 0;border-bottom:1px solid var(--b);font-size:12px"><span style="font-weight:600;min-width:90px">${r.label}</span><span style="color:var(--t2)">${r.value}</span></div>`).join('')}
+      <h4 style="margin:12px 0 4px">Tiebreakers</h4>
+      ${D.rules.tiebreakers.map((t,i)=>`<div style="display:flex;gap:4px;padding:2px 0;font-size:11px;color:var(--t2)"><span style="font-weight:700;color:#5856d6;min-width:12px">${i+1}</span>${t}</div>`).join('')}
+      <div style="margin-top:8px"><button class="act-btn" style="padding:6px 12px;font-size:10px" onclick="window.open('${D.rules.fullLink}','_blank')">Full Rules</button></div>`;
   }
   if(section==='weather'){
-    html=`<h3 style="margin-bottom:8px">Weather</h3>
-      <p style="font-size:15px;font-weight:600;margin-bottom:4px">${data.weather.summary||'No forecast'}</p>
-      <p class="text-sm">${data.weather.details||'Check back closer to tournament'}</p>`;
+    h=`<h3 style="margin-bottom:8px">Weather</h3><p style="font-weight:600;font-size:15px">${D.weather.summary||'No forecast'}</p><p class="help-text" style="text-align:left;margin-top:6px">${D.weather.details||'Check back closer to tournament'}</p>`;
   }
   if(section==='contacts'){
-    const tm=data.contacts.teamManagers||[];
-    html=`<h3 style="margin-bottom:8px">All Contacts</h3>
-      <div class="contact-row"><i class="ti ti-message-user"></i>
-        <div><div class="role">Team questions</div><div class="name">${data.contacts.manager.name}</div><div class="desc">Parent Manager</div></div></div>
-      <div class="contact-row"><i class="ti ti-ball-soccer"></i>
-        <div><div class="role">Soccer questions</div><div class="name">${data.contacts.coach.name}</div><div class="desc">Head Coach</div></div></div>
-      ${tm.map(m=>`<div class="contact-row"><i class="ti ti-users"></i>
-        <div><div class="role">Team Manager</div><div class="name">${m.name}</div><div class="desc">${m.phone?'<a href="tel:'+m.phone+'" style="color:var(--primary)">'+m.phone+'</a> · ':''}${m.email||''}</div></div></div>`).join('')}
-      <div class="contact-row" style="opacity:.6"><i class="ti ti-shield"></i>
-        <div><div class="role">Tournament admin (manager use)</div><div class="name">${data.contacts.tournamentDirector?data.contacts.tournamentDirector.email:'TBD'}</div></div></div>`;
+    const tm=D.contacts.teamManagers||[];
+    h=`<h3 style="margin-bottom:8px">Who to Contact</h3>
+      <div class="c-row"><i class="ti ti-ball-soccer"></i><div><div class="who">${D.contacts.coach.name}</div><div class="why">Soccer questions</div></div></div>
+      <div class="c-row"><i class="ti ti-message-user"></i><div><div class="who">${D.contacts.manager.name}</div><div class="why">Team logistics</div></div></div>
+      ${tm.map(m=>`<div class="c-row"><i class="ti ti-users"></i><div><div class="who">${m.name}</div><div class="why">Team Manager · ${m.phone?'<a href="tel:'+m.phone+'" style="color:var(--p)">'+m.phone+'</a>':''}</div></div></div>`).join('')}
+      <div class="c-row" style="opacity:.5"><i class="ti ti-shield"></i><div><div class="who">${D.contacts.tournamentDirector?.email||'Tournament Director'}</div><div class="why">Tournament admin — manager use only</div></div></div>`;
   }
   if(section==='resources'){
-    html=`<h3 style="margin-bottom:8px">Nearby Resources</h3>
-      <p style="font-size:13px"><strong>Academy Sports + Outdoors</strong><br>9041 Southside Blvd, Jax · (904) 363-6720 · 8am-10pm</p>
-      <p style="font-size:13px;margin-top:8px"><strong>Dick's Sporting Goods</strong><br>10390 Midtown Pkwy, Jax · (904) 642-4299 · 9am-9pm</p>
-      <p style="font-size:13px;margin-top:8px"><strong>CVS Pharmacy</strong><br>13970 Village Lake Circle, Jax · (904) 260-0550</p>
-      <p class="text-xs text-muted mt-2">Information current as of Jul 30, 2026</p>`;
+    h=`<h3 style="margin-bottom:8px">Nearby Resources</h3>
+      <p style="font-size:12px;margin-bottom:6px"><strong>Academy Sports + Outdoors</strong><br>9041 Southside Blvd, Jax · (904) 363-6720<br>Mon-Sat 8am-10pm · ~8-10 min</p>
+      <p style="font-size:12px;margin-bottom:6px"><strong>Dick's Sporting Goods</strong><br>10390 Midtown Pkwy, Jax · (904) 642-4299<br>Mon-Sat 9am-9pm · ~12-15 min</p>
+      <p style="font-size:12px"><strong>CVS Pharmacy</strong><br>13970 Village Lake Circle, Jax · (904) 260-0550</p>
+      <p class="help-text" style="margin-top:8px">Current as of Jul 30, 2026</p>`;
   }
   if(section==='about'){
-    html=`<h3 style="margin-bottom:8px">About</h3>
-      <p class="text-sm">Bob Tournament Hub v4.2</p>
-      <p class="text-sm text-muted">Prepared with Bob Team Manager<br>Updated July 30, 2026</p>
-      <p class="text-sm text-muted mt-2">Savannah United 17/18B Travel &bull; Sporting Jax Boys Invitational</p>`;
+    h=`<h3 style="margin-bottom:8px">About Bob</h3>
+      <p style="font-size:14px;font-weight:600">Prepared with Bob Team Manager</p>
+      <p class="help-text" style="text-align:left;margin-top:4px">Version 4.0 · Updated Jul 30, 2026<br>Savannah United 17/18B Travel<br>Sporting Jax Boys Invitational</p>`;
   }
-  openSheet(html);
+  document.getElementById('sc').innerHTML=h;
+  document.getElementById('sh').classList.add('on');document.getElementById('ov').classList.add('on');
+}
+function closeSheet(){document.getElementById('sh').classList.remove('on');document.getElementById('ov').classList.remove('on')}
+
+// === SEARCH ===
+function doSearch(q){
+  const el=document.getElementById('searchResults');
+  if(!q||q.length<2){el.style.display='none';return;}
+  const terms=q.toLowerCase().split(/\s+/);
+  const items=[
+    {l:'Hotels',v:'Hotels — Stay-to-Play & nearby'},{l:'Rules',v:'Tournament rules & tiebreakers'},
+    {l:'Weather',v:'Weather forecast & heat planning'},{l:'Contacts',v:'Coach, manager, team managers'},
+    {l:'Venue',v:'Veterans Park, parking, fields'},{l:'Schedule',v:'Game schedule'},
+    {l:'Packing',v:'Checklist & what to bring'},{l:'Coach',v:D.contacts.coach.name},
+    {l:'Manager',v:D.contacts.manager.name},
+    {l:'Parking',v:D.venue.parking},{l:'Field',v:D.venue.fields.count+' fields'},
+    {l:'Bathroom',v:'Restrooms at multiple locations'},{l:'Uniform',v:D.games?.[0]?.uniform||'TBD'},
+    {l:'Hotel',v:D.hotels.official[0]?.name+' — '+D.hotels.official[0]?.rate}
+  ];
+  const matches=items.filter(i=>terms.some(t=>i.l.toLowerCase().includes(t)||i.v.toLowerCase().includes(t)));
+  el.innerHTML=matches.length?matches.map(m=>`<div class="more-item" style="padding:10px 12px" onclick="closeSheet()"><div class="lbl"><span class="lbl">${m.l}</span><div class="sub">${m.v}</div></div></div>`).join(''):'<p class="help-text">No results</p>';
+  el.style.display='block';
 }
 
-function showHotels(){showMoreSheet('hotels')}
-function showFieldMap(){window.open(data.venue.fields.map,'_blank')}
-
-// ===== LOAD DATA =====
-async function loadData(){
-  try {
-    const r=await fetch('data.json?_='+Date.now());
-    data=await r.json();
-    if(!data.contacts.tournamentDirector) data.contacts.tournamentDirector={email:'TDirector@SportingJaxAcademy.com'};
-    document.getElementById('tournamentName').textContent=data.tournament.name;
-    document.getElementById('tournamentDates').textContent=`${data.tournament.dates.start} — ${data.tournament.dates.end} · ${data.venue.name}`;
-    renderBanner();renderNextGame();renderActions();renderHomeCards();renderContacts();
-    renderSchedule();renderVenue();renderChecklist();
-  } catch(e){
-    document.getElementById('tournamentName').textContent='Offline';
-    document.getElementById('tournamentDates').textContent='Check your connection';
-  }
+// === INIT ===
+async function init(){
+  try{
+    const r=await fetch('data.json?_='+Date.now());D=await r.json();
+    if(!D.contacts.tournamentDirector)D.contacts.tournamentDirector={email:'TDirector@SportingJaxAcademy.com'};
+    renderHome();renderVenue();renderPack();
+  }catch(e){document.getElementById('tname').textContent='Offline';document.getElementById('plabel').textContent='Check connection';}
 }
-
-// ===== INIT =====
-if(window.matchMedia('(prefers-color-scheme:dark)').matches) document.body.classList.add('dark');
-if('serviceWorker'in navigator) navigator.serviceWorker.register('sw.js');
-loadData();
+if(window.matchMedia('(prefers-color-scheme:dark)').matches)document.body.classList.add('dark');
+if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
+init();
 </script>
 </body>
 </html>
