@@ -125,10 +125,9 @@
   },
   "updates": [],
   "contacts": {
-    "manager": { "name": "Rich Rouleau", "role": "Parent Manager", "phone": "", "email": "rrouleau@mac.com" },
+    "manager": { "name": "Jenn Boyd", "role": "Team Manager", "phone": "770-757-1617", "email": "jsboyd21@gmail.com" },
     "coach": { "name": "Keith Gunn", "role": "Head Coach", "phone": "" },
     "teamManagers": [
-      { "name": "Jenn Boyd", "phone": "770-757-1617", "email": "jsboyd21@gmail.com" },
       { "name": "Victoria Huryn", "phone": "859-445-2028", "email": "victoriaamberlong@gmail.com" }
     ],
     "premierStaff": [
