@@ -344,6 +344,7 @@ function renderHomeCards() {
 // ===== CONTACTS =====
 function renderContacts() {
   const el=document.getElementById('contactSection');
+  const tm=data.contacts.teamManagers||[];
   el.innerHTML=`<div class="card">
     <div class="card-title"><i class="ti ti-phone" style="font-size:14px;margin-right:4px"></i>Quick Contacts</div>
     <div class="contact-row">
@@ -354,6 +355,10 @@ function renderContacts() {
       <i class="ti ti-ball-soccer"></i>
       <div><div class="role">Soccer questions</div><div class="name">${data.contacts.coach.name}</div><div class="desc">Head Coach</div></div>
     </div>
+    ${tm.map(m=>`<div class="contact-row">
+      <i class="ti ti-users"></i>
+      <div><div class="role">Team Manager</div><div class="name">${m.name}</div><div class="desc">${m.phone?'<a href="tel:'+m.phone+'" style="color:var(--primary)">'+m.phone+'</a>':''}</div></div>
+    </div>`).join('')}
     <div class="contact-row" style="opacity:.6">
       <i class="ti ti-shield"></i>
       <div><div class="role">Tournament administration (manager use)</div><div class="name">${data.contacts.tournamentDirector?data.contacts.tournamentDirector.email:'Tournament Director'}</div></div>
@@ -504,11 +509,14 @@ function showMoreSheet(section){
       <p class="text-sm">${data.weather.details||'Check back closer to tournament'}</p>`;
   }
   if(section==='contacts'){
+    const tm=data.contacts.teamManagers||[];
     html=`<h3 style="margin-bottom:8px">All Contacts</h3>
       <div class="contact-row"><i class="ti ti-message-user"></i>
         <div><div class="role">Team questions</div><div class="name">${data.contacts.manager.name}</div><div class="desc">Parent Manager</div></div></div>
       <div class="contact-row"><i class="ti ti-ball-soccer"></i>
         <div><div class="role">Soccer questions</div><div class="name">${data.contacts.coach.name}</div><div class="desc">Head Coach</div></div></div>
+      ${tm.map(m=>`<div class="contact-row"><i class="ti ti-users"></i>
+        <div><div class="role">Team Manager</div><div class="name">${m.name}</div><div class="desc">${m.phone?'<a href="tel:'+m.phone+'" style="color:var(--primary)">'+m.phone+'</a> · ':''}${m.email||''}</div></div></div>`).join('')}
       <div class="contact-row" style="opacity:.6"><i class="ti ti-shield"></i>
         <div><div class="role">Tournament admin (manager use)</div><div class="name">${data.contacts.tournamentDirector?data.contacts.tournamentDirector.email:'TBD'}</div></div></div>`;
   }
