@@ -1,0 +1,149 @@
+{
+  "sport": "soccer",
+  "sportConfig": {
+    "teamLabel": "Team",
+    "fieldLabel": "Field",
+    "matchLabel": "Game",
+    "uniformLabel": "Uniform",
+    "cleatsLabel": "Cleats"
+  },
+  "tournament": {
+    "name": "Sporting Jax Boys Invitational",
+    "shortName": "Sporting Jax",
+    "organizer": "Sporting Jax Academy",
+    "dates": {
+      "start": "2026-08-22",
+      "end": "2026-08-23"
+    }
+  },
+  "team": {
+    "name": "Savannah United 17/18B",
+    "shortName": "SU 17/18B",
+    "colors": ["#0055A4", "#ffffff"],
+    "logo": ""
+  },
+  "venue": {
+    "name": "Veterans Park",
+    "address": "1332 Veterans Parkway, St. Johns, FL 32259",
+    "coordinates": { "lat": 30.0821, "lng": -81.5484 },
+    "mapsUrl": "https://maps.apple.com/?q=1332+Veterans+Pkwy+St+Johns+FL+32259",
+    "parking": "Free on-site. Arrive 30-45 min early. Grass overflow available.",
+    "fields": {
+      "count": 6,
+      "surface": "5 grass + 1 turf (all lighted)",
+      "map": "https://docs.google.com/presentation/d/e/2PACX-1vQCJyfhW8bCpxTk5HXfMKEEbekRHoaQ4FtYkLSzNfe8McocTmwMratx3skY7bvF2nmKkWDnPnknJXTs/pub"
+    },
+    "amenities": {
+      "concessions": true,
+      "restrooms": true,
+      "shade": "Limited — bring canopy",
+      "aed": true,
+      "playground": true
+    }
+  },
+  "games": [],
+  "scheduleStatus": "pending",
+  "scheduleExpected": "August 8-15 via GotSport",
+  "hotels": {
+    "stayToPlay": true,
+    "portal": "https://system.gotsport.com/stores/1903604Y4",
+    "official": [
+      {
+        "name": "Hampton Inn & Suites Bartram Park",
+        "chain": "Hilton",
+        "rate": "$143/night",
+        "total2Nights": "$286+",
+        "rooms": 10,
+        "drive": "7.9 mi · 15 min",
+        "route": "Bartram Park Blvd & Race Track Rd",
+        "amenities": ["Free breakfast", "Free parking", "Outdoor pool", "Pet-friendly", "Free WiFi"],
+        "rating": 4.5,
+        "bestValue": true,
+        "bookUrl": "https://system.gotsport.com/stores/1903604Y4"
+      },
+      {
+        "name": "Fairfield Inn & Suites Butler Blvd",
+        "chain": "Marriott ★ Points",
+        "rate": "$139/night",
+        "rooms": 23,
+        "drive": "17.4 mi · 22 min",
+        "route": "I-95 S",
+        "amenities": ["Outdoor pool", "Whirlpool", "Marriott Bonvoy"],
+        "bestValue": false
+      },
+      {
+        "name": "Aloft by Marriott Tapestry Park",
+        "chain": "Marriott ★ Points",
+        "rate": "$139/night",
+        "rooms": 34,
+        "drive": "18.8 mi · 25 min",
+        "route": "FL-9B S",
+        "amenities": ["On-site bar & restaurant", "Outdoor pool", "Marriott Bonvoy"],
+        "bestValue": false
+      }
+    ],
+    "nonOfficial": [
+      {
+        "name": "HI Express Bartram Park",
+        "drive": "3.5 mi · 6 min",
+        "note": "Closest to venue. Not on GotSport portal."
+      },
+      {
+        "name": "Courtyard Flagler Center",
+        "chain": "Marriott ★ Points",
+        "drive": "8.6 mi · 12 min",
+        "note": "Marriott Bonvoy eligible. Not on GotSport."
+      }
+    ]
+  },
+  "weather": {
+    "summary": "Upper 90s · Heat index 105-114°F · Afternoon t-storms (40-60%)",
+    "details": "Typical late-August Florida weather. Morning games significantly cooler. Hydrate beginning Friday. Bring cooling towels, shade, sunscreen.",
+    "forecastLink": ""
+  },
+  "rules": {
+    "fullLink": "https://docs.google.com/document/d/e/2PACX-1vTfwqpJ6KrFTAWrKkvSay393zfFkZXSUVooPenxd6TStJpcIYHWFJa9kifZJdBQh6ip52gIxifONgO9/pub",
+    "keyRules": [
+      { "label": "Game Length", "value": "25-min halves (U9-U12)" },
+      { "label": "Mercy Rule", "value": "6-goal lead → match ends" },
+      { "label": "Substitutions", "value": "Unlimited" },
+      { "label": "Water Breaks", "value": "Mandatory at 85°F+" },
+      { "label": "Heading", "value": "Not allowed U12 and younger" },
+      { "label": "Forfeit", "value": "5 min late. Min 5 players." },
+      { "label": "Zero Tolerance", "value": "No ref abuse" },
+      { "label": "Weather", "value": "30-min delay clock" },
+      { "label": "Championship", "value": "No OT — straight to PKs" }
+    ],
+    "tiebreakers": [
+      "Head-to-Head (disregarded if 3+ teams tied)",
+      "Goal Differential — max 4 per game",
+      "Goals For — max 4 per game",
+      "Goals Against — fewest allowed",
+      "Shutouts — most clean sheets",
+      "Penalty Kicks — FIFA Kicks"
+    ]
+  },
+  "updates": [],
+  "contacts": {
+    "manager": { "name": "Rich Rouleau", "role": "Parent Manager" },
+    "coach": { "name": "Keith Gunn", "role": "Head Coach" },
+    "emergency": ""
+  },
+  "checklist": {
+    "player": [
+      "Both uniform kits", "Cleats", "Shin guards", "Water bottle",
+      "Extra socks", "Warm-up gear", "Dry clothes", "Recovery shoes", "Medications"
+    ],
+    "weather": [
+      "Water (plenty)", "Electrolytes", "Sunscreen SPF 50+",
+      "Cooling towel", "Rain gear", "Plastic bags"
+    ],
+    "parent": [
+      "Folding chairs", "Shade/canopy", "Umbrella", "Cooler",
+      "Snacks", "Portable charger", "Wipes", "Sibling activities"
+    ],
+    "emergency": [
+      "First-aid kit", "Ice packs", "Insurance info", "Emergency contacts"
+    ]
+  }
+}
