@@ -1,528 +1,324 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sporting Jax Boys Invitational — Parent Tournament Guide</title>
+<title>Savannah United 17/18B — Team Hub</title>
+<style>
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif; background:#f2f2f7; color:#1d1d1f; }
+  a { color:#0055A4; text-decoration:none; }
+  a:hover { text-decoration:underline; }
+
+  /* Hero */
+  .hero { background:linear-gradient(135deg,#0055A4 0%,#003D7A 50%,#002a5c 100%); padding:48px 24px 36px; text-align:center; position:relative; overflow:hidden; }
+  .hero::after { content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%; background:radial-gradient(ellipse at 30% 50%,rgba(255,255,255,0.06) 0%,transparent 60%); pointer-events:none; }
+  .hero-label { font-size:12px; color:rgba(255,255,255,0.6); text-transform:uppercase; letter-spacing:2px; margin-bottom:6px; font-weight:500; }
+  .hero h1 { font-size:28px; font-weight:700; color:#fff; letter-spacing:-0.5px; margin-bottom:4px; }
+  .hero p { font-size:16px; color:rgba(255,255,255,0.8); }
+  .hero .badge { display:inline-block; margin-top:12px; padding:4px 14px; border-radius:20px; background:rgba(255,255,255,0.15); font-size:12px; color:rgba(255,255,255,0.85); letter-spacing:0.5px; }
+
+  /* Nav cards */
+  .cards { display:flex; flex-wrap:wrap; gap:12px; max-width:680px; margin:-24px auto 0; padding:0 16px; position:relative; z-index:2; }
+  .card { flex:1 1 calc(33.33% - 12px); min-width:130px; background:rgba(255,255,255,0.85); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-radius:14px; padding:16px 14px; text-align:center; cursor:pointer; border:1px solid rgba(255,255,255,0.5); transition:all 0.2s; box-shadow:0 2px 12px rgba(0,0,0,0.06); }
+  .card:hover { transform:translateY(-2px); box-shadow:0 6px 24px rgba(0,85,164,0.12); border-color:#0055A4; text-decoration:none; }
+  .card-icon { font-size:22px; margin-bottom:6px; display:block; }
+  .card-label { font-size:12px; font-weight:600; color:#1d1d1f; letter-spacing:-0.2px; }
+
+  /* Main content area */
+  .container { max-width:680px; margin:0 auto; padding:24px 16px 40px; }
+
+  /* Section title */
+  .section-title { font-size:20px; font-weight:700; color:#1d1d1f; margin:0 0 4px 0; }
+  .section-sub { font-size:13px; color:#86868b; margin-bottom:16px; }
+
+  /* Info cards */
+  .info-card { background:#fff; border-radius:14px; padding:20px; margin-bottom:14px; box-shadow:0 1px 4px rgba(0,0,0,0.04); border:1px solid #e5e5ea; }
+  .info-card:last-child { margin-bottom:0; }
+  .info-card h3 { font-size:15px; font-weight:600; margin-bottom:8px; color:#1d1d1f; }
+  .info-card p, .info-card li { font-size:14px; color:#3a3a3c; line-height:1.6; }
+
+  /* Summary table */
+  .summary-grid { display:grid; grid-template-columns:100px 1fr; gap:0; font-size:14px; }
+  .summary-grid .label { color:#86868b; font-weight:500; padding:7px 0; border-bottom:1px solid #f0f0f2; }
+  .summary-grid .value { padding:7px 0; border-bottom:1px solid #f0f0f2; color:#1d1d1f; }
+
+  /* Hotel cards */
+  .hotel-card { border-radius:12px; padding:16px; margin-bottom:10px; border-left:4px solid; }
+  .hotel-card.primary { background:#f0fff0; border-left-color:#34c759; }
+  .hotel-card.secondary { background:#fff8f0; border-left-color:#ff9500; }
+  .hotel-card.other { background:#f8f8f8; border-left-color:#86868b; }
+  .hotel-name { font-size:14px; font-weight:600; color:#1d1d1f; margin-bottom:4px; }
+  .hotel-details { font-size:13px; color:#555; line-height:1.5; }
+  .hotel-rate { font-size:14px; font-weight:600; color:#0055A4; }
+
+  /* Rules table */
+  .rules-grid { display:grid; grid-template-columns:120px 1fr; gap:0; font-size:13px; }
+  .rules-grid dt { color:#555; font-weight:600; padding:5px 0; border-bottom:1px solid #f0f0f2; }
+  .rules-grid dd { padding:5px 0; border-bottom:1px solid #f0f0f2; color:#3a3a3c; }
+  .tiebreaker { display:flex; gap:8px; padding:5px 0; border-bottom:1px solid #f0f0f2; font-size:13px; }
+  .tiebreaker-num { font-weight:700; color:#5856d6; min-width:20px; }
+  .tiebreaker-name { font-weight:600; color:#1d1d1f; min-width:100px; }
+
+  /* Pill items */
+  .pill-grid { display:flex; flex-wrap:wrap; gap:6px; }
+  .pill { padding:5px 14px; border-radius:20px; font-size:12px; font-weight:500; }
+  .pill.blue { background:#e8f0fe; color:#0055A4; }
+  .pill.amber { background:#fff3d4; color:#8a6900; }
+  .pill.gray { background:#f0f0f0; color:#555; }
+  .pill.red { background:#fef2f2; color:#c41e1e; }
+
+  /* QR section */
+  .qr-section { text-align:center; background:#f8f8f8; border-radius:14px; padding:24px; border:1px solid #e5e5ea; }
+  .qr-section img { width:140px; height:140px; border-radius:10px; margin-bottom:10px; }
+  .qr-section .url { font-size:13px; font-weight:600; color:#0055A4; }
+
+  /* Tags */
+  .tag { display:inline-block; padding:2px 10px; border-radius:10px; font-size:11px; font-weight:500; }
+  .tag.marriott { background:#fff0e0; color:#b85c00; }
+  .tag.hilton { background:#e8f0fe; color:#0055A4; }
+
+  /* Footer */
+  .footer { text-align:center; padding:20px; font-size:11px; color:#aeaeb2; border-top:1px solid #e5e5ea; margin-top:24px; }
+
+  /* Responsive */
+  @media (max-width:500px) { .card { flex:1 1 calc(50% - 12px); } .hero h1 { font-size:22px; } .summary-grid { grid-template-columns:85px 1fr; } }
+
+  /* Accordion for full guide */
+  #full-guide { display:none; margin-top:16px; }
+  #full-guide:target { display:block; }
+  .toggle-guide { display:block; text-align:center; padding:14px; background:#0055A4; color:#fff; border-radius:12px; font-weight:600; font-size:14px; margin-top:16px; cursor:pointer; }
+  .toggle-guide:hover { background:#003D7A; text-decoration:none; }
+
+  /* Two columns for packing */
+  .two-col { display:flex; flex-wrap:wrap; gap:16px; }
+  .two-col > div { flex:1; min-width:200px; }
+</style>
 </head>
-<body style="margin:0; padding:0; background-color:#f5f5f7; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;">
+<body>
 
-<div style="background:#0055A4; padding:28px 20px; text-align:center;">
-  <p style="margin:0 0 4px 0; font-size:13px; color:rgba(255,255,255,0.7); text-transform:uppercase; letter-spacing:1px;">Savannah United 17/18B Travel</p>
-  <h1 style="margin:0; font-size:24px; font-weight:700; color:#ffffff; letter-spacing:-0.5px;">Sporting Jax Boys Invitational</h1>
-  <p style="margin:6px 0 0 0; font-size:15px; color:rgba(255,255,255,0.85);">August 22-23, 2026 &bull; St. Johns, FL</p>
+<div class="hero">
+  <div class="hero-label">Savannah United 17/18B Travel</div>
+  <h1>Soccer Team Hub</h1>
+  <p>Sporting Jax Boys Invitational &middot; August 22-23, 2026</p>
+  <span class="badge">Permanent Link &mdash; Always Up to Date</span>
 </div>
 
-<div style="max-width:620px; margin:0 auto; padding:20px 16px 40px;">
-
-<!-- WELCOME -->
-<div style="background:#ffffff; border-radius:12px; padding:20px; margin-bottom:16px; border-top:4px solid #0055A4;">
-  <p style="margin:0; font-size:15px; color:#3a3a3c; line-height:1.6;">Welcome to our first tournament guide for the Sporting Jax Boys Invitational! We put this together to make planning a little easier by gathering the most important tournament, travel, lodging, and venue information into one place. As additional information becomes available, we'll send updated versions.</p>
+<div class="cards">
+  <a href="#hotels" class="card"><span class="card-icon">🏨</span><span class="card-label">Hotels</span></a>
+  <a href="#rules" class="card"><span class="card-icon">⚽</span><span class="card-label">Rules</span></a>
+  <a href="#venue" class="card"><span class="card-icon">📍</span><span class="card-label">Venue</span></a>
+  <a href="#travel" class="card"><span class="card-icon">🚗</span><span class="card-label">Travel</span></a>
+  <a href="#packing" class="card"><span class="card-icon">🎒</span><span class="card-label">Packing</span></a>
+  <a href="#mobile" class="card"><span class="card-icon">📱</span><span class="card-label">Mobile</span></a>
 </div>
 
-<!-- 1. TOURNAMENT QUICK START -->
-<div style="background:#ffffff; border-radius:12px; padding:20px; margin-bottom:16px;">
-  <h2 style="margin:0 0 4px 0; font-size:18px; font-weight:700; color:#1d1d1f;">Tournament Quick Start</h2>
-  <p style="margin:0 0 14px 0; font-size:13px; color:#86868b;">Everything a busy parent needs in one place.</p>
+<div class="container">
 
-  <table style="width:100%; border-collapse:collapse; font-size:14px;">
-    <tr><td style="padding:8px 10px; border-top:1px solid #eee; color:#555; font-weight:600; width:90px;">Event</td><td style="padding:8px 10px; border-top:1px solid #eee;">Sporting Club Jax Boys Invitational</td></tr>
-    <tr style="background:#fafafa;"><td style="padding:8px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Team</td><td style="padding:8px 10px; border-top:1px solid #eee;">Savannah United 17/18B Travel (includes Premier)</td></tr>
-    <tr><td style="padding:8px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Dates</td><td style="padding:8px 10px; border-top:1px solid #eee;">Saturday &amp; Sunday, August 22-23, 2026</td></tr>
-    <tr style="background:#fafafa;"><td style="padding:8px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Venue</td><td style="padding:8px 10px; border-top:1px solid #eee;">Veterans Park<br>1332 Veterans Parkway, St. Johns, FL 32259</td></tr>
-    <tr><td style="padding:8px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Age Group</td><td style="padding:8px 10px; border-top:1px solid #eee;">U9 &bull; 7v7 format</td></tr>
-    <tr style="background:#fafafa;"><td style="padding:8px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Format</td><td style="padding:8px 10px; border-top:1px solid #eee;">Group play &rarr; knockout rounds</td></tr>
-    <tr><td style="padding:8px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Stay-to-Play</td><td style="padding:8px 10px; border-top:1px solid #eee;"><strong>Required</strong> for teams traveling over 90 miles</td></tr>
-    <tr style="background:#fafafa;"><td style="padding:8px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Drive from Sav</td><td style="padding:8px 10px; border-top:1px solid #eee;">~130 miles &bull; ~2h 15min via I-95 South</td></tr>
-    <tr><td style="padding:8px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Parking</td><td style="padding:8px 10px; border-top:1px solid #eee;">Free on-site &bull; Arrive early &bull; Grass overflow available</td></tr>
-  </table>
-</div>
-
-<!-- 2. PARENT ACTION ITEMS -->
-<div style="background:#ffffff; border-radius:12px; padding:20px; margin-bottom:16px;">
-  <h2 style="margin:0 0 10px 0; font-size:18px; font-weight:700; color:#1d1d1f;">Parent Action Items</h2>
-
-  <div style="margin-bottom:12px; padding:14px; background:#fef2f2; border-radius:10px; border-left:4px solid #d32f2f;">
-    <p style="margin:0 0 2px 0; font-size:12px; font-weight:700; color:#d32f2f; text-transform:uppercase; letter-spacing:0.5px;">Do This This Week</p>
-    <p style="margin:0; font-size:15px; font-weight:600; color:#1d1d1f;">&#9744; RSVP in PlayMetrics &mdash; Set Player Availability</p>
-    <p style="margin:2px 0 0 0; font-size:13px; color:#555;">The tournament is now live on your Home Dashboard and Travel Team Summary page. Tap "Set Player Availability" to confirm Niko for both days.</p>
-  </div>
-
-  <div style="margin-bottom:12px; padding:14px; background:#fef2f2; border-radius:10px; border-left:4px solid #d32f2f;">
-    <p style="margin:0 0 2px 0; font-size:12px; font-weight:700; color:#d32f2f; text-transform:uppercase; letter-spacing:0.5px;">Do This This Week</p>
-    <p style="margin:0; font-size:15px; font-weight:600; color:#1d1d1f;">&#9744; Book hotel on GotSport Travel Portal</p>
-    <p style="margin:2px 0 0 0; font-size:13px; color:#555;">Cancel by Aug 14 for full refund. See Section 6 for details.</p>
-  </div>
-
-  <div style="margin-bottom:12px; padding:14px; background:#fff8e7; border-radius:10px; border-left:4px solid #f57c00;">
-    <p style="margin:0 0 2px 0; font-size:12px; font-weight:700; color:#f57c00; text-transform:uppercase; letter-spacing:0.5px;">Coming Soon</p>
-    <p style="margin:0; font-size:15px; font-weight:600; color:#1d1d1f;">&#9744; Check game schedule ~Aug 8-15</p>
-    <p style="margin:2px 0 0 0; font-size:13px; color:#555;">Released via GotSport 1-2 weeks before tournament. I'll share it in PlayMetrics as soon as it's available.</p>
-  </div>
-
-  <div style="margin-bottom:12px; padding:14px; background:#fff8e7; border-radius:10px; border-left:4px solid #f57c00;">
-    <p style="margin:0 0 2px 0; font-size:12px; font-weight:700; color:#f57c00; text-transform:uppercase; letter-spacing:0.5px;">Coming Soon</p>
-    <p style="margin:0; font-size:15px; font-weight:600; color:#1d1d1f;">&#9744; Check weather forecast ~Aug 18-19</p>
-    <p style="margin:2px 0 0 0; font-size:13px; color:#555;">Reliable day-by-day forecast available 3-5 days before the tournament.</p>
-  </div>
-
-  <div style="margin-bottom:12px; padding:14px; background:#f0f7ff; border-radius:10px; border-left:4px solid #1976d2;">
-    <p style="margin:0 0 2px 0; font-size:12px; font-weight:700; color:#1976d2; text-transform:uppercase; letter-spacing:0.5px;">Before Leaving Home</p>
-    <p style="margin:0; font-size:15px; font-weight:600; color:#1d1d1f;">&#9744; Pack for your family</p>
-    <p style="margin:2px 0 0 0; font-size:13px; color:#555;">See Section 12 for the full packing checklist with everything from cleats to sunscreen.</p>
-  </div>
-
-  <div style="padding:14px; background:#f0f7ff; border-radius:10px; border-left:4px solid #1976d2;">
-    <p style="margin:0 0 2px 0; font-size:12px; font-weight:700; color:#1976d2; text-transform:uppercase; letter-spacing:0.5px;">Before Leaving Home</p>
-    <p style="margin:0; font-size:15px; font-weight:600; color:#1d1d1f;">&#9744; Review tournament rules</p>
-    <p style="margin:2px 0 0 0; font-size:13px; color:#555;">Section 13 covers the tiebreakers, mercy rule, and key rules parents need to know.</p>
-  </div>
-</div>
-
-<!-- 3. CONFIRMED AND PENDING -->
-<div style="background:#ffffff; border-radius:12px; padding:20px; margin-bottom:16px;">
-  <h2 style="margin:0 0 10px 0; font-size:18px; font-weight:700; color:#1d1d1f;">What We Know &amp; What We're Waiting For</h2>
-
-  <h3 style="font-size:14px; font-weight:600; color:#2e7d32; margin:0 0 8px 0;">&#10003; Confirmed</h3>
-
-  <div style="padding:10px 14px; background:#f0faf0; border-radius:8px; margin-bottom:14px;">
-    <p style="margin:2px 0; font-size:14px; color:#1d1d1f;"><strong>Official Tournament Information:</strong> Sporting Club Jax Boys Invitational, Aug 22-23 at Veterans Park, St. Johns, FL. U9 (7v7).</p>
-    <p style="margin:2px 0; font-size:14px; color:#1d1d1f;"><strong>Official Tournament Information:</strong> Stay-to-Play required for teams traveling over 90 miles.</p>
-    <p style="margin:2px 0; font-size:14px; color:#1d1d1f;"><strong>Official Tournament Information:</strong> Points system (3/1/0) and 6-tier tiebreakers. Rules document published.</p>
-    <p style="margin:2px 0; font-size:14px; color:#1d1d1f;"><strong>Confirmed Team Information:</strong> Savannah United 17/18B Travel will attend. Premier subset included.</p>
-    <p style="margin:2px 0; font-size:14px; color:#1d1d1f;"><strong>Confirmed Team Information:</strong> Tournament is listed on PlayMetrics Home Dashboard and Travel Team Summary with "Set Player Availability" &mdash; parents can RSVP now.</p>
-  </div>
-
-  <h3 style="font-size:14px; font-weight:600; color:#e65100; margin:0 0 8px 0;">&#8987; Pending Confirmation</h3>
-
-  <div style="padding:10px 14px; background:#fff8e7; border-radius:8px;">
-    <p style="margin:2px 0; font-size:14px; color:#1d1d1f;"><strong>Pending Confirmation:</strong> Game schedule &mdash; released 1-2 weeks before the tournament via GotSport.</p>
-    <p style="margin:2px 0; font-size:14px; color:#1d1d1f;"><strong>Pending Confirmation:</strong> Specific field assignments for U9 age group &mdash; released with schedule.</p>
-    <p style="margin:2px 0; font-size:14px; color:#1d1d1f;"><strong>Pending Confirmation:</strong> Bracket format for our specific age group &mdash; depends on number of teams registered.</p>
-    <p style="margin:2px 0; font-size:14px; color:#1d1d1f;"><strong>Pending Confirmation:</strong> Whether the team will coordinate a shared hotel block through the GotSport portal.</p>
-  </div>
-</div>
-
-<!-- 4. TOURNAMENT OVERVIEW -->
-<div style="background:#ffffff; border-radius:12px; padding:20px; margin-bottom:16px;">
-  <h2 style="margin:0 0 10px 0; font-size:18px; font-weight:700; color:#1d1d1f;">Tournament Overview</h2>
-
-  <p style="font-size:14px; color:#3a3a3c; margin:0 0 12px 0;">The Sporting Club Jax Boys Invitational is a weekend youth soccer tournament hosted by Sporting Jax Academy. Our U9 team will compete in <strong>7v7 group play</strong> on Saturday with knockout rounds on Sunday.</p>
-
-  <p style="font-size:14px; color:#3a3a3c; margin:0 0 4px 0;"><strong>Official Tournament Website:</strong> <a href="https://www.sportingjaxacademy.com/BoysInvitational" style="color:#0055A4;">sportingjaxacademy.com/BoysInvitational</a></p>
-  <p style="font-size:14px; color:#3a3a3c; margin:0;"><strong>Official Rules:</strong> <a href="https://docs.google.com/document/d/e/2PACX-1vTfwqpJ6KrFTAWrKkvSay393zfFkZXSUVooPenxd6TStJpcIYHWFJa9kifZJdBQh6ip52gIxifONgO9/pub" style="color:#0055A4;">2026 Sporting Jax Boys Invitational Official Rules</a></p>
-</div>
-
-<!-- 5. TRAVEL AND ARRIVAL PLANNING -->
-<div style="background:#ffffff; border-radius:12px; padding:20px; margin-bottom:16px;">
-  <h2 style="margin:0 0 10px 0; font-size:18px; font-weight:700; color:#1d1d1f;">Travel &amp; Arrival Planning</h2>
-
-  <h3 style="font-size:15px; font-weight:600; color:#1d1d1f; margin:0 0 6px 0;">Drive from Savannah</h3>
-  <p style="font-size:13px; color:#86868b; margin:0 0 10px 0;">Route: I-95 South to Exit 329 (CR-210 West) &rarr; Veterans Parkway &bull; ~130 miles</p>
-
-  <p style="font-size:13px; color:#86868b; margin:0 0 6px 0;">Departure times below are calculated so you <strong>arrive by 7:15am</strong> &mdash; 45 minutes before an 8am kickoff for check-in, warm-up, and coach instructions.</p>
-
-  <table style="width:100%; border-collapse:collapse; font-size:14px;">
-    <tr style="background:#f8f8f8;">
-      <th style="text-align:left; padding:8px 10px; color:#555; font-weight:600;">Scenario</th>
-      <th style="text-align:center; padding:8px 10px; color:#555; font-weight:600;">Time</th>
-      <th style="text-align:right; padding:8px 10px; color:#555; font-weight:600;">Depart by &bull; Arrive 7:15am</th>
-    </tr>
-    <tr>
-      <td style="padding:8px 10px; border-top:1px solid #eee;">Best case (no traffic, one stop)</td>
-      <td style="padding:8px 10px; border-top:1px solid #eee; text-align:center; font-weight:600; color:#34c759;">~2h 15min</td>
-      <td style="padding:8px 10px; border-top:1px solid #eee; text-align:right;">5:00am</td>
-    </tr>
-    <tr style="background:#fafafa;">
-      <td style="padding:8px 10px; border-top:1px solid #eee;">Normal (Saturday traffic, gas + food)</td>
-      <td style="padding:8px 10px; border-top:1px solid #eee; text-align:center; font-weight:600; color:#ff9500;">~2h 30min</td>
-      <td style="padding:8px 10px; border-top:1px solid #eee; text-align:right;">4:45am</td>
-    </tr>
-    <tr>
-      <td style="padding:8px 10px; border-top:1px solid #eee;">Heavy traffic / construction</td>
-      <td style="padding:8px 10px; border-top:1px solid #eee; text-align:center; font-weight:600; color:#ff3b30;">~3h 00min</td>
-      <td style="padding:8px 10px; border-top:1px solid #eee; text-align:right;">4:15am</td>
-    </tr>
-  </table>
-
-  <p style="margin:8px 0 0 0; font-size:14px; color:#86868b;"><strong>Parent Manager Recommendation:</strong> An overnight stay Friday night avoids the early Saturday drive entirely. If you do drive day-of, the best-case trip is ~2h 15min &mdash; leave by 5:00am for a 7:15am arrival.</p>
-
-  <h3 style="font-size:15px; font-weight:600; color:#1d1d1f; margin:16px 0 6px 0;">Player Report Time</h3>
-  <p style="font-size:14px; color:#3a3a3c; margin:0;"><strong>Pending Confirmation.</strong> Parents should plan for the player to arrive <strong>at least 45 minutes before their first game</strong> for check-in, warm-up, and coach instructions. Game schedule will be available 1-2 weeks before the tournament.</p>
-</div>
-
-<!-- 6. LODGING AND STAY-TO-PLAY -->
-<div style="background:#ffffff; border-radius:12px; padding:20px; margin-bottom:16px;">
-  <h2 style="margin:0 0 10px 0; font-size:18px; font-weight:700; color:#1d1d1f;">Lodging &amp; Stay-to-Play</h2>
-
-  <div style="padding:12px 14px; background:#1d1d1f; border-radius:8px; margin-bottom:14px;">
-    <p style="margin:0; font-size:14px; color:#ffffff;"><strong>Official Tournament Requirement:</strong> This tournament requires teams traveling more than 90 miles to book lodging through the <strong>GotSport Travel Partner Hotel Program</strong>. Our team is ~130 miles from the venue.</p>
-  </div>
-
-  <h3 style="font-size:15px; font-weight:600; color:#0055A4; margin:0 0 8px 0;">Official Partner Hotels</h3>
-  <p style="font-size:13px; color:#86868b; margin:0 0 10px 0;">Verified Jul 30, 2026 via GotSport Travel Portal. Actual distances to Veterans Park verified via Google Maps.</p>
-
-  <p style="font-size:14px; font-weight:600; color:#34c759; margin:0 0 6px 0;">&#9679; Within 15 Miles of Veterans Park</p>
-
-  <div style="padding:14px; background:#f0fff0; border-radius:8px; margin-bottom:14px; border-left:4px solid #34c759;">
-    <p style="margin:0 0 4px 0; font-size:15px; font-weight:600; color:#1d1d1f;">Hampton Inn &amp; Suites Jacksonville South / Bartram Park <span style="font-size:11px; color:#86868b;">(Hilton)</span></p>
-    <table style="font-size:13px; width:100%;">
-      <tr><td style="padding:2px 8px 2px 0; color:#555; width:110px;">Rate:</td><td><strong>$143/night</strong> ($286+ for 2 nights)</td></tr>
-      <tr><td style="padding:2px 8px 2px 0; color:#555;">Rooms Left:</td><td><strong>10 Queen/Queen</strong> Non-Smoking</td></tr>
-      <tr><td style="padding:2px 8px 2px 0; color:#555;">Distance:</td><td><strong>7.9 mi</strong> / 15 min drive to Veterans Park</td></tr>
-      <tr><td style="padding:2px 8px 2px 0; color:#555;">Includes:</td><td>Free hot breakfast, free parking, outdoor pool, pet-friendly, free WiFi</td></tr>
-      <tr><td style="padding:2px 8px 2px 0; color:#555;">Rating:</td><td>4.5/5 (1,082 reviews)</td></tr>
-    </table>
-    <p style="margin:6px 0 0 0; font-size:13px; color:#0055A4; font-weight:600;">&#11088; Best Value &mdash; Closest to venue, lowest price, under 10 min drive</p>
-    <p style="margin:4px 0 0 0; font-size:13px;"><a href="https://system.gotsport.com/stores/1903604Y4" style="color:#0055A4; font-weight:600;">Book on GotSport Travel Portal &rarr;</a></p>
-  </div>
-
-  <p style="font-size:14px; font-weight:600; color:#ff9500; margin:0 0 6px 0;">&#9679; 15-20 Miles from Veterans Park</p>
-
-  <div style="padding:14px; background:#fff8f0; border-radius:8px; margin-bottom:10px; border-left:4px solid #ff9500;">
-    <table style="font-size:13px; width:100%;">
-      <tr><td style="padding:2px 0; color:#1d1d1f; font-weight:600;">Fairfield Inn &amp; Suites Jacksonville Butler Blvd <span style="font-size:11px; color:#b85c00;">(Marriott &#9733; Points)</span></td><td style="padding:2px 0; text-align:right;">$139/night &bull; <strong>17.4 mi</strong> &bull; 23 rooms</td></tr>
-      <tr><td style="padding:2px 0; color:#555;" colspan="2">22 min drive via I-95 S. Outdoor pool, whirlpool, King w/ pullout or Queen/Queen. Marriott Bonvoy eligible.</td></tr>
-    </table>
-  </div>
-
-  <div style="padding:14px; background:#fff8f0; border-radius:8px; margin-bottom:10px; border-left:4px solid #ff9500;">
-    <table style="font-size:13px; width:100%;">
-      <tr><td style="padding:2px 0; color:#1d1d1f; font-weight:600;">Aloft by Marriott Jacksonville Tapestry Park <span style="font-size:11px; color:#b85c00;">(Marriott &#9733; Points)</span></td><td style="padding:2px 0; text-align:right;">$139/night &bull; <strong>18.8 mi</strong> &bull; 34 rooms</td></tr>
-      <tr><td style="padding:2px 0; color:#555;" colspan="2">25 min drive via FL-9B. On-site bar &amp; restaurant, outdoor pool, pet-friendly. Marriott Bonvoy eligible.</td></tr>
-    </table>
-  </div>
-
-  <div style="padding:14px; background:#f8f8f8; border-radius:8px; margin-bottom:10px;">
-    <table style="font-size:13px; width:100%;">
-      <tr><td style="padding:2px 0; color:#1d1d1f; font-weight:600;">Hampton Inn &amp; Suites Jacksonville Deerwood Park <span style="font-size:11px; color:#86868b;">(Hilton)</span></td><td style="padding:2px 0; text-align:right;">$149/night &bull; ~15 mi &bull; <strong>5 rooms left</strong></td></tr>
-      <tr><td style="padding:2px 0; color:#555;" colspan="2">~15 min drive. Free hot breakfast, outdoor pool, pet-friendly. <strong>Very limited rooms.</strong></td></tr>
-    </table>
-  </div>
-
-  <div style="padding:14px; background:#f8f8f8; border-radius:8px; margin-bottom:10px;">
-    <table style="font-size:13px; width:100%;">
-      <tr><td style="padding:2px 0; color:#1d1d1f; font-weight:600;">Home2 Suites by Hilton St. Augustine I-95 <span style="font-size:11px; color:#86868b;">(Hilton)</span></td><td style="padding:2px 0; text-align:right;">$139/night &bull; ~16 mi &bull; 10 rooms</td></tr>
-      <tr><td style="padding:2px 0; color:#555;" colspan="2">~16 min drive. Full kitchen suites, outdoor saline pool, pet-friendly.</td></tr>
-    </table>
-  </div>
-
-  <div style="padding:14px; background:#f8f8f8; border-radius:8px; margin-bottom:10px;">
-    <table style="font-size:13px; width:100%;">
-      <tr><td style="padding:2px 0; color:#1d1d1f; font-weight:600;">Hilton Jacksonville at Mayo Clinic <span style="font-size:11px; color:#86868b;">(Hilton)</span></td><td style="padding:2px 0; text-align:right;">$189/night &bull; ~18 mi &bull; 50 rooms</td></tr>
-      <tr><td style="padding:2px 0; color:#555;" colspan="2">~18 min drive. Full-service with restaurant, room service, outdoor pool. Plenty of rooms.</td></tr>
-    </table>
-  </div>
-
-  <div style="padding:14px; background:#fff8f0; border-radius:8px; margin-bottom:14px; border-left:4px solid #ff9500;">
-    <table style="font-size:13px; width:100%;">
-      <tr><td style="padding:2px 0; color:#1d1d1f; font-weight:600;">Residence Inn by Marriott Mayo Clinic Area <span style="font-size:11px; color:#b85c00;">(Marriott &#9733; Points)</span></td><td style="padding:2px 0; text-align:right;">$205/night &bull; ~18 mi &bull; 11 rooms</td></tr>
-      <tr><td style="padding:2px 0; color:#555;" colspan="2">~18 min drive. Full kitchen suites, free hot breakfast. Marriott Bonvoy eligible. <strong>Requires 2-night minimum.</strong></td></tr>
-    </table>
-  </div>
-
-  <div style="margin-top:14px; padding:12px 14px; background:#fef2f2; border-radius:8px;">
-    <p style="margin:0; font-size:13px; color:#1d1d1f;"><strong>Important:</strong> Some nearby hotels (Holiday Inn Express Fleming Island at 21.2 mi, Holiday Inn Express Bartram Park, Courtyard Flagler Center, Comfort Suites Baymeadows) are not listed on the GotSport portal or exceed the 20-mile max distance. Booking outside the system may violate tournament housing rules. The Hampton Inn Bartram Park (7.9 mi) is your best compliant option.</p>
-  </div>
-
-  <p style="margin:10px 0 0 0; font-size:12px; color:#86868b;">Information current as of July 30, 2026. Rates and availability subject to change. Actual distances verified via Google Maps &mdash; GotSport portal distances are measured from a different reference and should not be trusted.</p>
-</div>
-
-<!-- 7. WEATHER AND HEAT PLANNING -->
-<div style="background:#ffffff; border-radius:12px; padding:20px; margin-bottom:16px; border-left:4px solid #ff9500;">
-  <h2 style="margin:0 0 10px 0; font-size:18px; font-weight:700; color:#1d1d1f;">Weather &amp; Heat Planning</h2>
-
-  <div style="padding:10px 14px; background:#fff8e7; border-radius:8px; margin-bottom:10px;">
-    <p style="margin:0; font-size:14px; color:#1d1d1f;"><strong>More than 3 weeks out:</strong> It is too early for a reliable daily forecast for August 22-23. Here is what families should expect based on typical late-August conditions in St. Johns, FL.</p>
-  </div>
-
-  <h3 style="font-size:15px; font-weight:600; color:#1d1d1f; margin:0 0 6px 0;">Typical Late-August Conditions</h3>
-  <table style="width:100%; border-collapse:collapse; font-size:14px;">
-    <tr><td style="padding:6px 10px; border-top:1px solid #eee; color:#555; font-weight:600; width:130px;">High temps</td><td style="padding:6px 10px; border-top:1px solid #eee;">Upper 90s F</td></tr>
-    <tr style="background:#fafafa;"><td style="padding:6px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Heat index</td><td style="padding:6px 10px; border-top:1px solid #eee;">105-114&deg;F &mdash; likely heat advisory</td></tr>
-    <tr><td style="padding:6px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Rain chance</td><td style="padding:6px 10px; border-top:1px solid #eee;">Afternoon thunderstorms common (40-60%)</td></tr>
-    <tr style="background:#fafafa;"><td style="padding:6px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Humidity</td><td style="padding:6px 10px; border-top:1px solid #eee;">High &mdash; expect heavy, humid air</td></tr>
-    <tr><td style="padding:6px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Morning games</td><td style="padding:6px 10px; border-top:1px solid #eee;">Significantly cooler, lower lightning risk</td></tr>
-  </table>
-
-  <div style="margin-top:12px; padding:12px 14px; background:#fef8e7; border-radius:8px;">
-    <p style="margin:0 0 4px 0; font-size:14px; font-weight:600; color:#1d1d1f;">&#9888; What This Means</p>
-    <p style="margin:0; font-size:13px; color:#555;">Start hydrating 24 hours before the first game. Morning games will be significantly more comfortable than afternoon. Assume afternoon thunderstorms may cause delays or schedule changes. The tournament uses a 30-minute lightning delay clock.</p>
-  </div>
-
-  <p style="margin:10px 0 0 0; font-size:13px; color:#86868b;"><strong>Check the forecast again around August 18-19</strong> for a reliable day-by-day forecast with specific temperatures and rain chances.</p>
-</div>
-
-<!-- 8. VENUE, PARKING, FIELDS, AMENITIES -->
-<div style="background:#ffffff; border-radius:12px; padding:20px; margin-bottom:16px;">
-  <h2 style="margin:0 0 10px 0; font-size:18px; font-weight:700; color:#1d1d1f;">Venue, Parking, Fields &amp; Amenities</h2>
-
-  <p style="font-size:14px; color:#3a3a3c; margin:0 0 4px 0;"><strong>Official Tournament Information:</strong> Veterans Park, 1332 Veterans Parkway, St. Johns, FL 32259.</p>
-  <p style="font-size:14px; color:#3a3a3c; margin:0 0 12px 0;"><strong>Official Tournament Field Map:</strong> <a href="https://docs.google.com/presentation/d/e/2PACX-1vQCJyfhW8bCpxTk5HXfMKEEbekRHoaQ4FtYkLSzNfe8McocTmwMratx3skY7bvF2nmKkWDnPnknJXTs/pub" style="color:#0055A4;">View Official Map &rarr;</a></p>
-
-  <h3 style="font-size:15px; font-weight:600; color:#1d1d1f; margin:0 0 6px 0;">Parking</h3>
-  <table style="width:100%; border-collapse:collapse; font-size:14px;">
-    <tr><td style="padding:6px 10px; border-top:1px solid #eee; color:#555; font-weight:600; width:130px;">Cost</td><td style="padding:6px 10px; border-top:1px solid #eee;">Free</td></tr>
-    <tr style="background:#fafafa;"><td style="padding:6px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Location</td><td style="padding:6px 10px; border-top:1px solid #eee;">Veterans Parkway (south) and Island Park Drive (north) sides</td></tr>
-    <tr><td style="padding:6px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Fill time</td><td style="padding:6px 10px; border-top:1px solid #eee;">Fills early on tournament days</td></tr>
-    <tr style="background:#fafafa;"><td style="padding:6px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Overflow</td><td style="padding:6px 10px; border-top:1px solid #eee;">Grass overflow available</td></tr>
-  </table>
-  <p style="margin:6px 0 14px 0; font-size:13px; color:#ff9500;"><strong>Parent Manager Recommendation:</strong> Arrive 30-45 minutes before your first game to secure parking and allow time to reach your field.</p>
-
-  <h3 style="font-size:15px; font-weight:600; color:#1d1d1f; margin:0 0 6px 0;">Fields</h3>
-  <table style="width:100%; border-collapse:collapse; font-size:14px;">
-    <tr><td style="padding:6px 10px; border-top:1px solid #eee; color:#555; font-weight:600; width:130px;">Total fields</td><td style="padding:6px 10px; border-top:1px solid #eee;">6 full-size (11v11) with multiple sub-configurations</td></tr>
-    <tr style="background:#fafafa;"><td style="padding:6px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Surfaces</td><td style="padding:6px 10px; border-top:1px solid #eee;">5 lighted grass + 1 lighted artificial turf (Field 6)</td></tr>
-    <tr><td style="padding:6px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">U9 fields</td><td style="padding:6px 10px; border-top:1px solid #eee;"><strong>Pending Confirmation</strong> &mdash; released with game schedule</td></tr>
-    <tr style="background:#fafafa;"><td style="padding:6px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Concessions</td><td style="padding:6px 10px; border-top:1px solid #eee;">On-site &bull; Lines get long during peak times</td></tr>
-    <tr><td style="padding:6px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Restrooms</td><td style="padding:6px 10px; border-top:1px solid #eee;">Multiple locations around complex</td></tr>
-    <tr style="background:#fafafa;"><td style="padding:6px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Amenities</td><td style="padding:6px 10px; border-top:1px solid #eee;">Clubhouse, AED, playground</td></tr>
-  </table>
-
-  <p style="margin:10px 0 0 0; font-size:13px; color:#86868b;">Specific field assignments for the U9 age group will be released with the game schedule 1-2 weeks before the tournament.</p>
-</div>
-
-<!-- 9. TEAM COMMUNICATION PLAN -->
-<div style="background:#ffffff; border-radius:12px; padding:20px; margin-bottom:16px; border-left:4px solid #007aff;">
-  <h2 style="margin:0 0 10px 0; font-size:18px; font-weight:700; color:#1d1d1f;">Team Communication Plan</h2>
-
-  <table style="width:100%; border-collapse:collapse; font-size:14px;">
-    <tr><td style="padding:8px 10px; border-top:1px solid #eee; color:#555; font-weight:600; width:145px;">Official schedule</td><td style="padding:8px 10px; border-top:1px solid #eee;">GotSport</td></tr>
-    <tr style="background:#fafafa;"><td style="padding:8px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Team updates</td><td style="padding:8px 10px; border-top:1px solid #eee;">PlayMetrics Messages &bull; Email</td></tr>
-    <tr><td style="padding:8px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Tournament logistics</td><td style="padding:8px 10px; border-top:1px solid #eee;">Parent Manager</td></tr>
-    <tr style="background:#fafafa;"><td style="padding:8px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Soccer questions</td><td style="padding:8px 10px; border-top:1px solid #eee;">Coach</td></tr>
-    <tr><td style="padding:8px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Urgent changes</td><td style="padding:8px 10px; border-top:1px solid #eee;">Team chat / text</td></tr>
-  </table>
-  <p style="margin:8px 0 0 0; font-size:13px; color:#86868b;">An updated guide will be sent when schedules and field assignments are confirmed.</p>
-</div>
-
-<!-- 10. COACH UPDATES (COMING SOON) -->
-<div style="background:#ffffff; border-radius:12px; padding:20px; margin-bottom:16px;">
-  <h2 style="margin:0 0 10px 0; font-size:18px; font-weight:700; color:#1d1d1f;">Coach Updates <span style="font-size:12px; font-weight:400; color:#86868b;">(Coming Soon)</span></h2>
-
-  <p style="font-size:14px; color:#86868b; margin:0 0 10px 0;">This section will be updated once our coaches release arrival times, uniform details, and any team-specific instructions.</p>
-
-  <p style="font-size:14px; color:#86868b; margin:0;"><em>Parents do not need to act on these items &mdash; they are for reference once confirmed by the coaching staff.</em></p>
-</div>
-
-<!-- 11. AGE-APPROPRIATE PLAYER GUIDANCE -->
-<div style="background:#ffffff; border-radius:12px; padding:20px; margin-bottom:16px;">
-  <h2 style="margin:0 0 10px 0; font-size:18px; font-weight:700; color:#1d1d1f;">Age-Appropriate Player Guidance</h2>
-
-  <p style="font-size:13px; color:#86868b; margin:0 0 10px 0;">Tournament weekends are exciting and demanding for young players. Here are some practical reminders.</p>
-
-  <div style="display:flex; flex-wrap:wrap; gap:8px;">
-    <div style="flex:1; min-width:200px;">
-      <ul style="font-size:14px; color:#3a3a3c; padding-left:18px; line-height:1.9; margin:0;">
-        <li>Prioritize sleep &mdash; early bedtimes Friday and Saturday</li>
-        <li>Keep meals familiar &mdash; tournament weekend is not the time for new foods</li>
-        <li>Bring simple, preferred snacks</li>
-        <li>Encourage regular hydration throughout the day</li>
-        <li>Limit exhausting hotel-pool activity before games</li>
-      </ul>
-    </div>
-    <div style="flex:1; min-width:200px;">
-      <ul style="font-size:14px; color:#3a3a3c; padding-left:18px; line-height:1.9; margin:0;">
-        <li>Bring quiet activities for downtime between games</li>
-        <li>Expect physical and emotional fatigue &mdash; especially after a loss</li>
-        <li>Keep postgame conversations positive and brief</li>
-        <li>Allow coaches to provide soccer instruction</li>
-        <li>Emphasize effort, teamwork, learning, and enjoyment</li>
-      </ul>
+  <!-- Quick Summary -->
+  <div class="info-card" style="border-top:3px solid #0055A4;">
+    <h3>Quick Start</h3>
+    <div class="summary-grid">
+      <span class="label">Event</span><span class="value">Sporting Club Jax Boys Invitational</span>
+      <span class="label">Team</span><span class="value">Savannah United 17/18B Travel + Premier</span>
+      <span class="label">Dates</span><span class="value">Sat-Sun, August 22-23, 2026</span>
+      <span class="label">Venue</span><span class="value">Veterans Park, 1332 Veterans Pkwy, St. Johns, FL 32259</span>
+      <span class="label">Age / Format</span><span class="value">U9 &bull; 7v7 &bull; Group &rarr; Knockout</span>
+      <span class="label">Stay-to-Play</span><span class="value">Required for teams traveling over 90 miles</span>
+      <span class="label">Drive</span><span class="value">~130 mi &bull; ~2h 15min via I-95 South</span>
+      <span class="label">Parking</span><span class="value">Free on-site. Arrive early. Grass overflow.</span>
     </div>
   </div>
+
+  <!-- Action Items -->
+  <div class="info-card" style="border-left:4px solid #007aff;">
+    <h3>Parent Action Items</h3>
+    <p style="margin-bottom:6px;"><strong style="color:#d32f2f;">Do This This Week:</strong></p>
+    <ul style="padding-left:18px; margin-bottom:10px;">
+      <li><strong>RSVP in PlayMetrics</strong> &mdash; Set Niko's availability on Home Dashboard or Travel Team Summary</li>
+      <li><strong>Book hotel</strong> on GotSport Travel Portal by <strong>Aug 14</strong> (cancel by Aug 14 for full refund)</li>
+    </ul>
+    <p style="margin-bottom:6px;"><strong style="color:#f57c00;">Coming Soon:</strong></p>
+    <ul style="padding-left:18px;">
+      <li>Game schedule ~Aug 8-15 via GotSport</li>
+      <li>Weather forecast ~Aug 18-19</li>
+    </ul>
+  </div>
+
+  <!-- Hotels -->
+  <div class="section-title" id="hotels">Hotels &amp; Stay-to-Play</div>
+  <div class="section-sub">Verified Jul 30, 2026 &bull; Actual distances via Google Maps</div>
+
+  <div class="info-card" style="background:#1d1d1f; border-radius:12px;">
+    <p style="font-size:13px; color:#fff;"><strong>Official Tournament Requirement:</strong> Teams traveling more than 90 miles must book through the GotSport Travel Partner Hotel Program.</p>
+  </div>
+
+  <p style="font-size:14px; font-weight:600; color:#34c759; margin:2px 0 8px 0;">Within 15 Miles of Veterans Park</p>
+
+  <div class="hotel-card primary">
+    <div class="hotel-name">Hampton Inn &amp; Suites Bartram Park <span class="tag hilton">Hilton</span></div>
+    <div class="hotel-details">
+      <span class="hotel-rate">$143/night</span> &bull; 10 rooms &bull; <strong>7.9 mi</strong> / 15 min drive<br>
+      Free hot breakfast, free parking, outdoor pool, pet-friendly &bull; 4.5/5 rating<br>
+      <strong style="color:#0055A4;">Best Value &mdash; closest to venue, lowest price</strong>
+    </div>
+  </div>
+
+  <p style="font-size:14px; font-weight:600; color:#ff9500; margin:14px 0 8px 0;">15-20 Miles from Veterans Park</p>
+
+  <div class="hotel-card secondary">
+    <div class="hotel-name">Fairfield Inn &amp; Suites Butler Blvd <span class="tag marriott">Marriott &#9733; Points</span></div>
+    <div class="hotel-details"><span class="hotel-rate">$139/night</span> &bull; 17.4 mi &bull; 23 rooms &bull; 22 min drive &bull; Marriott Bonvoy eligible</div>
+  </div>
+
+  <div class="hotel-card secondary">
+    <div class="hotel-name">Aloft by Marriott Tapestry Park <span class="tag marriott">Marriott &#9733; Points</span></div>
+    <div class="hotel-details"><span class="hotel-rate">$139/night</span> &bull; 18.8 mi &bull; 34 rooms &bull; 25 min drive &bull; On-site bar &amp; restaurant &bull; Marriott Bonvoy eligible</div>
+  </div>
+
+  <div class="hotel-card other">
+    <div class="hotel-name">Hampton Inn Deerwood Park <span class="tag hilton">Hilton</span></div>
+    <div class="hotel-details"><span class="hotel-rate">$149/night</span> &bull; ~15 mi &bull; <strong>Only 5 rooms left</strong></div>
+  </div>
+
+  <div class="hotel-card other">
+    <div class="hotel-name">Home2 Suites St. Augustine <span class="tag hilton">Hilton</span></div>
+    <div class="hotel-details"><span class="hotel-rate">$139/night</span> &bull; ~16 mi &bull; 10 rooms &bull; Full kitchen suites</div>
+  </div>
+
+  <div class="hotel-card other">
+    <div class="hotel-name">Hilton Jacksonville at Mayo Clinic <span class="tag hilton">Hilton</span></div>
+    <div class="hotel-details"><span class="hotel-rate">$189/night</span> &bull; ~18 mi &bull; 50 rooms &bull; Full-service</div>
+  </div>
+
+  <div class="hotel-card secondary">
+    <div class="hotel-name">Residence Inn by Marriott Mayo Clinic <span class="tag marriott">Marriott &#9733; Points</span></div>
+    <div class="hotel-details"><span class="hotel-rate">$205/night</span> &bull; ~18 mi &bull; 11 rooms &bull; Full kitchens &bull; <strong>Requires 2-night minimum</strong> &bull; Marriott Bonvoy eligible</div>
+  </div>
+
+  <div class="info-card" style="border-left:4px solid #0055A4;">
+    <p style="font-size:13px; margin:0;"><strong>Book:</strong> <a href="https://system.gotsport.com/stores/1903604Y4">system.gotsport.com/stores/1903604Y4</a></p>
+  </div>
+
+  <!-- Travel -->
+  <div class="section-title" id="travel">Travel &amp; Arrival</div>
+  <div class="section-sub">Route: I-95 S to Exit 329 (CR-210 W) &rarr; Veterans Parkway &bull; ~130 miles</div>
+
+  <div class="info-card">
+    <p style="font-size:13px; color:#86868b; margin-bottom:10px;">Departure times target arrival by <strong>7:15am</strong> (45 min before an 8am game).</p>
+    <table style="width:100%; border-collapse:collapse; font-size:14px;">
+      <tr style="background:#f8f8f8;"><th style="text-align:left; padding:8px 10px; color:#555; font-weight:600;">Scenario</th><th style="text-align:center; padding:8px 10px; color:#555; font-weight:600;">Time</th><th style="text-align:right; padding:8px 10px; color:#555; font-weight:600;">Depart by</th></tr>
+      <tr><td style="padding:8px 10px; border-top:1px solid #eee;">Best case (no traffic, one stop)</td><td style="padding:8px 10px; border-top:1px solid #eee; text-align:center; font-weight:600; color:#34c759;">~2h 15min</td><td style="padding:8px 10px; border-top:1px solid #eee; text-align:right;">5:00am</td></tr>
+      <tr style="background:#fafafa;"><td style="padding:8px 10px; border-top:1px solid #eee;">Normal (Saturday traffic, gas + food)</td><td style="padding:8px 10px; border-top:1px solid #eee; text-align:center; font-weight:600; color:#ff9500;">~2h 30min</td><td style="padding:8px 10px; border-top:1px solid #eee; text-align:right;">4:45am</td></tr>
+      <tr><td style="padding:8px 10px; border-top:1px solid #eee;">Heavy traffic / construction</td><td style="padding:8px 10px; border-top:1px solid #eee; text-align:center; font-weight:600; color:#ff3b30;">~3h 00min</td><td style="padding:8px 10px; border-top:1px solid #eee; text-align:right;">4:15am</td></tr>
+    </table>
+    <p style="margin-top:8px; font-size:13px; color:#86868b;"><strong>Recommendation:</strong> Overnight stay Friday night avoids the early drive entirely.</p>
+  </div>
+
+  <!-- Venue -->
+  <div class="section-title" id="venue">Venue &amp; Parking</div>
+  <div class="section-sub">Veterans Park &bull; Field Map &bull; Amenities</div>
+
+  <div class="info-card">
+    <p style="font-size:14px; margin-bottom:8px;"><strong>Veterans Park</strong>, 1332 Veterans Pkwy, St. Johns, FL 32259</p>
+    <p style="font-size:13px; margin-bottom:6px;"><strong>Parking:</strong> Free. Fills early &mdash; arrive 30-45 min early. Grass overflow available.</p>
+    <p style="font-size:13px; margin-bottom:6px;"><strong>Fields:</strong> 6 full-size (5 grass + 1 turf, all lighted). U9 fields pending schedule release.</p>
+    <p style="font-size:13px;"><strong>Field Map:</strong> <a href="https://docs.google.com/presentation/d/e/2PACX-1vQCJyfhW8bCpxTk5HXfMKEEbekRHoaQ4FtYkLSzNfe8McocTmwMratx3skY7bvF2nmKkWDnPnknJXTs/pub">View Official Map &rarr;</a></p>
+  </div>
+
+  <!-- Rules -->
+  <div class="section-title" id="rules">Tournament Rules</div>
+  <div class="section-sub"><a href="https://docs.google.com/document/d/e/2PACX-1vTfwqpJ6KrFTAWrKkvSay393zfFkZXSUVooPenxd6TStJpcIYHWFJa9kifZJdBQh6ip52gIxifONgO9/pub">Full Official Rules &rarr;</a></div>
+
+  <div class="info-card" style="border-left:4px solid #5856d6;">
+    <dl class="rules-grid">
+      <dt>Points</dt><dd>Win = 3 &bull; Tie = 1 &bull; Loss = 0</dd>
+      <dt>Game Length</dt><dd>25-minute halves for U9-U12</dd>
+      <dt>Mercy Rule</dt><dd>6-goal lead at halftime or later = match ends</dd>
+      <dt>Substitutions</dt><dd>Unlimited &mdash; goal kicks, throw-ins, kickoffs, halftime, injury</dd>
+      <dt>Zero Tolerance</dt><dd>No referee abuse. Immediate removal + 1-game suspension</dd>
+      <dt>Water Breaks</dt><dd>Mandatory mid-half at 85&deg;F+ &mdash; expected all weekend</dd>
+      <dt>Championship</dt><dd>No overtime &mdash; straight to FIFA penalty kicks</dd>
+    </dl>
+
+    <p style="font-size:14px; font-weight:600; margin:14px 0 6px 0; color:#1d1d1f;">Tiebreakers (in order)</p>
+    <div class="tiebreaker"><span class="tiebreaker-num">1</span><span class="tiebreaker-name">Head-to-Head</span><span style="color:#555;">Result between tied teams (disregarded if 3+ teams)</span></div>
+    <div class="tiebreaker"><span class="tiebreaker-num">2</span><span class="tiebreaker-name">Goal Differential</span><span style="color:#555;">GF minus GA. <strong style="color:#d32f2f;">Max 4 per game.</strong></span></div>
+    <div class="tiebreaker"><span class="tiebreaker-num">3</span><span class="tiebreaker-name">Goals For</span><span style="color:#555;">Total scored. <strong style="color:#d32f2f;">Max 4 per game.</strong></span></div>
+    <div class="tiebreaker"><span class="tiebreaker-num">4</span><span class="tiebreaker-name">Goals Against</span><span style="color:#555;">Fewest allowed (no cap)</span></div>
+    <div class="tiebreaker"><span class="tiebreaker-num">5</span><span class="tiebreaker-name">Shutouts</span><span style="color:#555;">Most clean sheets</span></div>
+    <div class="tiebreaker"><span class="tiebreaker-num">6</span><span class="tiebreaker-name">Penalty Kicks</span><span style="color:#555;">FIFA Kicks from the Penalty Mark</span></div>
+  </div>
+
+  <!-- Packing -->
+  <div class="section-title" id="packing">Packing Checklist</div>
+  <div class="section-sub">What to bring for the weekend</div>
+
+  <div class="info-card">
+    <p style="font-size:13px; font-weight:600; margin-bottom:6px;">Player Gear</p>
+    <div class="pill-grid" style="margin-bottom:12px;">
+      <span class="pill blue">Both uniform kits</span><span class="pill blue">Cleats</span><span class="pill blue">Shin guards</span>
+      <span class="pill blue">Water bottle</span><span class="pill blue">Extra socks</span><span class="pill blue">Warm-up gear</span>
+      <span class="pill blue">Dry clothes</span><span class="pill blue">Recovery shoes</span><span class="pill blue">Medications</span>
+    </div>
+    <p style="font-size:13px; font-weight:600; margin-bottom:6px;">Weather &amp; Hydration</p>
+    <div class="pill-grid" style="margin-bottom:12px;">
+      <span class="pill amber">Water (plenty)</span><span class="pill amber">Electrolytes</span><span class="pill amber">Sunscreen SPF 50+</span>
+      <span class="pill amber">Cooling towel</span><span class="pill amber">Rain gear</span><span class="pill amber">Plastic bags</span>
+    </div>
+    <p style="font-size:13px; font-weight:600; margin-bottom:6px;">Parent Sideline</p>
+    <div class="pill-grid" style="margin-bottom:12px;">
+      <span class="pill gray">Folding chairs</span><span class="pill gray">Shade</span><span class="pill gray">Umbrella</span>
+      <span class="pill gray">Cooler</span><span class="pill gray">Snacks</span><span class="pill gray">Portable charger</span>
+      <span class="pill gray">Wipes</span><span class="pill gray">Sibling activities</span>
+    </div>
+    <p style="font-size:13px; font-weight:600; margin-bottom:6px;">Emergency</p>
+    <div class="pill-grid">
+      <span class="pill red">First-aid</span><span class="pill red">Ice packs</span><span class="pill red">Insurance info</span>
+      <span class="pill red">Emergency contacts</span><span class="pill red">Prescriptions</span>
+    </div>
+  </div>
+
+  <!-- Weather -->
+  <div class="section-title" id="weather">Weather</div>
+  <div class="section-sub">Late-August conditions in St. Johns, FL</div>
+
+  <div class="info-card" style="border-left:4px solid #ff9500;">
+    <p style="font-size:13px; color:#86868b; margin-bottom:8px;">Too early for reliable daily forecast. Check again ~Aug 18-19.</p>
+    <div class="summary-grid">
+      <span class="label">Highs</span><span class="value">Upper 90s F</span>
+      <span class="label">Heat Index</span><span class="value" style="color:#d32f2f; font-weight:600;">105-114&deg;F</span>
+      <span class="label">Rain</span><span class="value">Afternoon thunderstorms common (40-60%)</span>
+      <span class="label">Morning</span><span class="value">Significantly cooler, lower lightning risk</span>
+    </div>
+  </div>
+
+  <!-- Nearby Resources -->
+  <div class="section-title" id="resources">Nearby Resources</div>
+  <div class="info-card" style="border-left:4px solid #ff9500;">
+    <p style="font-size:13px; margin-bottom:6px;"><strong>Academy Sports + Outdoors</strong><br>9041 Southside Blvd, Jax &bull; (904) 363-6720 &bull; 8am-10pm &bull; 8-10 min</p>
+    <p style="font-size:13px; margin-bottom:6px;"><strong>Dick's Sporting Goods</strong><br>10390 Midtown Pkwy, Jax &bull; (904) 642-4299 &bull; 9am-9pm &bull; 12-15 min</p>
+    <p style="font-size:13px;"><strong>CVS Pharmacy</strong><br>13970 Village Lake Circle, Jax &bull; (904) 260-0550</p>
+  </div>
+
+  <!-- Mobile Guide -->
+  <div class="section-title" id="mobile">Mobile Guide</div>
+  <div class="section-sub">Save this page to your phone for quick access</div>
+
+  <div class="qr-section">
+    <img src="https://rrouleau-x.github.io/sporting-jax-guide/qr-code.png" alt="QR Code">
+    <p style="font-size:13px; color:#86868b; margin-bottom:4px;">Scan with your phone camera:</p>
+    <p class="url"><a href="https://rrouleau-x.github.io/sporting-jax-guide/">rrouleau-x.github.io/sporting-jax-guide</a></p>
+    <p style="font-size:11px; color:#aeaeb2; margin-top:6px;">Permanent link &mdash; always up to date</p>
+  </div>
+
 </div>
 
-<!-- 12. PACKING CHECKLIST -->
-<div style="background:#ffffff; border-radius:12px; padding:20px; margin-bottom:16px;">
-  <h2 style="margin:0 0 10px 0; font-size:18px; font-weight:700; color:#1d1d1f;">Packing Checklist</h2>
-
-  <h3 style="font-size:15px; font-weight:600; color:#1d1d1f; margin:0 0 6px 0;">Player Gear</h3>
-  <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px;">
-    <span style="background:#f0f5ff; padding:4px 12px; border-radius:16px; font-size:13px; color:#0055A4;">&#9744; Both uniform kits</span>
-    <span style="background:#f0f5ff; padding:4px 12px; border-radius:16px; font-size:13px; color:#0055A4;">&#9744; Cleats</span>
-    <span style="background:#f0f5ff; padding:4px 12px; border-radius:16px; font-size:13px; color:#0055A4;">&#9744; Shin guards</span>
-    <span style="background:#f0f5ff; padding:4px 12px; border-radius:16px; font-size:13px; color:#0055A4;">&#9744; Labeled water bottle</span>
-    <span style="background:#f0f5ff; padding:4px 12px; border-radius:16px; font-size:13px; color:#0055A4;">&#9744; Extra socks</span>
-    <span style="background:#f0f5ff; padding:4px 12px; border-radius:16px; font-size:13px; color:#0055A4;">&#9744; Warm-up / training gear</span>
-    <span style="background:#f0f5ff; padding:4px 12px; border-radius:16px; font-size:13px; color:#0055A4;">&#9744; Dry clothes</span>
-    <span style="background:#f0f5ff; padding:4px 12px; border-radius:16px; font-size:13px; color:#0055A4;">&#9744; Recovery shoes or sandals</span>
-    <span style="background:#f0f5ff; padding:4px 12px; border-radius:16px; font-size:13px; color:#0055A4;">&#9744; Personal medications</span>
-  </div>
-
-  <h3 style="font-size:15px; font-weight:600; color:#1d1d1f; margin:0 0 6px 0;">Weather &amp; Hydration</h3>
-  <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px;">
-    <span style="background:#fff3d4; padding:4px 12px; border-radius:16px; font-size:13px; color:#8a6900;">&#9744; Water (plenty)</span>
-    <span style="background:#fff3d4; padding:4px 12px; border-radius:16px; font-size:13px; color:#8a6900;">&#9744; Electrolytes</span>
-    <span style="background:#fff3d4; padding:4px 12px; border-radius:16px; font-size:13px; color:#8a6900;">&#9744; Sunscreen (SPF 50+)</span>
-    <span style="background:#fff3d4; padding:4px 12px; border-radius:16px; font-size:13px; color:#8a6900;">&#9744; Cooling towel</span>
-    <span style="background:#fff3d4; padding:4px 12px; border-radius:16px; font-size:13px; color:#8a6900;">&#9744; Rain gear</span>
-    <span style="background:#fff3d4; padding:4px 12px; border-radius:16px; font-size:13px; color:#8a6900;">&#9744; Small fan</span>
-    <span style="background:#fff3d4; padding:4px 12px; border-radius:16px; font-size:13px; color:#8a6900;">&#9744; Plastic bags for wet gear</span>
-  </div>
-
-  <h3 style="font-size:15px; font-weight:600; color:#1d1d1f; margin:0 0 6px 0;">Parent Sideline</h3>
-  <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px;">
-    <span style="background:#f0f0f0; padding:4px 12px; border-radius:16px; font-size:13px; color:#555;">&#9744; Folding chairs</span>
-    <span style="background:#f0f0f0; padding:4px 12px; border-radius:16px; font-size:13px; color:#555;">&#9744; Shade (if permitted)</span>
-    <span style="background:#f0f0f0; padding:4px 12px; border-radius:16px; font-size:13px; color:#555;">&#9744; Umbrella</span>
-    <span style="background:#f0f0f0; padding:4px 12px; border-radius:16px; font-size:13px; color:#555;">&#9744; Cooler</span>
-    <span style="background:#f0f0f0; padding:4px 12px; border-radius:16px; font-size:13px; color:#555;">&#9744; Snacks</span>
-    <span style="background:#f0f0f0; padding:4px 12px; border-radius:16px; font-size:13px; color:#555;">&#9744; Portable charger</span>
-    <span style="background:#f0f0f0; padding:4px 12px; border-radius:16px; font-size:13px; color:#555;">&#9744; Wipes</span>
-    <span style="background:#f0f0f0; padding:4px 12px; border-radius:16px; font-size:13px; color:#555;">&#9744; Trash bags</span>
-    <span style="background:#f0f0f0; padding:4px 12px; border-radius:16px; font-size:13px; color:#555;">&#9744; Activities for siblings</span>
-  </div>
-
-  <h3 style="font-size:15px; font-weight:600; color:#1d1d1f; margin:0 0 6px 0;">Emergency</h3>
-  <div style="display:flex; flex-wrap:wrap; gap:6px;">
-    <span style="background:#fef2f2; padding:4px 12px; border-radius:16px; font-size:13px; color:#c41e1e;">&#9744; Basic first-aid supplies</span>
-    <span style="background:#fef2f2; padding:4px 12px; border-radius:16px; font-size:13px; color:#c41e1e;">&#9744; Ice packs</span>
-    <span style="background:#fef2f2; padding:4px 12px; border-radius:16px; font-size:13px; color:#c41e1e;">&#9744; Insurance information</span>
-    <span style="background:#fef2f2; padding:4px 12px; border-radius:16px; font-size:13px; color:#c41e1e;">&#9744; Emergency contacts</span>
-    <span style="background:#fef2f2; padding:4px 12px; border-radius:16px; font-size:13px; color:#c41e1e;">&#9744; Prescriptions</span>
-  </div>
+<div class="footer">
+  <p>Savannah United 17/18B Travel &bull; Sporting Jax Boys Invitational &bull; August 22-23, 2026</p>
+  <p>Prepared with Bob Team Manager &bull; Version 4.2 &bull; Updated July 30, 2026</p>
 </div>
 
-<!-- 13. TOURNAMENT RULES PARENTS NEED -->
-<div style="background:#ffffff; border-radius:12px; padding:20px; margin-bottom:16px; border-left:4px solid #5856d6;">
-  <h2 style="margin:0 0 10px 0; font-size:18px; font-weight:700; color:#1d1d1f;">Tournament Rules Parents Need to Know</h2>
-
-  <p style="font-size:14px; color:#3a3a3c; margin:0 0 10px 0;"><strong>Official Tournament Information.</strong> Full rules: <a href="https://docs.google.com/document/d/e/2PACX-1vTfwqpJ6KrFTAWrKkvSay393zfFkZXSUVooPenxd6TStJpcIYHWFJa9kifZJdBQh6ip52gIxifONgO9/pub" style="color:#0055A4;">2026 Sporting Jax Official Rules</a></p>
-
-  <table style="width:100%; border-collapse:collapse; font-size:14px;">
-    <tr><td style="padding:8px 10px; border-top:1px solid #eee; color:#555; font-weight:600; width:120px;">Points</td><td style="padding:8px 10px; border-top:1px solid #eee;">Win = 3 &bull; Tie = 1 &bull; Loss = 0</td></tr>
-    <tr style="background:#fafafa;"><td style="padding:8px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Game length</td><td style="padding:8px 10px; border-top:1px solid #eee;">25-minute halves for U9-U12</td></tr>
-    <tr><td style="padding:8px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Mercy rule</td><td style="padding:8px 10px; border-top:1px solid #eee;">Match ends when a team leads by 6 at halftime or later</td></tr>
-    <tr style="background:#fafafa;"><td style="padding:8px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Substitutions</td><td style="padding:8px 10px; border-top:1px solid #eee;">Unlimited &mdash; goal kicks, throw-ins, kickoffs, halftime, injury</td></tr>
-    <tr><td style="padding:8px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Zero tolerance</td><td style="padding:8px 10px; border-top:1px solid #eee;">No referee abuse. Immediate removal + minimum 1-game suspension</td></tr>
-    <tr style="background:#fafafa;"><td style="padding:8px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Heading</td><td style="padding:8px 10px; border-top:1px solid #eee;">Not allowed for U12 and younger</td></tr>
-    <tr><td style="padding:8px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Water breaks</td><td style="padding:8px 10px; border-top:1px solid #eee;">Mandatory mid-half at 85&deg;F+ &mdash; expected all weekend</td></tr>
-    <tr style="background:#fafafa;"><td style="padding:8px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Forfeit</td><td style="padding:8px 10px; border-top:1px solid #eee;">5 minutes late from scheduled kickoff. Min 5 players to start</td></tr>
-    <tr><td style="padding:8px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Weather</td><td style="padding:8px 10px; border-top:1px solid #eee;">30-minute delay clock. Post-halftime stoppage = completed game</td></tr>
-    <tr style="background:#fafafa;"><td style="padding:8px 10px; border-top:1px solid #eee; color:#555; font-weight:600;">Championship</td><td style="padding:8px 10px; border-top:1px solid #eee;">No overtime &mdash; straight to penalty kicks if tied</td></tr>
-  </table>
-
-  <h3 style="font-size:15px; font-weight:600; color:#1d1d1f; margin:16px 0 6px 0;">Tiebreakers (in order)</h3>
-  <table style="width:100%; border-collapse:collapse; font-size:14px;">
-    <tr><td style="padding:6px 10px; border-top:1px solid #eee; color:#5856d6; font-weight:700; width:30px;">1</td><td style="padding:6px 10px; border-top:1px solid #eee;"><strong>Head-to-Head</strong></td><td style="padding:6px 10px; border-top:1px solid #eee; color:#555;">Result between tied teams (disregarded if 3+ teams tied)</td></tr>
-    <tr style="background:#fafafa;"><td style="padding:6px 10px; border-top:1px solid #eee; color:#5856d6; font-weight:700;">2</td><td style="padding:6px 10px; border-top:1px solid #eee;"><strong>Goal Differential</strong></td><td style="padding:6px 10px; border-top:1px solid #eee; color:#555;">GF minus GA. <strong style="color:#d32f2f;">Max 4 goals per game.</strong></td></tr>
-    <tr><td style="padding:6px 10px; border-top:1px solid #eee; color:#5856d6; font-weight:700;">3</td><td style="padding:6px 10px; border-top:1px solid #eee;"><strong>Goals For</strong></td><td style="padding:6px 10px; border-top:1px solid #eee; color:#555;">Total scored. <strong style="color:#d32f2f;">Max 4 goals per game.</strong></td></tr>
-    <tr style="background:#fafafa;"><td style="padding:6px 10px; border-top:1px solid #eee; color:#5856d6; font-weight:700;">4</td><td style="padding:6px 10px; border-top:1px solid #eee;"><strong>Goals Against</strong></td><td style="padding:6px 10px; border-top:1px solid #eee; color:#555;">Fewest allowed (no cap)</td></tr>
-    <tr><td style="padding:6px 10px; border-top:1px solid #eee; color:#5856d6; font-weight:700;">5</td><td style="padding:6px 10px; border-top:1px solid #eee;"><strong>Shutouts</strong></td><td style="padding:6px 10px; border-top:1px solid #eee; color:#555;">Most clean sheets</td></tr>
-    <tr style="background:#fafafa;"><td style="padding:6px 10px; border-top:1px solid #eee; color:#5856d6; font-weight:700;">6</td><td style="padding:6px 10px; border-top:1px solid #eee;"><strong>Penalty Kicks</strong></td><td style="padding:6px 10px; border-top:1px solid #eee; color:#555;">FIFA Kicks from the Penalty Mark</td></tr>
-  </table>
-  <p style="margin:10px 0 0 0; font-size:13px; color:#86868b;">The 4-goal cap on Goal Differential and Goals For is the most commonly misunderstood rule. The cap applies per game, not per tournament.</p>
-</div>
-
-<!-- 14. NEARBY FAMILY RESOURCES -->
-<div style="background:#ffffff; border-radius:12px; padding:20px; margin-bottom:16px; border-left:4px solid #ff9500;">
-  <h2 style="margin:0 0 10px 0; font-size:18px; font-weight:700; color:#1d1d1f;">Nearby Family Resources</h2>
-
-  <p style="font-size:13px; color:#86868b; margin:0 0 10px 0;">Closest to the Bartram Park hotel area. Information current as of July 30, 2026.</p>
-
-  <h3 style="font-size:14px; font-weight:600; color:#1d1d1f; margin:0 0 6px 0;">Forgot Something?</h3>
-
-  <div style="padding:10px 12px; background:#fff8e7; border-radius:8px; margin-bottom:8px;">
-    <p style="margin:0 0 2px 0; font-size:14px; font-weight:600; color:#1d1d1f;">Academy Sports + Outdoors</p>
-    <p style="margin:0; font-size:13px; color:#555;">9041 Southside Blvd, Jacksonville &bull; (904) 363-6720<br>Mon-Sat 8am-10pm, Sun 9am-9pm &bull; ~8-10 min from Bartram Park hotels</p>
-  </div>
-
-  <div style="padding:10px 12px; background:#f8f8f8; border-radius:8px; margin-bottom:12px;">
-    <p style="margin:0 0 2px 0; font-size:14px; font-weight:600; color:#1d1d1f;">Dick's Sporting Goods &mdash; St. Johns Town Center</p>
-    <p style="margin:0; font-size:13px; color:#555;">10390 Midtown Parkway, Jacksonville &bull; (904) 642-4299<br>Mon-Sat 9am-9pm, Sun 10am-7pm &bull; ~12-15 min from Bartram Park hotels</p>
-  </div>
-
-  <h3 style="font-size:14px; font-weight:600; color:#1d1d1f; margin:0 0 6px 0;">Food Nearby</h3>
-
-  <div style="padding:10px 12px; background:#f8f8f8; border-radius:8px; margin-bottom:12px;">
-    <p style="margin:0 0 2px 0; font-size:14px; font-weight:600; color:#1d1d1f;">St. Johns Town Center</p>
-    <p style="margin:0; font-size:13px; color:#555;">Multiple family-friendly restaurants near the hotel area &bull; ~10-15 min from Veterans Park</p>
-  </div>
-
-  <h3 style="font-size:14px; font-weight:600; color:#1d1d1f; margin:0 0 6px 0;">Pharmacy &amp; Urgent Care</h3>
-
-  <div style="padding:10px 12px; background:#f8f8f8; border-radius:8px;">
-    <p style="margin:0 0 2px 0; font-size:14px; font-weight:600; color:#1d1d1f;">CVS Pharmacy &mdash; Bartram Park</p>
-    <p style="margin:0; font-size:13px; color:#555;">13970 Village Lake Circle, Jacksonville &bull; (904) 260-0550<br>Open daily &bull; ~5 min from Bartram Park hotels</p>
-  </div>
-</div>
-
-<!-- 15. WEEKEND ITINERARY -->
-<div style="background:#ffffff; border-radius:12px; padding:20px; margin-bottom:16px;">
-  <h2 style="margin:0 0 10px 0; font-size:18px; font-weight:700; color:#1d1d1f;">Weekend Itinerary</h2>
-
-  <div style="padding:12px 14px; background:#f0f7ff; border-radius:8px; margin-bottom:10px;">
-    <p style="margin:0; font-size:14px; font-weight:600; color:#0055A4;">Friday, August 21</p>
-    <p style="margin:4px 0 0 0; font-size:13px; color:#555;"><strong>Parent Manager Recommendation:</strong> Travel to Jacksonville/St. Johns area. Check into hotel. Early bedtime for players. A Friday overnight avoids the need for a 4:45-5:00am Saturday departure.</p>
-  </div>
-
-  <div style="padding:12px 14px; background:#f0f7ff; border-radius:8px; margin-bottom:10px;">
-    <p style="margin:0; font-size:14px; font-weight:600; color:#0055A4;">Saturday, August 22 &mdash; Group Play</p>
-    <p style="margin:4px 0 0 0; font-size:13px; color:#555;"><strong>Pending Confirmation.</strong> Schedule released 1-2 weeks before. Expect 2-3 group play games. Player report time at least 45 minutes before first game.</p>
-  </div>
-
-  <div style="padding:12px 14px; background:#f0f7ff; border-radius:8px;">
-    <p style="margin:0; font-size:14px; font-weight:600; color:#0055A4;">Sunday, August 23 &mdash; Knockout Rounds</p>
-    <p style="margin:4px 0 0 0; font-size:13px; color:#555;"><strong>Pending Confirmation.</strong> Schedule depends on Saturday results. Teams that advance play in semifinals/finals. All teams play at least one game Sunday.</p>
-  </div>
-</div>
-
-<!-- 16. SCREENSHOT-FRIENDLY QUICK REFERENCE -->
-<div style="background:#1d1d1f; border-radius:12px; padding:20px; margin-bottom:16px;">
-  <h2 style="margin:0 0 10px 0; font-size:16px; font-weight:700; color:#ffffff;">Quick Reference</h2>
-  <p style="margin:0 0 10px 0; font-size:12px; color:#aeaeb2;">Screenshot this for quick access on game day.</p>
-
-  <table style="width:100%; border-collapse:collapse; font-size:13px; color:#e0e0e0;">
-    <tr><td style="padding:6px 8px; border-top:1px solid #333; color:#aeaeb2; width:80px;">Tournament</td><td style="padding:6px 8px; border-top:1px solid #333;">Sporting Jax Boys Invitational</td></tr>
-    <tr><td style="padding:6px 8px; border-top:1px solid #333; color:#aeaeb2;">Team</td><td style="padding:6px 8px; border-top:1px solid #333;">SU 17/18B Travel</td></tr>
-    <tr><td style="padding:6px 8px; border-top:1px solid #333; color:#aeaeb2;">Dates</td><td style="padding:6px 8px; border-top:1px solid #333;">Aug 22-23</td></tr>
-    <tr><td style="padding:6px 8px; border-top:1px solid #333; color:#aeaeb2;">Venue</td><td style="padding:6px 8px; border-top:1px solid #333;">Veterans Park, St. Johns FL</td></tr>
-    <tr><td style="padding:6px 8px; border-top:1px solid #333; color:#aeaeb2;">Parking</td><td style="padding:6px 8px; border-top:1px solid #333;">Free &bull; Arrive 30-45 min early</td></tr>
-    <tr><td style="padding:6px 8px; border-top:1px solid #333; color:#aeaeb2;">Drive</td><td style="padding:6px 8px; border-top:1px solid #333;">~2h 15min &bull; I-95 S to Exit 329</td></tr>
-    <tr><td style="padding:6px 8px; border-top:1px solid #333; color:#aeaeb2;">Stay-to-Play</td><td style="padding:6px 8px; border-top:1px solid #333;">Required &bull; GotSport portal</td></tr>
-    <tr><td style="padding:6px 8px; border-top:1px solid #333; color:#aeaeb2;">Format</td><td style="padding:6px 8px; border-top:1px solid #333;">U9 &bull; 7v7 &bull; Group &rarr; Knockout</td></tr>
-    <tr><td style="padding:6px 8px; border-top:1px solid #333; color:#aeaeb2;">Heat</td><td style="padding:6px 8px; border-top:1px solid #333;">105F+ heat index &bull; Hydrate, shade, sunscreen</td></tr>
-    <tr><td style="padding:6px 8px; border-top:1px solid #333; color:#aeaeb2;">Field Map</td><td style="padding:6px 8px; border-top:1px solid #333;"><a href="https://docs.google.com/presentation/d/e/2PACX-1vQCJyfhW8bCpxTk5HXfMKEEbekRHoaQ4FtYkLSzNfe8McocTmwMratx3skY7bvF2nmKkWDnPnknJXTs/pub" style="color:#64b5f6;">View &rarr;</a></td></tr>
-    <tr><td style="padding:6px 8px; border-top:1px solid #333; color:#aeaeb2;">Rules</td><td style="padding:6px 8px; border-top:1px solid #333;"><a href="https://docs.google.com/document/d/e/2PACX-1vTfwqpJ6KrFTAWrKkvSay393zfFkZXSUVooPenxd6TStJpcIYHWFJa9kifZJdBQh6ip52gIxifONgO9/pub" style="color:#64b5f6;">View &rarr;</a></td></tr>
-  </table>
-</div>
-
-<!-- 17. FINAL NEXT STEPS -->
-<div style="background:#ffffff; border-radius:12px; padding:20px; margin-bottom:16px; border-left:4px solid #34c759;">
-  <h2 style="margin:0 0 10px 0; font-size:18px; font-weight:700; color:#1d1d1f;">Final Next Steps</h2>
-
-  <ol style="font-size:14px; color:#3a3a3c; padding-left:18px; line-height:2; margin:0;">
-    <li><strong>RSVP in PlayMetrics</strong> &mdash; Set Niko's availability for both tournament days on your Home Dashboard or Travel Team Summary.</li>
-    <li><strong>Book hotel</strong> on the GotSport Travel Portal by August 14 if planning to stay overnight. Cancel by Aug 14 for full refund.</li>
-    <li><strong>Watch for the game schedule</strong> &mdash; released 1-2 weeks before the tournament via GotSport. Will be shared in PlayMetrics as soon as available.</li>
-    <li><strong>Check weather forecast</strong> around August 18-19 for reliable day-by-day conditions.</li>
-    <li><strong>Pack</strong> using the checklist in Section 12 &mdash; include heat and rain preparedness.</li>
-    <li><strong>An updated guide</strong> with confirmed game times, field assignments, and coach instructions will be sent when the schedule is released.</li>
-  </ol>
-
-  <p style="margin:12px 0 0 0; font-size:14px; color:#0055A4; font-weight:600;">Go, Savannah United!</p>
-  <p style="margin:4px 0 0 0; font-size:13px; color:#86868b;">Looking forward to a fun weekend of soccer. Safe travels, and we'll send an updated guide as soon as schedules are released.</p>
-</div>
-
-<!-- MOBILE GUIDE -->
-<div style="background:#ffffff; border-radius:12px; padding:20px; margin-bottom:16px; border-left:4px solid #34c759;">
-  <h2 style="margin:0 0 10px 0; font-size:18px; font-weight:700; color:#1d1d1f;">Mobile Guide</h2>
-  <p style="font-size:14px; color:#3a3a3c; margin:0 0 10px 0;">Save this guide to your phone for quick access all weekend.</p>
-  <div style="text-align:center; background:#f8f8f8; padding:16px; border-radius:10px;">
-    <p style="margin:0 0 10px 0; font-size:13px; color:#86868b;">Scan this QR code with your phone camera:</p>
-    <img src="https://rrouleau-x.github.io/sporting-jax-guide/qr-code.png" alt="QR Code" style="width:160px; height:160px; border-radius:8px; display:inline-block;">
-    <p style="margin:8px 0 0 0; font-size:13px; color:#0055A4; font-weight:600;"><a href="https://rrouleau-x.github.io/sporting-jax-guide/" style="color:#0055A4;">rrouleau-x.github.io/sporting-jax-guide</a></p>
-    <p style="margin:4px 0 0 0; font-size:11px; color:#aeaeb2;">Permanent link &mdash; always up to date</p>
-  </div>
-</div>
-
-<!-- FOOTER -->
-<div style="border-top:1px solid #e5e5ea; padding:20px 0; text-align:center;">
-  <p style="margin:0; font-size:12px; color:#86868b;">Savannah United 17/18B Travel &bull; Sporting Jax Boys Invitational &bull; August 22-23, 2026</p>
-  <p style="margin:4px 0 0 0; font-size:11px; color:#aeaeb2;">Prepared with Bob Team Manager &bull; Version 4.0 &bull; Updated July 30, 2026</p>
-</div>
-
-</div>
 </body>
 </html>
