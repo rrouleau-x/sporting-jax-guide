@@ -125,9 +125,18 @@
   },
   "updates": [],
   "contacts": {
-    "manager": { "name": "Rich Rouleau", "role": "Parent Manager" },
-    "coach": { "name": "Keith Gunn", "role": "Head Coach" },
+    "manager": { "name": "Rich Rouleau", "role": "Parent Manager", "phone": "" },
+    "coach": { "name": "Keith Gunn", "role": "Head Coach", "phone": "" },
+    "tournamentDirector": { "name": "Tournament Director", "email": "TDirector@SportingJaxAcademy.com", "phone": "" },
     "emergency": ""
+  },
+  "venueRules": {
+    "tents": "Pop-up canopies allowed. Must be weighted (no stakes in turf fields). Place behind spectator line — not between field and sideline.",
+    "pets": "Veterans Park is pet-friendly. Dogs must be leashed. Clean up after your pet. Not all tournament venues allow pets — check each venue.",
+    "foodCooler": "Outside food and coolers allowed. No glass containers. Concessions available on-site.",
+    "chairs": "Folding chairs allowed along sidelines behind spectator line. Do not block access paths or medical lanes.",
+    "alcohol": "No alcohol permitted.",
+    "smoking": "Smoking only in designated areas away from fields and playgrounds."
   },
   "checklist": {
     "player": [

@@ -183,15 +183,27 @@
         <i class="ti ti-cloud-rain" style="color:var(--yellow);font-size:18px"></i>
         <span class="font-bold">Weather</span>
       </div>
-      <p class="text-sm" id="weatherSummary">Loading...</p>
+      <p class="text-sm" id="weatherSummary">No forecast available yet. Expect late-August Florida weather: upper 90s, heat index 105+, afternoon storms possible.</p>
     </div>
 
-    <div class="card">
+    <div class="card" id="coachUpdateCard">
       <div class="flex items-center gap-2 mb-2">
         <i class="ti ti-users" style="color:var(--blue);font-size:18px"></i>
-        <span class="font-bold">Coach Update</span>
+        <span class="font-bold">Latest from Coach</span>
       </div>
-      <p class="text-sm text-muted" id="coachUpdate">No new updates from the coach yet.</p>
+      <p class="text-sm text-muted" id="coachUpdate">No new updates from the coach yet. Check back closer to tournament weekend.</p>
+    </div>
+
+    <div class="card" style="border-left:4px solid var(--red);">
+      <div class="flex items-center gap-2 mb-2">
+        <i class="ti ti-phone" style="color:var(--red);font-size:18px"></i>
+        <span class="font-bold">Quick Contacts</span>
+      </div>
+      <p class="text-sm" id="contactInfo"><strong>Parent Manager:</strong> Rich Rouleau<br><strong>Coach:</strong> Keith Gunn<br><strong>Tournament Director:</strong> TDirector@SportingJaxAcademy.com</p>
+      <div class="flex gap-2 mt-2">
+        <button class="qa-btn" style="flex:1;padding:10px;font-size:12px" onclick="if(confirm('Call coach?')){}"><i class="ti ti-phone-call"></i>Call Coach</button>
+        <button class="qa-btn" style="flex:1;padding:10px;font-size:12px" onclick="navigateTo('info')"><i class="ti ti-info-circle"></i>All Contacts</button>
+      </div>
     </div>
   </div>
 
@@ -479,8 +491,10 @@ function renderInfo() {
         Contacts <i class="ti ti-chevron-down"></i>
       </button>
       <div class="accordion-body">
-        <p><strong>Parent Manager:</strong> ${data.contacts.manager.name}</p>
-        <p><strong>Coach:</strong> ${data.contacts.coach.name}</p>
+        <p><strong>Parent Manager:</strong> ${data.contacts.manager.name}${data.contacts.manager.phone ? ' · ' + data.contacts.manager.phone : ''}</p>
+        <p><strong>Coach:</strong> ${data.contacts.coach.name}${data.contacts.coach.phone ? ' · ' + data.contacts.coach.phone : ''}</p>
+        <p><strong>Tournament Director:</strong> ${data.contacts.tournamentDirector ? data.contacts.tournamentDirector.email : 'TBD'}</p>
+        ${data.contacts.emergency ? '<p style="color:var(--red);font-weight:600;margin-top:4px"><i class="ti ti-alert-triangle"></i> Emergency: ' + data.contacts.emergency + '</p>' : ''}
       </div>
     </div>
 
