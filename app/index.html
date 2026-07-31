@@ -263,7 +263,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
     <div class="more-item" onclick="showSheet('rules')"><i class="ti ti-book"></i><div class="lbl"><span class="lbl">Rules & Tiebreakers</span><div class="sub">Tournament rules</div></div><i class="ti ti-chevron-right arr"></i></div>
     <div class="more-item" onclick="showSheet('weather')"><i class="ti ti-cloud-rain"></i><div class="lbl"><span class="lbl">Weather Details</span><div class="sub">Forecast & planning</div></div><i class="ti ti-chevron-right arr"></i></div>
     <div class="more-item" onclick="showSheet('contacts')"><i class="ti ti-phone"></i><div class="lbl"><span class="lbl">Contacts</span><div class="sub">Who to call for what</div></div><i class="ti ti-chevron-right arr"></i></div>
-    <div class="more-item" onclick="showSheet('resources')"><i class="ti ti-building-store"></i><div class="lbl"><span class="lbl">Nearby Resources</span><div class="sub">Stores, food, pharmacy</div></div><i class="ti ti-chevron-right arr"></i></div>
     <div class="more-item" onclick="showSheet('about')"><i class="ti ti-info-circle"></i><div class="lbl"><span class="lbl">About</span><div class="sub">Prepared with Bob</div></div><i class="ti ti-chevron-right arr"></i></div>
   </div>
 </div>
@@ -275,7 +274,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
   <button class="tab" data-scr="games"><i class="ti ti-trophy"></i>Games</button>
   <button class="tab" data-scr="venue"><i class="ti ti-map-pin"></i>Venue</button>
   <button class="tab" data-scr="pack"><i class="ti ti-backpack"></i>Pack</button>
-  <button class="tab" data-scr="more"><i class="ti ti-dots-grid"></i>More</button>
+  <button class="tab" data-scr="more" style="position:relative"><i class="ti ti-dots-grid"></i><span class="more-badge" id="moreBadge" style="display:none;position:absolute;top:0;right:-4px;width:14px;height:14px;border-radius:50%;background:var(--r);color:#fff;font-size:9px;text-align:center;line-height:14px"></span>More</button>
 </nav>
 
 <script>
@@ -634,6 +633,9 @@ async function init(){
     const r=await fetch('data.json?_='+Date.now());D=await r.json();
     if(!D.contacts.tournamentDirector)D.contacts.tournamentDirector={email:'TDirector@SportingJaxAcademy.com'};
     renderHome();renderVenue();renderPack();
+    // Show notification badge on More tab if updates exist
+    const badge=document.getElementById('moreBadge');
+    if(badge&&D.updates&&D.updates.length>0){badge.textContent=D.updates.length;badge.style.display='block';}
   }catch(e){document.getElementById('tname').textContent='Offline';document.getElementById('plabel').textContent='Check connection';}
 }
 if(window.matchMedia('(prefers-color-scheme:dark)').matches)document.body.classList.add('dark');
