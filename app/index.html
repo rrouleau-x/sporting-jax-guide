@@ -321,10 +321,9 @@ function renderHome(){
   const p=phase(),el=document.getElementById('homeContent'),c=cd();
   document.getElementById('tname').textContent=D.tournament.name;
   document.getElementById('tdates').textContent=D.venue.name;
-  const ph=phases[p];
   const dot=document.querySelector('.top-strip .dot');
+  const ph=phases[p];
   if(dot)dot.className='dot '+ph.dot;
-  document.getElementById('plabel').textContent=ph.label;
 
   if(p==='gameday'&&D.games?.length>0){
     const g=D.games[0];
