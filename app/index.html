@@ -392,6 +392,12 @@ function renderHome(){
       <div class="section-title">At a Glance</div>
       <div class="card compact" onclick="showSheet('weather')"><i class="ti ti-cloud-rain" style="color:var(--y);font-size:18px"></i><span>${D.weather.summary||'No forecast yet'}</span><i class="ti ti-chevron-right" style="margin-left:auto;color:var(--t2)"></i></div>
       <div class="card compact" onclick="showSheet('hotels')"><i class="ti ti-building" style="color:var(--p);font-size:18px"></i><span>${D.hotels.official[0]?.name||'Hotel info'}: ${D.hotels.official[0]?.rate||''} · ${D.hotels.official[0]?.drive||''}</span><i class="ti ti-chevron-right" style="margin-left:auto;color:var(--t2)"></i></div>
+      <div class="card compact" onclick="showSheet('updates')" id="homeUpdateCard">
+        <i class="ti ti-bell-ringing" style="color:var(--r);font-size:18px"></i>
+        <span style="flex:1"><strong>Updates</strong> · ${D.updates&&D.updates.length>0?D.updates[D.updates.length-1].title:'No new alerts'}</span>
+        ${D.updates&&D.updates.length>0?`<span style="background:var(--r);color:#fff;border-radius:8px;padding:1px 6px;font-size:9px;font-weight:700">${D.updates.length}</span>`:''}
+        <i class="ti ti-chevron-right" style="margin-left:4px;color:var(--t2)"></i>
+      </div>
       <div class="card compact" onclick="showSheet('contacts')"><i class="ti ti-phone" style="color:var(--r);font-size:18px"></i><span>Need help? Coach: ${D.contacts.coach?.name}, Manager: ${D.contacts.manager?.name}</span><i class="ti ti-chevron-right" style="margin-left:auto;color:var(--t2)"></i></div>`;
   }
 }
@@ -562,10 +568,11 @@ function showSheet(section){
   if(section==='contacts'){
     const tm=D.contacts.teamManagers||[];
     h=`<h3 style="margin-bottom:8px">Who to Contact</h3>
-      <div class="c-row"><i class="ti ti-ball-soccer"></i><div><div class="who">${D.contacts.coach.name}</div><div class="why">Soccer questions</div></div></div>
-      <div class="c-row"><i class="ti ti-message-user"></i><div><div class="who">${D.contacts.manager.name}</div><div class="why">Team logistics</div></div></div>
-      ${tm.map(m=>`<div class="c-row"><i class="ti ti-users"></i><div><div class="who">${m.name}</div><div class="why">Team Manager · ${m.phone?'<a href="tel:'+m.phone+'" style="color:var(--p)">'+m.phone+'</a>':''}</div></div></div>`).join('')}
-      <div class="c-row" style="opacity:.5"><i class="ti ti-shield"></i><div><div class="who">${D.contacts.tournamentDirector?.email||'Tournament Director'}</div><div class="why">Tournament admin — manager use only</div></div></div>`;
+      <div class="c-row"><i class="ti ti-ball-soccer"></i><div><div class="who">${D.contacts.coach.name}</div><div class="why">Soccer question · lineups, positions, tactics</div></div></div>
+      <div class="c-row"><i class="ti ti-message-user"></i><div><div class="who">${D.contacts.manager.name}</div><div class="why">Team logistics · hotels, schedule, uniforms</div></div></div>
+      ${tm.map(m=>`<div class="c-row"><i class="ti ti-users"></i><div><div class="who">${m.name}</div><div class="why">General team help · ${m.phone?'<a href="tel:'+m.phone+'" style="color:var(--p)">'+m.phone+'</a>':''}</div></div></div>`).join('')}
+      <div class="c-row" style="opacity:.6"><i class="ti ti-shield"></i><div><div class="who">${D.contacts.tournamentDirector?.email||'Tournament HQ'}</div><div class="why">Lost kid · injury · venue emergency</div></div></div>
+      <div class="c-row"><i class="ti ti-ambulance"></i><div><div class="who">911 / Venue Medical</div><div class="why">Medical emergency — call 911 first</div></div></div>`;
   }
   if(section==='resources'){
     h=`<h3 style="margin-bottom:8px">Nearby Resources</h3>
