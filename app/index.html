@@ -432,8 +432,11 @@ function renderHome(){
 
 function leaveTime(g){
   if(!g||!g.arrival) return '';
-  const [h,m]=g.arrival.split(':').map(Number);
-  const now=new Date(), target=new Date(now);target.setHours(h||7,m||15,0,0);
+  const t=g.arrival.toUpperCase(), isPM=t.includes('PM');
+  const nums=t.replace(/[^0-9:]/g,'').split(':').map(Number);
+  let h=nums[0]||7, m=nums[1]||0;
+  if(isPM&&h<12)h+=12;
+  const now=new Date(), target=new Date(now);target.setHours(h,m,0,0);
   return Math.round((target-now)/60000).toString();
 }
 function toggleExpand(){document.getElementById('exp').classList.toggle('open')}
@@ -575,7 +578,7 @@ function showSheet(section){
     const ht=D.hotels;
     h=`<h3 style="margin-bottom:8px">Official — Stay-to-Play Compliant</h3><p class="help-text" style="text-align:left;margin-bottom:8px">These hotels satisfy the tournament housing requirement.</p>
       ${ht.official.map(o=>`<div style="padding:10px;background:var(--bg);border-radius:8px;margin-bottom:6px"><span style="font-weight:600">${o.name}</span><span style="font-size:10px;color:var(--t2)"> ${o.chain}</span><br><span style="font-size:11px">${o.rate} · ${o.drive} · ${o.rooms} rooms</span>${o.bestValue?'<br><span style="font-size:10px;color:var(--g);font-weight:600">⭐ Best Value</span>':''}</div>`).join('')}
-      <h3 style="margin:14px 0 8px">Non-Official</h3>${ht.nonOfficial.map(o=>`<div style="padding:8px;background:var(--bg);border-radius:8px;margin-bottom:4px"><span style="font-weight:600;font-size:12px">${o.name}</span><span style="font-size:11px"> · ${o.drive}</span><br><span style="font-size:10px;color:var(--text2)">${o.note}</span></div>`).join('')}
+      <h3 style="margin:14px 0 8px">Non-Official</h3>${ht.nonOfficial.map(o=>`<div style="padding:8px;background:var(--bg);border-radius:8px;margin-bottom:4px"><span style="font-weight:600;font-size:12px">${o.name}</span><span style="font-size:11px"> · ${o.drive}</span><br><span style="font-size:10px;color:var(--t2)">${o.note}</span></div>`).join('')}
       <p class="help-text" style="color:var(--r);text-align:left">Do not book non-official until manager confirms proximity exception.</p>
       <div style="margin-top:10px"><button class="act-btn primary" style="padding:10px;font-size:12px" onclick="window.open('${ht.portal}','_blank')"><i class="ti ti-external-link"></i>Book on GotSport</button></div>`;
   }
@@ -643,12 +646,15 @@ async function init(){
     renderHome();renderVenue();renderPack();
     // Show notification badge on More tab if updates exist
     const badge=document.getElementById('moreBadge');
-    if(badge&&D.updates&&D.updates.length>0){badge.textContent=D.updates.length;badge.style.display='block';}
+    if(badge){
+      if(D.updates&&D.updates.length>0){badge.textContent=D.updates.length;badge.style.display='block';}
+      else{badge.style.display='none';}
+    }
   }catch(e){document.getElementById('tname').textContent='Offline';document.getElementById('plabel').textContent='Check connection';}
 }
-if(window.matchMedia('(prefers-color-scheme:dark)').matches)document.body.classList.add('dark');
-if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
 init();
+try{document.body.classList.add(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'');}catch(e){}
+try{if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');}catch(e){}
 </script>
 </body>
 </html>
