@@ -573,8 +573,8 @@ function showSheet(section){
       // Mark all as read
       markUpdatesRead();
       h=`<h3 style="margin-bottom:12px">Updates</h3>`+D.updates.map(u=>`<div class="update-row"><div class="dot ${u.type==='alert'?'alert':u.type==='warning'?'warn':'info'}"></div><span class="time">${u.time||''}</span><div class="text"><div class="title">${u.title}</div><div class="desc">${u.description}${u.posted?' · '+u.posted:''}</div></div></div>`).join('');
-      ${D.updates.some(u=>u.actionRequired)?'<p class="text-sm text-muted mt-2"><i class="ti ti-alert-triangle" style="color:var(--r)"></i> Action required on some items</p>':''}`;
-  }
+      if(D.updates.some(u=>u.actionRequired))h+='<p class="text-sm text-muted mt-2"><i class="ti ti-alert-triangle" style="color:var(--r)"></i> Action required on some items</p>';
+    }
   if(section==='hotels'){
     const ht=D.hotels;
     h=`<h3 style="margin-bottom:8px">Official — Stay-to-Play Compliant</h3><p class="help-text" style="text-align:left;margin-bottom:8px">These hotels satisfy the tournament housing requirement.</p>
