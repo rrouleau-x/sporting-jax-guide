@@ -645,7 +645,7 @@ async function init(){
     const r=await fetch('data.json?_='+Date.now());D=await r.json();
     if(!D.contacts.tournamentDirector)D.contacts.tournamentDirector={email:'TDirector@SportingJaxAcademy.com'};
     renderHome();renderVenue();renderPack();renderGames();
-  }catch(e){document.getElementById('tname').textContent='Offline';document.getElementById('plabel').textContent='Check connection';}
+  }catch(e){document.getElementById('tname').textContent='Offline';const td=document.getElementById('tdates');if(td)td.textContent='Check connection';}
 }
 init();
 try{document.body.classList.add(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'');}catch(e){}
