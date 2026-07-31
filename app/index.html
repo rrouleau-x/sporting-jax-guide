@@ -282,7 +282,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
   <button class="tab" data-scr="games"><i class="ti ti-trophy"></i>Games</button>
   <button class="tab" data-scr="venue"><i class="ti ti-map-pin"></i>Venue</button>
   <button class="tab" data-scr="pack"><i class="ti ti-backpack"></i>Pack</button>
-  <button class="tab" data-scr="more" style="position:relative"><i class="ti ti-dots-grid"></i><span class="more-badge" id="moreBadge" style="position:absolute;top:0;right:-4px;width:14px;height:14px;border-radius:50%;background:var(--r);color:#fff;font-size:9px;text-align:center;line-height:14px">1</span>More</button>
+  <button class="tab" data-scr="more"><i class="ti ti-dots-grid"></i>More</button>
 </nav>
 
 <script>
@@ -644,12 +644,6 @@ async function init(){
     const r=await fetch('data.json?_='+Date.now());D=await r.json();
     if(!D.contacts.tournamentDirector)D.contacts.tournamentDirector={email:'TDirector@SportingJaxAcademy.com'};
     renderHome();renderVenue();renderPack();
-    // Show notification badge on More tab if updates exist
-    const badge=document.getElementById('moreBadge');
-    if(badge){
-      if(D.updates&&D.updates.length>0){badge.textContent=D.updates.length;badge.style.display='block';}
-      else{badge.style.display='none';}
-    }
   }catch(e){document.getElementById('tname').textContent='Offline';document.getElementById('plabel').textContent='Check connection';}
 }
 init();
