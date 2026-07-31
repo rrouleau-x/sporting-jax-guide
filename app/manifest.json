@@ -1,6 +1,6 @@
 {
-  "name": "Bob Tournament Hub",
-  "short_name": "Bob Hub",
+  "name": "Sporting Jax Guide",
+  "short_name": "Sporting Jax",
   "description": "Smart tournament guide for youth sports families",
   "start_url": "/app/",
   "display": "standalone",
