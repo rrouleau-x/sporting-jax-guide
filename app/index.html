@@ -569,7 +569,11 @@ function showSheet(section){
   let h='';
   if(section==='updates'){
     if(!D.updates||!D.updates.length) h=`<h3 style="margin-bottom:12px">Updates</h3><p class="help-text" style="padding:20px">No updates yet. Messages and alerts will appear here.</p>`;
-    else h=`<h3 style="margin-bottom:12px">Updates</h3>`+D.updates.map(u=>`<div class="update-row"><div class="dot ${u.type==='alert'?'alert':u.type==='warning'?'warn':'info'}"></div><span class="time">${u.time||''}</span><div class="text"><div class="title">${u.title}</div><div class="desc">${u.description}${u.posted?' · '+u.posted:''}</div></div></div>`).join('');
+    else {
+      // Mark all as read
+      markUpdatesRead();
+      h=`<h3 style="margin-bottom:12px">Updates</h3>`+D.updates.map(u=>`<div class="update-row"><div class="dot ${u.type==='alert'?'alert':u.type==='warning'?'warn':'info'}"></div><span class="time">${u.time||''}</span><div class="text"><div class="title">${u.title}</div><div class="desc">${u.description}${u.posted?' · '+u.posted:''}</div></div></div>`).join('');
+      ${D.updates.some(u=>u.actionRequired)?'<p class="text-sm text-muted mt-2"><i class="ti ti-alert-triangle" style="color:var(--r)"></i> Action required on some items</p>':''}`;
   }
   if(section==='hotels'){
     const ht=D.hotels;
@@ -613,6 +617,31 @@ function showSheet(section){
   document.getElementById('sc').innerHTML=h;
   document.getElementById('sh').classList.add('on');document.getElementById('ov').classList.add('on');
 }
+// === UPDATE READ TRACKING ===
+function markUpdatesRead(){
+  if(!D||!D.updates)return;
+  localStorage.setItem('updates_read_count',D.updates.length);
+  localStorage.setItem('updates_read_time',Date.now());
+  updateBadge();
+}
+function hasUnreadUpdates(){
+  if(!D||!D.updates||D.updates.length===0)return false;
+  const read=parseInt(localStorage.getItem('updates_read_count')||'0');
+  return D.updates.length>read;
+}
+function updateBadge(){
+  const badge=document.getElementById('moreBadge');
+  if(!badge)return;
+  if(hasUnreadUpdates()){
+    const count=D.updates.length-(parseInt(localStorage.getItem('updates_read_count')||'0'));
+    badge.textContent=count;
+    badge.style.display='block';
+    badge.style.minWidth='14px';badge.style.height='14px';badge.style.borderRadius='7px';badge.style.left='55%';badge.style.top='0';badge.style.padding='0 3px';
+  }else{
+    badge.style.display='none';
+  }
+}
+
 function closeSheet(){document.getElementById('sh').classList.remove('on');document.getElementById('ov').classList.remove('on')}
 
 // === SEARCH ===
@@ -640,10 +669,7 @@ async function init(){
   try{
     const r=await fetch('data.json?_='+Date.now());D=await r.json();
     if(!D.contacts.tournamentDirector)D.contacts.tournamentDirector={email:'TDirector@SportingJaxAcademy.com'};
-    renderHome();renderVenue();renderPack();
-    // Show notification badge on More tab if updates exist
-    const badge=document.getElementById('moreBadge');
-    if(badge&&D.updates&&D.updates.length>0){badge.textContent=D.updates.length;badge.style.display='block';badge.style.minWidth='14px';badge.style.height='14px';badge.style.borderRadius='7px';badge.style.right='2px';badge.style.top='-2px';badge.style.padding='0 3px';}
+    renderHome();renderVenue();renderPack();updateBadge();
   }catch(e){document.getElementById('tname').textContent='Offline';document.getElementById('plabel').textContent='Check connection';}
 }
 if(window.matchMedia('(prefers-color-scheme:dark)').matches)document.body.classList.add('dark');
