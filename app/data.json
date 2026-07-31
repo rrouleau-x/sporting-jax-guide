@@ -128,7 +128,9 @@
       "Penalty Kicks — FIFA Kicks"
     ]
   },
-  "updates": [],
+  "updates": [
+    { "type": "warning", "title": "Bring white & blue jerseys", "description": "Uniform confirmation — but pack both kits in case of late change", "time": "Jul 30 · 6:00 PM", "posted": "Coach Keith", "actionRequired": false }
+  ],
   "contacts": {
     "manager": { "name": "Jenn Boyd", "role": "Team Manager", "phone": "770-757-1617", "email": "jsboyd21@gmail.com" },
     "coach": { "name": "Keith Gunn", "role": "Head Coach", "phone": "" },
