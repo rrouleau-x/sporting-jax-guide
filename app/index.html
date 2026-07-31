@@ -643,7 +643,7 @@ async function init(){
   try{
     const r=await fetch('data.json?_='+Date.now());D=await r.json();
     if(!D.contacts.tournamentDirector)D.contacts.tournamentDirector={email:'TDirector@SportingJaxAcademy.com'};
-    renderHome();renderVenue();renderPack();
+    renderHome();renderVenue();renderPack();renderGames();
   }catch(e){document.getElementById('tname').textContent='Offline';document.getElementById('plabel').textContent='Check connection';}
 }
 init();
