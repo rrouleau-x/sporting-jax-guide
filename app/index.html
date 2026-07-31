@@ -282,7 +282,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
   <button class="tab" data-scr="games"><i class="ti ti-trophy"></i>Games</button>
   <button class="tab" data-scr="venue"><i class="ti ti-map-pin"></i>Venue</button>
   <button class="tab" data-scr="pack"><i class="ti ti-backpack"></i>Pack</button>
-  <button class="tab" data-scr="more"><i class="ti ti-dots-grid"></i>More</button>
+  <button class="tab" data-scr="more" style="position:relative"><i class="ti ti-dots-grid"></i><span class="more-badge" id="moreBadge" style="position:absolute;top:0;right:-4px;width:14px;height:14px;border-radius:50%;background:var(--r);color:#fff;font-size:9px;text-align:center;line-height:14px">1</span>More</button>
 </nav>
 
 <script>
@@ -569,12 +569,8 @@ function showSheet(section){
   let h='';
   if(section==='updates'){
     if(!D.updates||!D.updates.length) h=`<h3 style="margin-bottom:12px">Updates</h3><p class="help-text" style="padding:20px">No updates yet. Messages and alerts will appear here.</p>`;
-    else {
-      // Mark all as read
-      markUpdatesRead();
-      h=`<h3 style="margin-bottom:12px">Updates</h3>`+D.updates.map(u=>`<div class="update-row"><div class="dot ${u.type==='alert'?'alert':u.type==='warning'?'warn':'info'}"></div><span class="time">${u.time||''}</span><div class="text"><div class="title">${u.title}</div><div class="desc">${u.description}${u.posted?' · '+u.posted:''}</div></div></div>`).join('');
-      if(D.updates.some(u=>u.actionRequired))h+='<p class="text-sm text-muted mt-2"><i class="ti ti-alert-triangle" style="color:var(--r)"></i> Action required on some items</p>';
-    }
+    else h=`<h3 style="margin-bottom:12px">Updates</h3>`+D.updates.map(u=>`<div class="update-row"><div class="dot ${u.type==='alert'?'alert':u.type==='warning'?'warn':'info'}"></div><span class="time">${u.time||''}</span><div class="text"><div class="title">${u.title}</div><div class="desc">${u.description}${u.posted?' · '+u.posted:''}</div></div></div>`).join('');
+  }
   if(section==='hotels'){
     const ht=D.hotels;
     h=`<h3 style="margin-bottom:8px">Official — Stay-to-Play Compliant</h3><p class="help-text" style="text-align:left;margin-bottom:8px">These hotels satisfy the tournament housing requirement.</p>
@@ -617,31 +613,6 @@ function showSheet(section){
   document.getElementById('sc').innerHTML=h;
   document.getElementById('sh').classList.add('on');document.getElementById('ov').classList.add('on');
 }
-// === UPDATE READ TRACKING ===
-function markUpdatesRead(){
-  if(!D||!D.updates)return;
-  localStorage.setItem('updates_read_count',D.updates.length);
-  localStorage.setItem('updates_read_time',Date.now());
-  updateBadge();
-}
-function hasUnreadUpdates(){
-  if(!D||!D.updates||D.updates.length===0)return false;
-  const read=parseInt(localStorage.getItem('updates_read_count')||'0');
-  return D.updates.length>read;
-}
-function updateBadge(){
-  const badge=document.getElementById('moreBadge');
-  if(!badge)return;
-  if(hasUnreadUpdates()){
-    const count=D.updates.length-(parseInt(localStorage.getItem('updates_read_count')||'0'));
-    badge.textContent=count;
-    badge.style.display='block';
-    badge.style.minWidth='14px';badge.style.height='14px';badge.style.borderRadius='7px';badge.style.left='55%';badge.style.top='0';badge.style.padding='0 3px';
-  }else{
-    badge.style.display='none';
-  }
-}
-
 function closeSheet(){document.getElementById('sh').classList.remove('on');document.getElementById('ov').classList.remove('on')}
 
 // === SEARCH ===
@@ -669,7 +640,10 @@ async function init(){
   try{
     const r=await fetch('data.json?_='+Date.now());D=await r.json();
     if(!D.contacts.tournamentDirector)D.contacts.tournamentDirector={email:'TDirector@SportingJaxAcademy.com'};
-    renderHome();renderVenue();renderPack();updateBadge();
+    renderHome();renderVenue();renderPack();
+    // Show notification badge on More tab if updates exist
+    const badge=document.getElementById('moreBadge');
+    if(badge&&D.updates&&D.updates.length>0){badge.textContent=D.updates.length;badge.style.display='block';}
   }catch(e){document.getElementById('tname').textContent='Offline';document.getElementById('plabel').textContent='Check connection';}
 }
 if(window.matchMedia('(prefers-color-scheme:dark)').matches)document.body.classList.add('dark');
