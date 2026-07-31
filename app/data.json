@@ -135,7 +135,7 @@
     "manager": { "name": "Jenn Boyd", "role": "Team Manager", "phone": "770-757-1617", "email": "jsboyd21@gmail.com" },
     "coach": { "name": "Keith Gunn", "role": "Head Coach", "phone": "" },
     "teamManagers": [
-      { "name": "Victoria Huryn", "phone": "859-445-2028", "email": "victoriaamberlong@gmail.com" },
+      { "name": "Victoria Huryn", "phone": "", "email": "victoriaamberlong@gmail.com" },
       { "name": "David Shuman Jr", "phone": "", "email": "d.shuman@savannahunited.com" }
     ],
     "premierStaff": [
