@@ -26,7 +26,7 @@
     "name": "Veterans Park",
     "address": "1332 Veterans Parkway, St. Johns, FL 32259",
     "coordinates": { "lat": 30.0821, "lng": -81.5484 },
-    "mapsUrl": "https://maps.apple.com/?q=1332+Veterans+Pkwy+St+Johns+FL+32259",
+    "mapsUrl": "https://www.google.com/maps/?q=1332+Veterans+Pkwy+St+Johns+FL+32259",
     "parking": "Free main paved lot (Fields 1-4). Overflow grass lot at east end (Fields 5-6). No parking on grass near Fields 1-2. Arrive 30-45 min early.",
     "fields": {
       "count": 6,
@@ -168,10 +168,10 @@
     ]
   },
   "nearby": {
-    "urgentCare": { "name": "Baptist Health Emergency", "address": "2310 Village Square Pkwy, Fleming Island", "phone": "904-516-2300", "drive": "~17 min", "maps": "https://maps.apple.com/?q=Baptist+Health+Emergency+Fleming+Island" },
-    "target": { "name": "Target", "address": "1490 County Rd 210, St. Johns", "drive": "~7 min", "maps": "https://maps.apple.com/?q=Target+County+Rd+210+St+Johns+FL" },
-    "dicks": { "name": "Dick's Sporting Goods", "address": "10390 Midtown Pkwy, Jacksonville", "drive": "~15 min", "maps": "https://maps.apple.com/?q=Dicks+Sporting+Goods+Midtown+Pkwy+Jacksonville" },
-    "coffee": { "name": "Starbucks", "address": "1490 County Rd 210, St. Johns", "drive": "~7 min", "maps": "https://maps.apple.com/?q=Starbucks+County+Rd+210+St+Johns" }
+    "urgentCare": { "name": "Baptist Health Emergency", "address": "2310 Village Square Pkwy, Fleming Island", "phone": "904-516-2300", "drive": "~17 min", "maps": "https://www.google.com/maps/?q=Baptist+Health+Emergency+Fleming+Island" },
+    "target": { "name": "Target", "address": "1490 County Rd 210, St. Johns", "drive": "~7 min", "maps": "https://www.google.com/maps/?q=Target+County+Rd+210+St+Johns+FL" },
+    "dicks": { "name": "Dick's Sporting Goods", "address": "10390 Midtown Pkwy, Jacksonville", "drive": "~15 min", "maps": "https://www.google.com/maps/?q=Dicks+Sporting+Goods+Midtown+Pkwy+Jacksonville" },
+    "coffee": { "name": "Starbucks", "address": "1490 County Rd 210, St. Johns", "drive": "~7 min", "maps": "https://www.google.com/maps/?q=Starbucks+County+Rd+210+St+Johns" }
   },
   "offline": {
     "pdfGuideUrl": "",
