@@ -300,16 +300,39 @@ function go(s){
 }
 document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>go(t.dataset.scr)));
 
+// ══ EASTERN TIME (America/New_York — EST/EDT) ═════════════════════════
+// All parent-visible dates/times render in the family's home zone (ET),
+// regardless of the device's clock/timezone setting. JS parses bare
+// 'YYYY-MM-DD' as UTC (off-by-one for ET) and toISOString() returns UTC
+// — so we always build ET wall-clock Dates explicitly.
+const ET='America/New_York';
+function etNow(){ // current instant as an ET wall-clock Date (safe for tz math)
+  const p=new Intl.DateTimeFormat('en-US',{timeZone:ET,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).formatToParts(new Date());
+  const g=k=>p.find(x=>x.type===k)?.value||'0';
+  const h=parseInt(g('hour'),10)%24;
+  return new Date(+g('year'),+g('month')-1,+g('day'),h,+g('minute'),+g('second'));
+}
+function etDate(d){ // ET wall-clock date → 'YYYY-MM-DD' (never UTC-shifted)
+  const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),dd=String(d.getDate()).padStart(2,'0');
+  return y+'-'+m+'-'+dd;
+}
+function etParse(iso){ // 'YYYY-MM-DD' → ET wall-clock midnight
+  const [y,m,d]=iso.split('-').map(Number);return new Date(y,m-1,d);
+}
+function etDayName(d){ // 'Saturday, Aug 22' in ET
+  return d.toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric',timeZone:ET});
+}
+
 function phase(){
   if(!D)return'planning';
-  const n=new Date(),s=new Date(D.tournament.dates.start),e=new Date(D.tournament.dates.end+'T23:59:59');
+  const n=etNow(),s=etParse(D.tournament.dates.start),e=etParse(D.tournament.dates.end);e.setHours(23,59,59,0);
   if(n>e)return'complete';
   if(n>=s&&n<=e)return D.updates?.some(u=>u.type==='alert')?'delay':'gameday';
   const d=s-n;return d<5*864e5?'countdown':'planning';
 }
 function cd(){
   if(!D)return null;
-  const s=new Date(D.tournament.dates.start),n=new Date(),d=s-n;
+  const s=etParse(D.tournament.dates.start),n=etNow(),d=s-n;
   if(d<=0)return null;
   return{d:Math.floor(d/864e5),h:Math.floor((d%864e5)/36e5),m:Math.floor((d%36e5)/6e4)};
 }
@@ -438,15 +461,13 @@ function toggleExpand(){const exp=document.getElementById('exp');if(exp)exp.clas
 function timeline(){
   // DYNAMIC timeline: built from the tournament's actual date window and
   // the games array — NOT a hardcoded 3-day shape. Works for any
-  // tournament length, any dates, and highlights TODAY from the device
-  // clock (true to the day the app is opened).
+  // tournament length, any dates, and highlights TODAY in EASTERN TIME
+  // (the family's home zone) from the device clock.
   if(!D?.tournament?.dates?.start) return '';
   const DAY=864e5;
-  const start=new Date(D.tournament.dates.start+'T00:00:00');
-  const end=new Date(D.tournament.dates.end+'T23:59:59');
-  const today=new Date();
-  const iso=d=>d.toISOString().slice(0,10);
-  const dayName=d=>d.toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'});
+  const start=etParse(D.tournament.dates.start);
+  const end=etParse(D.tournament.dates.end);end.setHours(23,59,59,0);
+  const today=etNow();
   const gamesByDay={};(D.games||[]).forEach(g=>{const k=g.date||''; (gamesByDay[k]=gamesByDay[k]||[]).push(g);});
 
   const days=[];
@@ -454,25 +475,25 @@ function timeline(){
   if(today<start){
     const travel=new Date(start.getTime()-DAY);
     const city=(D.venue?.address||'').split(',')[1]?.trim()||'the tournament';
-    days.push({day:dayName(travel),cls:'done',items:['Travel to '+city,'Hotel check-in','Early bedtime']});
+    days.push({day:etDayName(travel),cls:'done',items:['Travel to '+city,'Hotel check-in','Early bedtime']});
   }
   // One entry per real tournament day
   for(let t=new Date(start);t<=end;t=new Date(t.getTime()+DAY)){
-    const key=iso(t);
+    const key=etDate(t);
     const games=gamesByDay[key]||[];
-    const isToday=iso(t)===iso(today);
-    const isPast=t<new Date(iso(today)+'T00:00:00');
+    const isToday=etDate(t)===etDate(today);
+    const isPast=t<etParse(etDate(today));
     const items=games.length
       ? games.map((g,i)=>'Game '+(i+1)+': '+(g.time||'TBD')+' vs '+(g.opponent||'TBD')+(g.field?' · Field '+g.field:''))
       : ['Schedule pending'];
     // First game day gets a leave-time hint when known
     if(games.length&&games[0].arrival)items.unshift('Leave: '+games[0].arrival);
-    days.push({day:dayName(t),cls:isPast?'done':isToday?'current':'',items});
+    days.push({day:etDayName(t),cls:isPast?'done':isToday?'current':'',items});
   }
   // Final day: possible knockout / drive home (only if not already shown)
   const lastGame=(D.games||[]).slice(-1)[0];
   if(lastGame&&lastGame.date&&!gamesByDay[lastGame.date]){
-    days.push({day:dayName(new Date(lastGame.date+'T00:00:00')),cls:'',items:['Possible final','Drive home']});
+    days.push({day:etDayName(etParse(lastGame.date)),cls:'',items:['Possible final','Drive home']});
   }
   return days.map((d,i)=>`
     <div class="day ${d.cls}">
@@ -501,14 +522,13 @@ function renderGames(){
     el.innerHTML=`<div class="card" style="text-align:center;padding:32px"><i class="ti ti-ball-soccer" style="font-size:48px;color:var(--y);opacity:.4"></i><h3 style="margin:8px 0 4px">Schedule Releases Soon</h3><p class="help-text">${D.scheduleExpected}. Check back then for game times, fields, and opponents.</p></div>`;return;
   }
   // Group games by their real date — multi-day tournaments get a day
-  // header per date, with today's block highlighted.
-  const fmt=d=>{const dt=new Date(d+'T00:00:00');return dt.toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'})};
-  const today=new Date().toISOString().slice(0,10);
+  // header per date, with today's block highlighted (EASTERN TIME).
+  const today=etDate(etNow());
   const byDay={};D.games.forEach(g=>{(byDay[g.date||'']=byDay[g.date||'']||[]).push(g);});
   let out='';
   for(const [day,games] of Object.entries(byDay)){
     const isToday=day===today;
-    out+=`<div class="section-title" style="${isToday?'color:var(--y);':''}">${day?fmt(day):'TBD'}${isToday?' · TODAY':''}${day?'':''}</div>`;
+    out+=`<div class="section-title" style="${isToday?'color:var(--y);':''}">${day?etDayName(etParse(day)):'TBD'}${isToday?' · TODAY':''}</div>`;
     out+=games.map((g,i)=>`<div class="${isToday?'game-card next':g.status==='Complete'?'game-card past':'game-card'}" onclick="expandGame(this)">
       <div style="display:flex;justify-content:space-between;align-items:baseline">
         <span class="time">${g.time||'TBD'}</span>
