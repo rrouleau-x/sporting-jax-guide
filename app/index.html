@@ -332,9 +332,16 @@ function phase(){
 }
 function cd(){
   if(!D)return null;
-  const s=etParse(D.tournament.dates.start),n=etNow(),d=s-n;
+  // CALENDAR-DAY countdown in Eastern Time: Aug 22 − Jul 31 = 22 days,
+  // regardless of the current hour. (A time-floor would show 21 at
+  // 9pm — parents expect calendar days until the tournament.)
+  const s=etParse(D.tournament.dates.start), n=etParse(etDate(etNow()));
+  const d=Math.round((s-n)/864e5);
   if(d<=0)return null;
-  return{d:Math.floor(d/864e5),h:Math.floor((d%864e5)/36e5),m:Math.floor((d%36e5)/6e4)};
+  // h/m are the remainder of the current partial day (time-based)
+  const now=etNow();
+  const rem=s-now;
+  return{d, h:Math.max(0,Math.floor((rem%864e5)/36e5)), m:Math.max(0,Math.floor((rem%36e5)/6e4))};
 }
 
 function renderHome(){

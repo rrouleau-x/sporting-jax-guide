@@ -1,4 +1,4 @@
-const CACHE = 'sporting-jax-v6';
+const CACHE = 'sporting-jax-v7';
 
 self.addEventListener('install', e => {
   self.skipWaiting();
