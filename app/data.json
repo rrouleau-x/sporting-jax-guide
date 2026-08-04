@@ -81,8 +81,8 @@
       {
         "name": "Fairfield Inn & Suites Butler Blvd",
         "chain": "Marriott ★ Points",
-        "rate": "$139/night",
-        "rooms": 23,
+        "rate": "$139–$149/night",
+        "rooms": 34,
         "drive": "17.4 mi · 22 min",
         "route": "I-95 S",
         "amenities": [
@@ -120,7 +120,7 @@
         "note": "Marriott Bonvoy eligible. Not on GotSport."
       }
     ],
-    "updatedAt": "2026-08-04T08:05:00-0400"
+    "updatedAt": "2026-08-04T17:42:52-0400"
   },
   "weather": {
     "summary": "Upper 90s · Heat index 105-114°F · Afternoon t-storms (40-60%)",
