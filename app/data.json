@@ -81,7 +81,8 @@
       {
         "name": "Fairfield Inn & Suites Butler Blvd",
         "chain": "Marriott ★ Points",
-        "rate": "$139/night",
+        "rate": "$139–$149/night",
+        "total2Nights": "$278–$298+",
         "rooms": 35,
         "drive": "17.4 mi · 22 min",
         "route": "I-95 S",
@@ -96,7 +97,8 @@
         "name": "Aloft by Marriott Tapestry Park",
         "chain": "Marriott ★ Points",
         "rate": "$139/night",
-        "rooms": 34,
+        "total2Nights": "$278+",
+        "rooms": 33,
         "drive": "18.8 mi · 25 min",
         "route": "FL-9B S",
         "amenities": [
@@ -120,7 +122,7 @@
         "note": "Marriott Bonvoy eligible. Not on GotSport."
       }
     ],
-    "updatedAt": "2026-08-05T16:48:56-0400"
+    "updatedAt": "2026-08-07T09:14:50-0400"
   },
   "weather": {
     "summary": "Upper 90s · Heat index 105-114°F · Afternoon t-storms (40-60%)",
@@ -183,6 +185,22 @@
       "description": "Uniform confirmation — but pack both kits in case of late change",
       "time": "Jul 30 · 6:00 PM",
       "posted": "Coach Keith",
+      "actionRequired": false
+    },
+    {
+      "type": "info",
+      "title": "Pre-tournament practices posted (Aug 11–17)",
+      "description": "Four practices added to the team calendar, all at Jennifer Ross Soccer Complex Field 7, 5:30–7:00 PM: Tue Aug 11, Wed Aug 12, Thu Aug 13, Mon Aug 17. First session is next Tuesday — final tune-ups before Sporting Jax.",
+      "time": "Aug 5",
+      "posted": "Savannah United",
+      "actionRequired": false
+    },
+    {
+      "type": "info",
+      "title": "Fall events added to team calendar",
+      "description": "New team events posted: Local Festival Sat Sep 12 (JRSC), 1-Day Festival Sat Sep 19 & Sat Sep 26 (JRSC), and Carolina Cup Sat–Sun Oct 3–4 in Columbia, SC — an away tournament, so plan travel early.",
+      "time": "Aug 5",
+      "posted": "Savannah United",
       "actionRequired": false
     }
   ],
