@@ -54,21 +54,21 @@
   },
   "games": [],
   "scheduleStatus": "pending",
-  "scheduleExpected": "August 8-15 via GotSport",
+  "scheduleExpected": "Brackets published; schedule page says COMING SOON. Expected any day.",
   "hotels": {
     "stayToPlay": true,
     "portal": "https://system.gotsport.com/stores/1903604Y4",
     "official": [
       {
-        "name": "Hampton Inn & Suites Bartram Park",
+        "name": "Hampton Inn & Suites Jacksonville South - Bartram Park",
         "chain": "Hilton",
-        "rate": "$143/night",
-        "total2Nights": "$286+",
-        "rooms": 1,
+        "rate": "$119/night (non-refundable) or $139 (free cancel)",
+        "total2Nights": "$238-278+",
+        "rooms": 9,
         "drive": "7.9 mi · 15 min",
         "route": "Bartram Park Blvd & Race Track Rd",
         "amenities": [
-          "Free breakfast",
+          "Free hot breakfast",
           "Free parking",
           "Outdoor pool",
           "Pet-friendly",
@@ -76,53 +76,57 @@
         ],
         "rating": 4.5,
         "bestValue": true,
-        "bookUrl": "https://system.gotsport.com/stores/1903604Y4"
+        "bookUrl": "https://www.booking.com"
       },
       {
-        "name": "Fairfield Inn & Suites Butler Blvd",
+        "name": "Fairfield Inn & Suites Jacksonville Butler Boulevard",
         "chain": "Marriott ★ Points",
-        "rate": "$139–$149/night",
-        "total2Nights": "$278–$298+",
-        "rooms": 35,
+        "rate": "$110/night (non-refundable) or $129 (free cancel)",
+        "total2Nights": "$220-258+",
+        "rooms": 5,
         "drive": "17.4 mi · 22 min",
         "route": "I-95 S",
         "amenities": [
+          "Free buffet breakfast",
           "Outdoor pool",
           "Whirlpool",
           "Marriott Bonvoy"
         ],
-        "bestValue": false
+        "bestValue": false,
+        "bookUrl": "https://www.booking.com"
       },
       {
-        "name": "Aloft by Marriott Tapestry Park",
+        "name": "Aloft by Marriott Jacksonville Tapestry Park",
         "chain": "Marriott ★ Points",
-        "rate": "$139/night",
-        "total2Nights": "$278+",
-        "rooms": 33,
-        "drive": "18.8 mi · 25 min",
+        "rate": "$116/night (breakfast $9 extra)",
+        "total2Nights": "$232+",
+        "rooms": 10,
+        "drive": "18.3 mi · 25 min",
         "route": "FL-9B S",
         "amenities": [
           "On-site bar & restaurant",
           "Outdoor pool",
           "Marriott Bonvoy"
         ],
-        "bestValue": false
+        "bestValue": false,
+        "bookUrl": "https://www.booking.com"
       }
     ],
     "nonOfficial": [
       {
-        "name": "HI Express Bartram Park",
-        "drive": "3.5 mi · 6 min",
-        "note": "Closest to venue. Not on GotSport portal."
+        "name": "Holiday Inn Express Jacksonville South - Bartram Park",
+        "chain": "IHG",
+        "drive": "7.9 mi · 16 min",
+        "note": "$128/night, free breakfast (rated 10.0), 6+ rooms. Adjacent to Hampton Inn. Not on GotSport portal."
       },
       {
-        "name": "Courtyard Flagler Center",
+        "name": "Courtyard by Marriott Jacksonville Flagler Center",
         "chain": "Marriott ★ Points",
-        "drive": "8.6 mi · 12 min",
-        "note": "Marriott Bonvoy eligible. Not on GotSport."
+        "drive": "9.4 mi · 16 min",
+        "note": "$105/night (lowest rate), breakfast $7 extra, 5 rooms. Not on GotSport portal."
       }
     ],
-    "updatedAt": "2026-08-07T09:14:50-0400"
+    "updatedAt": "2026-08-10T17:50:00-0400"
   },
   "weather": {
     "summary": "Upper 90s · Heat index 105-114°F · Afternoon t-storms (40-60%)",
@@ -133,49 +137,65 @@
     "fullLink": "https://docs.google.com/document/d/e/2PACX-1vTfwqpJ6KrFTAWrKkvSay393zfFkZXSUVooPenxd6TStJpcIYHWFJa9kifZJdBQh6ip52gIxifONgO9/pub",
     "keyRules": [
       {
+        "label": "Format",
+        "value": "7v7 · Max roster 12 · Min 5 to start · Size 4 ball"
+      },
+      {
         "label": "Game Length",
-        "value": "25-min halves (U9-U12)"
+        "value": "25-min halves · 5-min halftime"
+      },
+      {
+        "label": "Points",
+        "value": "Win = 3 · Tie = 1 · Loss = 0"
       },
       {
         "label": "Mercy Rule",
-        "value": "6-goal lead → match ends"
+        "value": "6-goal lead at halftime or later → match ends"
+      },
+      {
+        "label": "Goal Cap",
+        "value": "Max 4 goals per game for GD and GF tiebreakers"
       },
       {
         "label": "Substitutions",
-        "value": "Unlimited"
-      },
-      {
-        "label": "Water Breaks",
-        "value": "Mandatory at 85°F+"
+        "value": "Unlimited at goal kicks, throw-ins, kickoffs, halftime, injury"
       },
       {
         "label": "Heading",
-        "value": "Not allowed U12 and younger"
+        "value": "Not allowed U12 and younger → indirect free kick"
+      },
+      {
+        "label": "Water Breaks",
+        "value": "Mandatory mid-half at 85°F+ (FYSA Rule 402.4)"
       },
       {
         "label": "Forfeit",
-        "value": "5 min late. Min 5 players."
+        "value": "5 min late (10 min finals). Min 5 players. Recorded as 4-0 loss."
       },
       {
         "label": "Zero Tolerance",
-        "value": "No ref abuse"
+        "value": "No ref abuse — immediate removal + suspension"
       },
       {
         "label": "Weather",
-        "value": "30-min delay clock"
+        "value": "30-min delay clock. Post-halftime stoppage = completed game."
       },
       {
         "label": "Championship",
-        "value": "No OT — straight to PKs"
+        "value": "No OT — straight to PKs if tied"
+      },
+      {
+        "label": "Stay-to-Play",
+        "value": "Required for teams 90+ miles. Exception: TDirector@SportingJaxAcademy.com"
       }
     ],
     "tiebreakers": [
       "Head-to-Head (disregarded if 3+ teams tied)",
       "Goal Differential — max 4 per game",
       "Goals For — max 4 per game",
-      "Goals Against — fewest allowed",
+      "Goals Against — fewest allowed (no cap)",
       "Shutouts — most clean sheets",
-      "Penalty Kicks — FIFA Kicks"
+      "Penalty Kicks — FIFA Kicks from the Penalty Mark"
     ]
   },
   "updates": [
@@ -206,39 +226,37 @@
   ],
   "contacts": {
     "manager": {
-      "name": "Jenn Boyd",
-      "role": "Team Manager",
-      "phone": "770-757-1617",
-      "email": "jsboyd21@gmail.com"
+      "name": "Rich Rouleau",
+      "role": "Parent Team Manager",
+      "phone": "",
+      "email": "rrouleau@mac.com"
     },
     "coach": {
       "name": "Keith Gunn",
       "role": "Head Coach",
-      "phone": ""
+      "phone": "912-856-9442",
+      "email": "keith.gunn@savannahunited.com"
     },
     "teamManagers": [
       {
-        "name": "Victoria Huryn",
-        "phone": "859-445-2028",
-        "email": "victoriaamberlong@gmail.com"
+        "name": "Carson Gray",
+        "phone": "770-757-1617",
+        "email": "carson.gray@savannahunited.com"
       },
       {
-        "name": "David Shuman Jr",
-        "phone": "",
-        "email": "d.shuman@savannahunited.com"
+        "name": "Mitchell Heath",
+        "phone": "859-445-2028",
+        "email": "mitchell.heath@savannahunited.com"
       }
     ],
     "premierStaff": [
       {
         "name": "Mitchell Heath",
-        "role": "Premier Staff"
+        "role": "Premier Staff",
+        "phone": "912-856-9442"
       },
       {
         "name": "Carson Gray",
-        "role": "Premier Staff"
-      },
-      {
-        "name": "Premier Staff Contact",
         "role": "Premier Staff",
         "phone": "912-856-9442"
       }
@@ -246,9 +264,9 @@
     "tournamentDirector": {
       "name": "Tournament Director",
       "email": "TDirector@SportingJaxAcademy.com",
-      "phone": ""
+      "phone": "904-257-5575"
     },
-    "emergency": ""
+    "emergency": "911"
   },
   "venueRules": {
     "tents": "Pop-up canopies allowed. Must be weighted (no stakes in turf fields). Place behind spectator line — not between field and sideline.",
@@ -297,29 +315,36 @@
   },
   "nearby": {
     "urgentCare": {
-      "name": "Baptist Health Emergency",
-      "address": "2310 Village Square Pkwy, Fleming Island",
-      "phone": "904-516-2300",
-      "drive": "~17 min",
-      "maps": "https://www.google.com/maps/?q=Baptist+Health+Emergency+Fleming+Island"
+      "name": "CareSpot Urgent Care",
+      "address": "70 Durbin Pavilion Dr, Suite 101, St. Johns, FL 32259",
+      "phone": "904-295-0038",
+      "drive": "8am-8pm daily",
+      "maps": "https://www.google.com/maps/?q=CareSpot+Urgent+Care+Durbin+Pavilion+St+Johns+FL"
     },
     "target": {
-      "name": "Target",
-      "address": "1490 County Rd 210, St. Johns",
-      "drive": "~7 min",
-      "maps": "https://www.google.com/maps/?q=Target+County+Rd+210+St+Johns+FL"
+      "name": "Academy Sports + Outdoors",
+      "address": "9041 Southside Blvd, Jacksonville, FL 32256",
+      "drive": "Closest sporting goods to venue",
+      "maps": "https://www.google.com/maps/?q=Academy+Sports+Outdoors+Southside+Blvd+Jacksonville+FL"
     },
     "dicks": {
-      "name": "Dick's Sporting Goods",
-      "address": "10390 Midtown Pkwy, Jacksonville",
-      "drive": "~15 min",
-      "maps": "https://www.google.com/maps/?q=Dicks+Sporting+Goods+Midtown+Pkwy+Jacksonville"
+      "name": "DICK'S Sporting Goods",
+      "address": "14964 Max Leggett Pkwy, Suite 300, Jacksonville, FL 32218",
+      "drive": "~20 min from venue",
+      "maps": "https://www.google.com/maps/?q=Dicks+Sporting+Goods+Max+Leggett+Pkwy+Jacksonville+FL"
+    },
+    "pharmacy": {
+      "name": "Walgreens",
+      "address": "390 SR-13 S, Jacksonville, FL 32259",
+      "phone": "904-230-4696",
+      "drive": "7am-10pm daily",
+      "maps": "https://www.google.com/maps/?q=Walgreens+390+SR-13+S+Jacksonville+FL+32259"
     },
     "coffee": {
-      "name": "Starbucks",
-      "address": "1490 County Rd 210, St. Johns",
-      "drive": "~7 min",
-      "maps": "https://www.google.com/maps/?q=Starbucks+County+Rd+210+St+Johns"
+      "name": "CVS (with MinuteClinic)",
+      "address": "430 SR-13, Jacksonville, FL 32259",
+      "drive": "Walk-ins welcome",
+      "maps": "https://www.google.com/maps/?q=CVS+430+SR-13+Jacksonville+FL+32259"
     }
   },
   "offline": {
