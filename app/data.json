@@ -54,7 +54,7 @@
   },
   "games": [],
   "scheduleStatus": "pending",
-  "scheduleExpected": "Brackets published; schedule page says COMING SOON. Expected any day.",
+  "scheduleExpected": "Brackets finalized; schedule page still says COMING SOON. Expected any day — tournament is 1 week away.",
   "hotels": {
     "stayToPlay": true,
     "portal": "https://system.gotsport.com/stores/1903604Y4",
@@ -126,12 +126,14 @@
         "note": "$105/night (lowest rate), breakfast $7 extra, 5 rooms. Not on GotSport portal."
       }
     ],
-    "updatedAt": "2026-08-10T17:50:00-0400"
+    "updatedAt": "2026-08-15T07:54:14-0400"
   },
   "weather": {
-    "summary": "Upper 90s · Heat index 105-114°F · Afternoon t-storms (40-60%)",
-    "details": "Typical late-August Florida weather. Morning games significantly cooler. Hydrate beginning Friday. Bring cooling towels, shade, sunscreen.",
-    "forecastLink": ""
+    "summary": "Weather shifted since Aug 10. Saturday Aug 22 now shows 55% rain chance with possible morning thunderstorms (up from 4%). Sunday Aug 23 is mostly sunny with 3% rain. Heat index 98-101F (RealFeel). Bring rain gear for Saturday.",
+    "details": "Sat Aug 22: High 92-96F, Low 77F, RealFeel 99F, mostly cloudy with rain, 55% rain chance (AccuWeather), UV 10, SW 8mph. Sun Aug 23: High 91-96F, Low 76-81F, RealFeel 98F, mostly sunny, 3-5% rain, UV 10, SW 7mph. Sources: AccuWeather 32259, TimeandDate. Recheck Aug 19-20.",
+    "forecastLink": "https://www.accuweather.com/en/us/saint-johns/32259/10-day-weather-forecast/13855_pc",
+    "source": "AccuWeather (32259) + TimeandDate",
+    "updatedAt": "2026-08-15T08:00:00-04:00"
   },
   "rules": {
     "fullLink": "https://docs.google.com/document/d/e/2PACX-1vTfwqpJ6KrFTAWrKkvSay393zfFkZXSUVooPenxd6TStJpcIYHWFJa9kifZJdBQh6ip52gIxifONgO9/pub",
