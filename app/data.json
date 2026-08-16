@@ -333,9 +333,46 @@
     }
   },
   "schedule": {
-    "games": [],
+    "games": [
+      {
+        "match": 28,
+        "date": "2026-08-22",
+        "time": "09:15 EDT",
+        "home": false,
+        "opponent": "Sporting SA PC NFPL B2017/18 Dev 1",
+        "opponentState": "FL",
+        "venue": "Chuck Rogers Park",
+        "field": "Field 5",
+        "address": "11950 San Jose Blvd, Jacksonville, FL 32223",
+        "status": "scheduled"
+      },
+      {
+        "match": 30,
+        "date": "2026-08-22",
+        "time": "15:30 EDT",
+        "home": true,
+        "opponent": "Sporting SA JAX NFPL B2017/18 N1 DEV 1",
+        "opponentState": "FL",
+        "venue": "Chuck Rogers Park",
+        "field": "Field 5",
+        "address": "11950 San Jose Blvd, Jacksonville, FL 32223",
+        "status": "scheduled"
+      },
+      {
+        "match": 32,
+        "date": "2026-08-23",
+        "time": "10:30 EDT",
+        "home": true,
+        "opponent": "Jacksonville FC JFC NFPL B2017/18 Elite Blue",
+        "opponentState": "FL",
+        "venue": "Chuck Rogers Park",
+        "field": "Field 5",
+        "address": "11950 San Jose Blvd, Jacksonville, FL 32223",
+        "status": "scheduled"
+      }
+    ],
     "scheduleStatus": "In Coach Review",
-    "scheduleExpected": "Brackets finalized; schedule now in Coach Review. Expected to publish imminently \u2014 tournament is 6 days away.",
+    "scheduleExpected": "Schedule released! 3 games at Chuck Rogers Park Field 5.",
     "bracket": {
       "division": "U9 Boys Silver",
       "bracketName": "Bracket A",
@@ -377,17 +414,18 @@
         "fields": "Fields 5, 6, 7"
       }
     ],
-    "gotsportScheduleUrl": "https://system.gotsport.com/org_event/events/54816"
+    "gotsportScheduleUrl": "https://system.gotsport.com/org_event/events/54816",
+    "scheduleReleased": true
   },
   "venue": {
     "venue": {
-      "name": "Veterans Park",
-      "address": "1332 Veterans Parkway, St. Johns, FL 32259",
+      "name": "Chuck Rogers Park",
+      "address": "11950 San Jose Blvd, Jacksonville, FL 32223",
       "coordinates": {
         "lat": 30.0821,
         "lng": -81.5484
       },
-      "mapsUrl": "https://www.google.com/maps/?q=1332+Veterans+Pkwy+St+Johns+FL+32259",
+      "mapsUrl": "https://www.google.com/maps/dir/Chuck+Rogers+Park,11950+San+Jose+Blvd,Jacksonville,FL+32223",
       "parking": "Free main paved lot (Fields 1-4). Overflow grass lot at east end (Fields 5-6). No parking on grass near Fields 1-2. Arrive 30-45 min early.",
       "fields": {
         "count": 6,
@@ -405,7 +443,8 @@
         "shade": "Limited \u2014 bring canopy",
         "aed": true,
         "playground": true
-      }
+      },
+      "field": "Field 5"
     }
   },
   "team": {
