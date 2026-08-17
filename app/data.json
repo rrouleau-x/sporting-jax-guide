@@ -125,6 +125,14 @@
   "updates": {
     "updates": [
       {
+        "type": "info",
+        "title": "Schedule UPDATED: Game 1 moved to 10:30 AM, fields changed",
+        "description": "Updated schedule (Aug 17): Game 1 vs PC NFPL Dev 1 moved from 9:15 AM to 10:30 AM at Chuck Rogers Park Field 7 (was Field 5). Game 2 vs JAX NFPL N1 DEV 1 stays 3:30 PM but now on Field 6 (was Field 5). Game 3 vs JFC NFPL Elite Blue stays Sun 10:30 AM on Field 5. New: Bracket A Final Sun 2:15 PM at Field 5 (#1 vs #2). Division confirmed: U9 Boys Silver, Bracket A (4 teams).",
+        "time": "2026-08-17T14:30:00-0400",
+        "posted": "Bob Team Manager",
+        "actionRequired": true
+      },
+      {
         "type": "warning",
         "title": "Weather Alert: Rain now likely BOTH days",
         "description": "Sunday forecast flipped from clear (3% rain) to thunderstorms (59% rain). Saturday at 56%. Heat intensified \u2014 RealFeel 104F Sat, 101F Sun, 108F Friday travel day. Pack rain gear for both days.",
@@ -337,12 +345,12 @@
       {
         "match": 28,
         "date": "2026-08-22",
-        "time": "09:15 EDT",
+        "time": "10:30 EDT",
         "home": false,
         "opponent": "Sporting SA PC NFPL B2017/18 Dev 1",
         "opponentState": "FL",
         "venue": "Chuck Rogers Park",
-        "field": "Field 5",
+        "field": "Field 7",
         "address": "11950 San Jose Blvd, Jacksonville, FL 32223",
         "status": "scheduled"
       },
@@ -354,7 +362,7 @@
         "opponent": "Sporting SA JAX NFPL B2017/18 N1 DEV 1",
         "opponentState": "FL",
         "venue": "Chuck Rogers Park",
-        "field": "Field 5",
+        "field": "Field 6",
         "address": "11950 San Jose Blvd, Jacksonville, FL 32223",
         "status": "scheduled"
       },
@@ -369,10 +377,23 @@
         "field": "Field 5",
         "address": "11950 San Jose Blvd, Jacksonville, FL 32223",
         "status": "scheduled"
+      },
+      {
+        "match": 33,
+        "date": "2026-08-23",
+        "time": "14:15 EDT",
+        "home": null,
+        "opponent": "Bracket A #1 vs #2 (Final)",
+        "opponentState": null,
+        "venue": "Chuck Rogers Park",
+        "field": "Field 5",
+        "address": "11950 San Jose Blvd, Jacksonville, FL 32223",
+        "status": "conditional",
+        "note": "Final depends on bracket standings after 3 round-robin games"
       }
     ],
-    "scheduleStatus": "In Coach Review",
-    "scheduleExpected": "Schedule released! 3 games at Chuck Rogers Park Field 5.",
+    "scheduleStatus": "Schedule Updated",
+    "scheduleExpected": "Schedule updated Aug 17: G1 moved to 10:30 AM (Field 7), G2 on Field 6, G3 on Field 5. Final added Sun 2:15 PM (Field 5). 4-team Bracket A round-robin + final.",
     "bracket": {
       "division": "U9 Boys Silver",
       "bracketName": "Bracket A",
@@ -394,8 +415,8 @@
           "state": "FL"
         }
       ],
-      "format": "4-team bracket \u2014 likely round-robin (3 games) with possible final",
-      "gameGuarantee": "3 games minimum (depending on bracket and weather)"
+      "format": "4-team bracket — round-robin (3 games) + Bracket A #1 vs #2 final (Sun 2:15 PM)",
+      "gameGuarantee": "3 games minimum + potential final (depending on bracket standings)"
     },
     "u9Venues": [
       {
