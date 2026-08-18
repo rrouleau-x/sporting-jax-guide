@@ -308,6 +308,7 @@
 
 const TOURNAMENT = {
   timezone: "America/New_York",
+  matchDurationMin: 65,   // estimated game + halftime (used to derive active window)
   brand: { initial: "SU", primary: "#0055A4", dark: "#003f7a" },
   tournament: {
     name: "Sporting Jax Boys Invitational",
@@ -463,8 +464,9 @@ document.documentElement.style.setProperty('--su',TOURNAMENT.brand.primary);
 document.documentElement.style.setProperty('--su-dark',TOURNAMENT.brand.dark);
 document.getElementById('updBanner').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span><b>Updated '+TOURNAMENT.tournament.updatesUpdated+'.</b> See what changed &nbsp;<a href="#scr-more" data-goto="more">here</a>.</span>';
 
-// ---- TOURNAMENT-AGNOSTIC DATE HELPERS ----
+// ---- TOURNAMENT STATE RESOLVER (single source of truth for time) ----
 const TZ=TOURNAMENT.timezone;
+const DURATION=(TOURNAMENT.matchDurationMin||60)*60000; // active-match window
 function tzNow(){return new Date();}
 function tzTime(iso){return new Date(iso);}
 function fmtParts(diff){
@@ -472,34 +474,60 @@ function fmtParts(diff){
   const days=Math.floor(diff/86400000),hours=Math.floor((diff%86400000)/3600000),mins=Math.floor((diff%3600000)/60000);
   return {days,hours,mins};
 }
-
-// ---- LIVE COUNTDOWN (contextual: travel → G1 → G2 → G3 → confirmed final → complete) ----
-const cdLabel=document.getElementById('cdLabel'),cdBody=document.getElementById('cdBody');
-function nextEvent(now){
-  // Build the ordered event list from data
-  const events=[];
-  if(TOURNAMENT.travel) events.push({type:'travel',t:tzTime(TOURNAMENT.travel.date+"T00:00:00-04:00"),label:'Travel'});
-  TOURNAMENT.games.forEach(g=>{
-    if(g.status==='confirmed') events.push({type:'game',t:tzTime(g.datetime),game:g,label:g.label});
-    else if(g.status==='conditional'&&g.confirmed) events.push({type:'game',t:tzTime(g.datetime),game:g,label:g.label});
+/* Resolve the full tournament state from data + now. Everything downstream
+   (countdown, Next Match, context, Today) consumes this ONE result, so they
+   can never disagree. Fully generic — knows nothing about any specific
+   tournament. */
+function resolveTournamentState(t, now){
+  const travel=t.travel?{...t.travel,start:tzTime(t.travel.date+"T00:00:00-04:00")}:null;
+  // Derive each game's active window [start, end] from data (or duration)
+  const games=(t.games||[]).map(g=>{
+    const start=tzTime(g.datetime);
+    const end=g.end?tzTime(g.end):new Date(start.getTime()+DURATION);
+    return {...g,start,end};
   });
-  events.sort((a,b)=>a.t-b.t);
-  // next upcoming
-  for(const e of events){ if(e.t>now) return e; }
-  return null; // complete
-}
-function renderCountdown(){
-  const now=tzNow(),ev=nextEvent(now);
-  if(!ev){ cdLabel.textContent='Tournament Complete'; cdBody.innerHTML=''; return; }
-  const diff=ev.t-now;
-  if(ev.type==='travel'){
-    cdLabel.textContent='UNTIL TRAVEL';
+  // Only "active" games (confirmed, or conditional that has been confirmed) count toward next/current
+  const eligible=games.filter(g=>g.status==='confirmed'||(g.status==='conditional'&&g.confirmed));
+  // Determine each game's state
+  const withState=games.map(g=>{
+    let st;
+    if(g.status==='cancelled') st='cancelled';
+    else if(g.status==='postponed') st='postponed';
+    else if(g.status==='conditional'&&!g.confirmed) st='conditional';
+    else if(now<g.start) st='upcoming';
+    else if(now<g.end) st='current';
+    else st='completed';
+    return {...g,state:st};
+  });
+  const currentMatch=withState.find(g=>g.state==='current')||null;
+  const nextMatch=withState.find(g=>g.state==='upcoming')||null;
+  // Countdown target = the next event boundary. If a match is live, count its remaining window;
+  // else the next eligible start; travel is the earliest milestone.
+  let countdownTarget=null,countdownLabel='',phase;
+  if(currentMatch){
+    phase='in-match';
+    countdownTarget=currentMatch.end;
+    countdownLabel=currentMatch.label.toUpperCase()+' · HAPPENING NOW';
+  } else if(nextMatch){
+    if(travel&&now<travel.start){ phase='pre-tournament'; countdownTarget=nextMatch.start; countdownLabel='UNTIL KICKOFF'; }
+    else if(travel&&now<new Date(travel.start.getTime()+24*3600000)){ phase='travel'; countdownTarget=nextMatch.start; countdownLabel='UNTIL KICKOFF'; }
+    else { phase='between-games'; countdownTarget=nextMatch.start; countdownLabel='UNTIL '+nextMatch.label.toUpperCase(); }
   } else {
-    const g=ev.game;
-    const isFirst=TOURNAMENT.games[0]&&g.id===TOURNAMENT.games[0].id;
-    cdLabel.textContent='UNTIL '+(isFirst?'KICKOFF':g.label.toUpperCase());
+    // No current or upcoming match. If there's a still-pending conditional final whose
+    // scheduled time hasn't fully passed, we're waiting on a bracket result.
+    const pendFinal=withState.find(g=>g.state==='conditional');
+    if(pendFinal&&now<pendFinal.end){ phase='awaiting-final'; countdownTarget=null; countdownLabel='AWAITING BRACKET RESULT'; }
+    else { phase='complete'; countdownTarget=null; countdownLabel='TOURNAMENT COMPLETE'; }
   }
-  const p=fmtParts(diff);
+  return {now,phase,currentMatch,nextMatch,countdownTarget,countdownLabel,travel,games,withState};
+}
+
+// ---- LIVE COUNTDOWN (consumes resolver) ----
+const cdLabel=document.getElementById('cdLabel'),cdBody=document.getElementById('cdBody');
+function renderCountdown(state){
+  cdLabel.textContent=state.countdownLabel||'';
+  if(!state.countdownTarget){ cdBody.innerHTML=''; return; }
+  const p=fmtParts(state.countdownTarget-state.now);
   let html;
   if(p.days>0) html='<span class="cd-num num">'+p.days+'</span><span class="cd-unit">d</span><span class="cd-sep">·</span><span class="cd-num num">'+p.hours+'</span><span class="cd-unit">hr</span><span class="cd-sep">·</span><span class="cd-num num">'+p.mins+'</span><span class="cd-unit">min</span>';
   else if(p.hours>0) html='<span class="cd-num num">'+p.hours+'</span><span class="cd-unit">hr</span><span class="cd-sep">·</span><span class="cd-num num">'+p.mins+'</span><span class="cd-unit">min</span>';
@@ -507,76 +535,60 @@ function renderCountdown(){
   cdBody.innerHTML=html;
 }
 
-// ---- CONTEXT + NEED-NOW (data-driven) ----
+// ---- CONTEXT + NEED-NOW (consumes resolver) ----
 const ctxText=document.getElementById('ctxText'),ctxChip=document.getElementById('ctxChip');
 const needTitle=document.getElementById('needTitle'),needList=document.getElementById('needList');
-function currentPhase(now){
-  const travel=TOURNAMENT.travel?tzTime(TOURNAMENT.travel.date+"T00:00:00-04:00"):null;
-  const g1=TOURNAMENT.games[0]?tzTime(TOURNAMENT.games[0].datetime):null;
-  if(travel&&now<travel) return 'pre';
-  if(travel&&now<tzTime(travel.getTime()+24*3600000)) return 'travel';
-  if(g1&&now<g1) return 'game1';
-  // during/after g1
-  for(let i=0;i<TOURNAMENT.games.length;i++){
-    const g=TOURNAMENT.games[i];
-    if(g.status!=='confirmed')continue;
-    const t=tzTime(g.datetime);
-    const end=t.getTime()+2*3600000; // ~2hr match window
-    if(now>=t&&now<end) return 'game'+(i+1);
-  }
-  // between games: next upcoming confirmed game
-  const next=nextEvent(now);
-  if(next&&next.type==='game') return 'between';
-  return 'done';
-}
-function refreshContext(){
-  const now=tzNow(),ph=currentPhase(now);
-  let txt,chip,need='before';
-  const travel=TOURNAMENT.travel;
+function refreshContext(state){
+  const {phase,currentMatch,nextMatch,travel,now}=state;
   const g1=TOURNAMENT.games[0];
-  switch(ph){
-    case 'pre':
+  let txt,chip,need='before';
+  switch(phase){
+    case 'pre-tournament':
       const days=Math.max(0,Math.round((tzTime(g1.datetime).getTime()-new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime())/86400000));
-      const travelWeekday=travel?new Date(travel.date+"T12:00:00-04:00").toLocaleDateString('en-US',{weekday:'long',timeZone:TZ}):'';
-      txt=(days>0?days+' DAYS TO KICKOFF':'TODAY · GAME DAY');
-      chip=(travel?travel.label+' · '+travelWeekday:'Game Day'); need='before'; break;
+      const wd=travel?new Date(travel.start.getTime()).toLocaleDateString('en-US',{weekday:'long',timeZone:TZ}):'';
+      txt=(days>0?days+' DAYS TO KICKOFF':'TODAY · GAME DAY'); chip=(travel?travel.label+' · '+wd:'Game Day'); need='before'; break;
     case 'travel': txt='TRAVEL DAY'; chip=travel.detail||travel.label; need='travel'; break;
-    case 'game1': txt='GAME DAY'; chip=g1.label+' · '+g1.time; need='game1'; break;
-    case 'between': txt='BETWEEN GAMES'; need='between';
-      const nxt=nextEvent(now); chip=nxt&&nxt.game?nxt.game.label+' · '+nxt.game.time:'Next match'; break;
-    case 'done': txt='TOURNAMENT COMPLETE'; chip='Great weekend!'; need='before'; break;
-    default:
-      const gi=parseInt(ph.replace('game',''),10)-1;
-      const g=TOURNAMENT.games[gi]||g1; txt=(ph==='game1'?'GAME DAY':'FINAL DAY'); chip=g.label+' · '+g.time; need='game1'; break;
+    case 'in-match': txt='HAPPENING NOW'; chip=currentMatch.label+' · '+currentMatch.time+' · Field '+currentMatch.field; need='game1'; break;
+    case 'between-games': txt='BETWEEN GAMES'; chip=nextMatch?nextMatch.label+' · '+nextMatch.time:'Next match'; need='between'; break;
+    case 'awaiting-final': txt='AWAITING BRACKET RESULT'; chip='Final qualification not yet confirmed'; need='game3'; break;
+    case 'complete': txt='TOURNAMENT COMPLETE'; chip='Great weekend!'; need='before'; break;
+    default: txt='GAME DAY'; chip=nextMatch?nextMatch.label+' · '+nextMatch.time:'Next match'; need='game1';
   }
   ctxText.textContent=txt; ctxChip.textContent=chip;
-  const needKey=need==='travel'?'travel':need==='between'?'between':need==='game1'?'game1':'before';
+  const needKey=need==='travel'?'travel':need==='between'?'between':need==='game1'?'game1':need==='game3'?'game3':'before';
   const list=(TOURNAMENT.needs[needKey]||TOURNAMENT.needs.before);
   let needTitleText='Before Friday';
   if(need==='between') needTitleText='Between Games';
   else if(need==='travel') needTitleText=(travel?travel.label:'Today');
   else if(need==='game1') needTitleText=(g1?g1.label:'Game 1');
+  else if(need==='game3') needTitleText='Final Check';
   needTitle.textContent=needTitleText;
   needList.innerHTML=list.map(([a,b])=>'<li>'+a+' <span style="opacity:.75;font-weight:500">· '+b+'</span></li>').join('');
 }
 
-// ---- NEXT MATCH DASHBOARD ----
+// ---- NEXT MATCH DASHBOARD (consumes the SAME resolver) ----
 const nextStatus=document.getElementById('nextStatus'),nextBody=document.getElementById('nextBody');
-function renderNextMatch(){
-  const now=tzNow();
-  // next upcoming confirmed game
-  const upcoming=TOURNAMENT.games.filter(g=>g.status==='confirmed'&&tzTime(g.datetime)>now);
-  const g=upcoming[0]||TOURNAMENT.games[0];
-  if(!g){nextBody.innerHTML='<div class="time num">—</div><div class="vs">No upcoming matches</div>';return;}
+function renderNextMatch(state){
+  const {currentMatch,nextMatch,phase}=state;
   const venue=TOURNAMENT.venue;
-  nextStatus.textContent = g.arrivalStatus==='pending-coach'?'Awaiting arrival':'Confirmed';
-  nextStatus.className='status '+(g.arrivalStatus==='pending-coach'?'pend':'conf');
+  // Determine which game to show: a live match first, else the next upcoming
+  const g=currentMatch||nextMatch;
+  if(!g){
+    if(phase==='awaiting-final'){ nextStatus.textContent='Awaiting'; nextStatus.className='status pend'; nextBody.innerHTML='<div class="time num" style="font-size:26px">Final unconfirmed</div><div class="vs">Final qualification not yet decided.</div>'; return; }
+    nextStatus.textContent='Complete'; nextStatus.className='status conf';
+    nextBody.innerHTML='<div class="time num" style="font-size:30px">DONE</div><div class="vs">Tournament complete — safe travels home!</div>';
+    return;
+  }
+  const isLive=currentMatch&&currentMatch.id===g.id;
+  nextStatus.textContent = isLive?'Happening Now':(g.arrivalStatus==='pending-coach'?'Awaiting arrival':'Confirmed');
+  nextStatus.className='status '+((isLive||g.arrivalStatus==='pending-coach')?'pend':'conf');
+  const dayBg=isLive?'var(--red)':'var(--su)';
   nextBody.innerHTML=
-    '<div class="day">'+g.dayLabel+'</div>'+
+    '<div class="day" style="color:'+(isLive?'var(--red)':'var(--su)')+'">'+(isLive?'HAPPENING NOW · ':'NEXT MATCH · ')+g.dayLabel+'</div>'+
     '<div class="time num">'+g.time+'</div>'+
     '<div class="vs">vs '+g.opponent+'</div>'+
     '<div class="meta-line"><span class="pill field">FIELD '+g.field+'</span><span class="pill away">'+(g.home?'HOME':'AWAY')+'</span></div>'+
-    '<div class="arrive"><span class="dot" style="width:9px;height:9px;background:'+(g.arrivalStatus==='pending-coach'?'var(--amber)':'var(--green)')+'"></span> Player arrival <b>'+g.arrival+'</b>'+(g.arrivalStatus==='pending-coach'?' <span class="pend">· awaiting coach confirmation</span>':'')+'</div>'+
+    (g.arrival&&!isLive?'<div class="arrive"><span class="dot" style="width:9px;height:9px;background:'+(g.arrivalStatus==='pending-coach'?'var(--amber)':'var(--green)')+'"></span> Player arrival <b>'+g.arrival+'</b>'+(g.arrivalStatus==='pending-coach'?' <span class="pend">· awaiting coach confirmation</span>':'')+'</div>':'')+
     '<div class="arrive" style="border-top:none;margin-top:6px;padding-top:0"><span class="dot" style="width:9px;height:9px;background:var(--link)"></span> '+venue.name+' · '+venue.address+', '+venue.city+'</div>'+
     '<div class="wx-mini"><span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></svg> '+TOURNAMENT.weather.mini.day+' '+TOURNAMENT.weather.mini.temp+' · '+TOURNAMENT.weather.mini.feels+' · '+TOURNAMENT.weather.mini.storm+'</span><span class="exp" data-wxopen>Weekend forecast ›</span></div>'+
     '<div class="btn-row">'+
@@ -584,8 +596,19 @@ function renderNextMatch(){
       '<a class="btn ghost" href="'+venue.fieldMapUrl+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-4 9a3 3 0 0 0 2.6 1.5h6.8A3 3 0 0 0 18 18l-4-9V3"/></svg>Field Map</a>'+
       '<a class="btn ghost" href="https://playmetrics.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.6 8.6 0 0 1-3.4-.7L3 21l1.8-5.6A8.4 8.4 0 0 1 3 11.5a8.5 8.5 0 0 1 18 0z"/></svg>Message Team</a>'+
     '</div>'+
-    (upcoming[1]?'<div style="margin-top:12px;padding-top:11px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)">Next: <b style="color:var(--su)">'+upcoming[1].label+'</b> · '+upcoming[1].time+' · Field '+upcoming[1].field+'</div>':'');
+    (nextMatch&&nextMatch.id!==g.id?'<div style="margin-top:12px;padding-top:11px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)">Next: <b style="color:var(--su)">'+nextMatch.label+'</b> · '+nextMatch.time+' · Field '+nextMatch.field+'</div>':'');
 }
+
+// ---- MASTER REFRESH: countdown ticks fast, full state re-resolves on a slower cadence ----
+let lastStateKey='';
+function refreshAll(){
+  const state=resolveTournamentState(TOURNAMENT,tzNow());
+  // Countdown is cheap — run every second. Full re-render only when state changes.
+  const key=state.phase+'|'+(state.currentMatch?state.currentMatch.id:'')+'|'+(state.nextMatch?state.nextMatch.id:'');
+  renderCountdown(state);
+  if(key!==lastStateKey){ lastStateKey=key; refreshContext(state); renderNextMatch(state); }
+}
+
 
 // ---- WEEKEND FORECAST + WATCH ----
 const wxFull=document.getElementById('wxFull');
@@ -703,8 +726,12 @@ function tog(id,el){const pack=loadPack();pack[id]=!pack[id];savePack(pack);el.c
 function resetPack(){if(confirm('Reset the packing checklist?')){localStorage.removeItem(LS);renderPack();}}
 
 // ---- INIT + LIVE TICK ----
-renderSchedule();renderVenue();renderBreak();renderNearby();renderContacts();renderRules();renderChanges();renderWeather();renderNextMatch();renderCountdown();refreshContext();renderPack();
-setInterval(()=>{renderCountdown();refreshContext();},1000);
+renderSchedule();renderVenue();renderBreak();renderNearby();renderContacts();renderRules();renderChanges();renderWeather();renderPack();
+lastStateKey=''; // force initial full render
+refreshAll();
+// Countdown ticks every second; full state (Next Match / context) re-resolves every second too,
+// but only re-renders when the resolved state actually changes (cheap + consistent).
+setInterval(refreshAll,1000);
 </script>
 </body>
 </html>
