@@ -232,6 +232,9 @@
     <span><span class="dot b"></span>Guide recommendation</span>
   </div>
 
+  <!-- WEEKEND STATUS (compact progress) -->
+  <div id="weekendStatus" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;padding:10px 14px;background:var(--card);border-bottom:1px solid var(--line);font-size:10.5px;font-weight:700;color:var(--muted)"></div>
+
   <main>
     <section class="screen on" id="scr-today">
       <div class="updated-banner" id="updBanner"></div>
@@ -423,11 +426,11 @@ const TOURNAMENT = {
   },
   packing:{
     alert:"Pack both kits — blue & white. Uniform color not confirmed until game day.",
-    groups:{
-      "Player":[["Blue kit","Both kits"],["White kit","Both kits"],["Cleats",null],["Shin guards",null],["Water bottle",null],["Extra socks",null],["Warm-up gear",null],["Dry clothes",null],["Recovery shoes",null]],
-      "Heat / Weather":[["Electrolytes",null],["Sunscreen SPF 50+",null],["Cooling towel",null],["Rain jacket",null],["Plastic bags",null],["Extra water",null]],
-      "Sideline":[["Chairs",null],["Canopy",null],["Cooler",null],["Umbrella",null],["Snacks",null],["Charger",null],["Sibling entertainment",null]]
-    }
+    groups:[
+      { kind:"always", title:"Player", items:[["Blue kit","Both kits"],["White kit","Both kits"],["Cleats",null],["Shin guards",null],["Water bottle",null],["Extra socks",null],["Warm-up gear",null],["Dry clothes",null],["Recovery shoes",null]] },
+      { kind:"weather", title:"Heat / Weather", items:[["Electrolytes",null],["Sunscreen SPF 50+",null],["Cooling towel",null],["Rain jacket",null],["Plastic bags",null],["Extra water",null]] },
+      { kind:"always", title:"Sideline", items:[["Chairs",null],["Canopy",null],["Cooler",null],["Umbrella",null],["Snacks",null],["Charger",null],["Sibling entertainment",null]] }
+    ]
   },
   needs:{
     before:[["Charge phones","both days"],["Fill water bottles","both days"],["Pack both kits","blue + white"],["Confirm cleats / shin guards","fit check"],["Check departure time","Fri afternoon"]],
@@ -606,7 +609,40 @@ function refreshAll(){
   // Countdown is cheap — run every second. Full re-render only when state changes.
   const key=state.phase+'|'+(state.currentMatch?state.currentMatch.id:'')+'|'+(state.nextMatch?state.nextMatch.id:'');
   renderCountdown(state);
-  if(key!==lastStateKey){ lastStateKey=key; refreshContext(state); renderNextMatch(state); }
+  if(key!==lastStateKey){ lastStateKey=key; refreshContext(state); renderNextMatch(state); renderSchedule(state); renderWeekendStatus(state); }
+}
+
+// ---- WEEKEND STATUS (compact progress derived from state) ----
+function renderWeekendStatus(state){
+  const st=state||resolveTournamentState(TOURNAMENT,tzNow());
+  const el=document.getElementById('weekendStatus');if(!el)return;
+  const curId=st.currentMatch?st.currentMatch.id:null,nextId=st.nextMatch?st.nextMatch.id:null;
+  const parts=[];
+  const travel=TOURNAMENT.travel;
+  if(travel){
+    const tStart=tzTime(travel.date+"T00:00:00-04:00");
+    const tDone=st.now>new Date(tStart.getTime()+24*3600000);
+    parts.push('<span>'+travel.label+' '+(tDone?'<span style="color:var(--green)">✓</span>':'<span style="color:var(--su)">●</span>')+'</span>');
+  }
+  const byDay={};
+  TOURNAMENT.games.forEach(g=>{(byDay[g.dayLabel]=byDay[g.dayLabel]||[]).push(g);});
+  for(const [day,games] of Object.entries(byDay)){
+    const dayShort=day.split('·')[0].trim().slice(0,3);
+    let cell=dayShort+' ';
+    cell+=games.map(g=>{
+      const done=st.withState.find(x=>x.id===g.id)?.state==='completed';
+      const live=g.id===curId;
+      const nxt=g.id===nextId;
+      const gnum=TOURNAMENT.games.findIndex(x=>x.id===g.id)+1;
+      const sym=g.type==='final'?'◇':(gnum>0?'G'+gnum:'?');
+      if(done)return '<span style="color:var(--green)">'+sym+'✓</span>';
+      if(live)return '<span style="color:var(--red)">'+sym+'●</span>';
+      if(nxt)return '<span style="color:var(--su)">'+sym+'●</span>';
+      return '<span style="opacity:.45">'+sym+'</span>';
+    }).join(' ');
+    parts.push('<span>'+cell+'</span>');
+  }
+  el.innerHTML=parts.join('<span style="opacity:.25">·</span>');
 }
 
 
@@ -620,8 +656,11 @@ function renderWeather(){
 }
 document.querySelectorAll('[data-wxopen]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();wxFull.classList.toggle('open');}));
 
-// ---- SCHEDULE ----
-function renderSchedule(){
+// ---- SCHEDULE (uses resolver to highlight NOW / NEXT) ----
+function renderSchedule(state){
+  const st=state||resolveTournamentState(TOURNAMENT,tzNow());
+  const currentId=st.currentMatch?st.currentMatch.id:null;
+  const nextId=st.nextMatch?st.nextMatch.id:null;
   document.getElementById('schedVenueLine').textContent='All games at '+TOURNAMENT.venue.name+' · '+TOURNAMENT.venue.address+', '+TOURNAMENT.venue.city;
   const byDay={};
   TOURNAMENT.games.forEach(g=>{(byDay[g.dayLabel]=byDay[g.dayLabel]||[]).push(g);});
@@ -630,8 +669,11 @@ function renderSchedule(){
     const isSat=day.toLowerCase().includes('saturday');
     out+='<div class="daycard '+(isSat?'sat':'sun')+'"><div class="dh"><span>'+day+'</span><span class="dd">'+games.map(g=>g.label).join(' + ')+'</span></div>';
     games.forEach((g,i)=>{
-      if(g.type==='final'){out+='<div class="final"><div class="ftag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0z"/></svg>Potential Final · Not Guaranteed</div><div class="ftime num">'+g.time+'</div><div class="ftag" style="color:var(--su)">'+g.opponent+' · Field '+g.field+'</div><div class="fnote">'+g.note+'</div></div>';return;}
-      out+='<div class="g"><div class="ghome">'+(g.home?'Home':'Away')+'</div><div class="grow"><span class="gtime num">'+g.time+'</span><span class="pill field">Field '+g.field+'</span></div><div class="gvs">vs '+g.opponent+'</div></div>';
+      const badge = g.id===currentId?'<span style="float:right;font-size:10px;font-weight:800;color:var(--red);letter-spacing:.4px">NOW</span>':(g.id===nextId?'<span style="float:right;font-size:10px;font-weight:800;color:var(--su);letter-spacing:.4px">NEXT</span>':'');
+      if(g.type==='final'){
+        out+='<div class="final" style="'+(g.id===nextId?'border-color:var(--su);background:var(--su-soft)':'')+'"><div class="ftag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0z"/></svg>Potential Final · Not Guaranteed'+badge+'</div><div class="ftime num">'+g.time+'</div><div class="ftag" style="color:var(--su)">'+g.opponent+' · Field '+g.field+'</div><div class="fnote">'+g.note+'</div></div>';return;
+      }
+      out+='<div class="g" style="'+(g.id===currentId?'background:var(--red-bg);border-left:4px solid var(--red)':(g.id===nextId?'background:var(--su-soft);border-left:4px solid var(--su)':''))+'"><div class="ghome">'+(g.home?'Home':'Away')+'</div><div class="grow"><span class="gtime num">'+g.time+'</span><span class="pill field">Field '+g.field+'</span></div><div class="gvs">vs '+g.opponent+'</div>'+badge+'</div>';
       // gap between games
       const next=games[i+1];
       if(next&&next.type!=='final'){
@@ -701,8 +743,9 @@ fg.href=TOURNAMENT.tournament.fullGuideUrl;
 document.getElementById('fg1').textContent='Full '+TOURNAMENT.tournament.name+' Guide';
 document.getElementById('fg2').textContent='Everything in one detailed document — hotel, travel scenarios, full rules, itinerary.';
 
-// ---- PACKING ----
+// ---- PACKING (template-driven groups with kind badges) ----
 const LISTS=TOURNAMENT.packing.groups;
+const KIND_LABEL={always:'Always',weather:'Weather',tournament:'Tournament'};
 const LS='gd-pack-'+TOURNAMENT.tournament.name.toLowerCase().replace(/[^a-z0-9]+/g,'-');
 document.getElementById('packAlert').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span><b>'+TOURNAMENT.packing.alert+'</b></span>';
 function loadPack(){try{return JSON.parse(localStorage.getItem(LS))||{}}catch(e){return{}}}
@@ -710,14 +753,14 @@ function savePack(o){localStorage.setItem(LS,JSON.stringify(o));}
 function renderPack(){
   const pack=loadPack();const wrap=document.getElementById('packLists');
   let html='',total=0,done=0;
-  for(const [grp,items] of Object.entries(LISTS)){
-    html+='<div class="chkgrp"><h4>'+grp+'</h4>';
-    items.forEach(([name,sub])=>{
-      const id=grp+'::'+name;const checked=!!pack[id];if(checked)done++;total++;
+  LISTS.forEach(grp=>{
+    html+='<div class="chkgrp"><h4>'+grp.title+' <span style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px">'+(KIND_LABEL[grp.kind]||grp.kind)+'</span></h4>';
+    grp.items.forEach(([name,sub])=>{
+      const id=grp.title+'::'+name;const checked=!!pack[id];if(checked)done++;total++;
       html+='<div class="chk '+(checked?'done':'')+'" onclick="tog(\''+id.replace(/'/g,"\\'")+'\',this)"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span class="chkname">'+name+(sub?' <span class="muted small">('+sub+')</span>':'')+'</span></div>';
     });
     html+='</div>';
-  }
+  });
   wrap.innerHTML=html;
   document.getElementById('packCount').textContent=done+' of '+total;
   document.getElementById('packBar').style.width=(total?Math.round(done/total*100):0)+'%';
@@ -726,11 +769,12 @@ function tog(id,el){const pack=loadPack();pack[id]=!pack[id];savePack(pack);el.c
 function resetPack(){if(confirm('Reset the packing checklist?')){localStorage.removeItem(LS);renderPack();}}
 
 // ---- INIT + LIVE TICK ----
-renderSchedule();renderVenue();renderBreak();renderNearby();renderContacts();renderRules();renderChanges();renderWeather();renderPack();
-lastStateKey=''; // force initial full render
+renderVenue();renderBreak();renderNearby();renderContacts();renderRules();renderChanges();renderWeather();renderPack();
+lastStateKey=''; // force initial full render (schedule, countdown, next-match, context, weekend status)
 refreshAll();
-// Countdown ticks every second; full state (Next Match / context) re-resolves every second too,
-// but only re-renders when the resolved state actually changes (cheap + consistent).
+// Countdown ticks every second; full state (Next Match / context / schedule highlight /
+// weekend status) re-resolves every second too, but only re-renders when the resolved
+// state actually changes (cheap + consistent).
 setInterval(refreshAll,1000);
 </script>
 </body>
