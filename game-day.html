@@ -272,7 +272,8 @@
             <span class="pill field" id="nextField">FIELD 7</span>
             <span class="pill away" id="nextLoc">AWAY</span>
           </div>
-          <div class="arrive">Player arrival <b id="nextArrive">9:45 AM</b> <span class="pend">*awaiting coach confirmation</span></div>
+          <div class="arrive"><span class="dot" style="width:9px;height:9px;background:var(--amber)"></span> Player arrival <b id="nextArrive">9:45 AM</b> <span class="pend">· awaiting coach confirmation</span></div>
+          <div class="arrive" style="border-top:none;margin-top:6px;padding-top:0"><span class="dot" style="width:9px;height:9px;background:var(--link)"></span> Chuck Rogers Park · 11950 San Jose Blvd, Jacksonville</div>
           <div class="wx-mini">
             <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></svg> Saturday 95° · feels 107° &nbsp;·&nbsp; storm 56%</span>
             <span class="exp" data-wxopen>Weekend forecast ›</span>
@@ -282,6 +283,7 @@
             <a class="btn ghost" href="https://docs.google.com/presentation/d/e/2PACX-1vQ3h1al3OLUWmrdBh2AW0WvUYH1N6rnsSs6o_IA5aiOd59b5DmzOC6jO6mei9PfJ_ACYOmxHqDd8V83/pub" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-4 9a3 3 0 0 0 2.6 1.5h6.8A3 3 0 0 0 18 18l-4-9V3"/></svg>Field Map</a>
             <a class="btn ghost" href="https://playmetrics.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.6 8.6 0 0 1-3.4-.7L3 21l1.8-5.6A8.4 8.4 0 0 1 3 11.5a8.5 8.5 0 0 1 18 0z"/></svg>Message Team</a>
           </div>
+          <div style="margin-top:12px;padding-top:11px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)">Next: <b style="color:var(--su)">Game 2</b> · 3:30 PM · Field 6</div>
         </div>
       </div>
 
@@ -299,12 +301,12 @@
             <div class="wxcard sat">
               <div class="wd">Saturday</div><div class="wt num">95°</div><div class="wf">Feels 107°</div>
               <div class="wrow"><span>Storm</span><b>56%</b></div>
-              <div class="wrow"><span>Rain</span><b>0.09 in</b></div>
+              <div class="wrow"><span>Concern</span><b>Extreme heat</b></div>
             </div>
             <div class="wxcard sun">
               <div class="wd">Sunday</div><div class="wt num">93°</div><div class="wf">Feels 102°</div>
               <div class="wrow"><span>Storm</span><b style="color:#ffd166">88%</b></div>
-              <div class="wrow"><span>Rain</span><b>0.40 in</b></div>
+              <div class="wrow"><span>Concern</span><b>High storm risk</b></div>
             </div>
           </div>
           <p class="small muted" style="margin:10px 0 0;text-align:right">Updated Aug 18 · 7:30 AM ET &nbsp;·&nbsp; <a href="https://www.accuweather.com/en/us/jacksonville/32223/10-day-weather-forecast/13855_pc" target="_blank" rel="noopener" style="color:var(--link);font-weight:700;text-decoration:none">Full forecast</a></p>
@@ -375,19 +377,24 @@
         <a class="btn" style="flex-direction:row;font-size:14px;gap:8px" href="https://www.google.com/maps/dir/Chuck+Rogers+Park,11950+San+Jose+Blvd,Jacksonville,FL+32223" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>Directions</a>
       </div>
 
-      <div class="section-title"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-4 9a3 3 0 0 0 2.6 1.5h6.8A3 3 0 0 0 18 18l-4-9V3"/></svg>Field Map</div>
+      <div class="section-title"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-4 9a3 3 0 0 0 2.6 1.5h6.8A3 3 0 0 0 18 18l-4-9V3"/></svg>Our Fields</div>
       <div class="card">
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
-          <div style="aspect-ratio:4/3;border-radius:10px;background:var(--bg);border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#9aa1ab">1</div>
-          <div style="aspect-ratio:4/3;border-radius:10px;background:var(--bg);border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#9aa1ab">2</div>
-          <div style="aspect-ratio:4/3;border-radius:10px;background:var(--bg);border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#9aa1ab">3</div>
-          <div style="aspect-ratio:4/3;border-radius:10px;background:var(--bg);border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#9aa1ab">4</div>
-          <div style="aspect-ratio:4/3;border-radius:10px;background:var(--su);border:3px solid var(--su-dark);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#fff;line-height:1.1">5<span style="font-size:8px;font-weight:700;opacity:.85">SUN G3</span></div>
-          <div style="aspect-ratio:4/3;border-radius:10px;background:var(--su);border:3px solid var(--su-dark);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#fff;line-height:1.1">6<span style="font-size:8px;font-weight:700;opacity:.85">SAT G2</span></div>
-          <div style="aspect-ratio:4/3;border-radius:10px;background:var(--su);border:3px solid var(--su-dark);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#fff;line-height:1.1">7<span style="font-size:8px;font-weight:700;opacity:.85">SAT G1</span></div>
-          <div style="aspect-ratio:4/3;border-radius:10px;background:var(--bg);border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#9aa1ab">8</div>
+          <div style="aspect-ratio:4/3;border-radius:10px;background:var(--bg);border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#c3c9d1">1</div>
+          <div style="aspect-ratio:4/3;border-radius:10px;background:var(--bg);border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#c3c9d1">2</div>
+          <div style="aspect-ratio:4/3;border-radius:10px;background:var(--bg);border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#c3c9d1">3</div>
+          <div style="aspect-ratio:4/3;border-radius:10px;background:var(--bg);border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#c3c9d1">4</div>
+          <div style="aspect-ratio:4/3;border-radius:10px;background:var(--su);border:3px solid var(--su-dark);box-shadow:0 2px 8px rgba(0,85,164,.35);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;font-size:22px;color:#fff;line-height:1.1">5<span style="font-size:8px;font-weight:700;opacity:.9;letter-spacing:.3px">SUN · G3+FINAL</span></div>
+          <div style="aspect-ratio:4/3;border-radius:10px;background:var(--su);border:3px solid var(--su-dark);box-shadow:0 2px 8px rgba(0,85,164,.35);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;font-size:22px;color:#fff;line-height:1.1">6<span style="font-size:8px;font-weight:700;opacity:.9;letter-spacing:.3px">SAT · G2</span></div>
+          <div style="aspect-ratio:4/3;border-radius:10px;background:var(--su);border:3px solid var(--su-dark);box-shadow:0 2px 8px rgba(0,85,164,.35);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;font-size:22px;color:#fff;line-height:1.1">7<span style="font-size:8px;font-weight:700;opacity:.9;letter-spacing:.3px">SAT · G1</span></div>
+          <div style="aspect-ratio:4/3;border-radius:10px;background:var(--bg);border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#c3c9d1">8</div>
         </div>
-        <p class="small" style="margin:10px 0 0;text-align:center;color:var(--su);font-weight:700">Our weekend: 7 → 6 → 5</p>
+        <div class="ourwk" style="margin-top:14px">
+          <div><div class="ow num">7</div><div class="owl">SAT G1</div></div><span class="arr">→</span>
+          <div><div class="ow num">6</div><div class="owl">SAT G2</div></div><span class="arr">→</span>
+          <div><div class="ow num">5</div><div class="owl">SUN G3+FINAL</div></div>
+        </div>
+        <p class="small" style="margin:10px 0 0;text-align:center;color:var(--su);font-weight:800;letter-spacing:.5px">7 → 6 → 5</p>
         <a class="btn ghost" style="margin-top:10px;flex-direction:row;gap:7px" href="https://docs.google.com/presentation/d/e/2PACX-1vQ3h1al3OLUWmrdBh2AW0WvUYH1N6rnsSs6o_IA5aiOd59b5DmzOC6jO6mei9PfJ_ACYOmxHqDd8V83/pub" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-4 9a3 3 0 0 0 2.6 1.5h6.8A3 3 0 0 0 18 18l-4-9V3"/></svg>Official field map</a>
       </div>
 
@@ -410,6 +417,10 @@
         <h1 style="font-size:20px;margin:0;font-weight:800">Packing</h1>
         <button onclick="resetPack()" style="border:1px solid var(--line);background:var(--card);color:var(--muted);font-size:12px;font-weight:700;padding:6px 12px;border-radius:20px;cursor:pointer">Reset Checklist</button>
       </div>
+      <div class="alert info" style="background:var(--su);color:#fff;align-items:center">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-6-4-6 4z"/></svg>
+        <span><b>Pack both kits</b> — blue &amp; white. Uniform color not confirmed until game day.</span>
+      </div>
       <div class="card" style="padding-bottom:10px">
         <div class="row"><span class="muted small" id="packCount">0 of 22</span><span class="muted small">Saved on this phone</span></div>
         <div class="progress"><i id="packBar" style="width:0%"></i></div>
@@ -426,15 +437,15 @@
         <span class="fgb"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></svg>Open full guide</span>
       </a>
 
-      <div class="section-title"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Between Games · Saturday</div>
+      <div class="section-title"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Suggested Saturday Reset</div>
       <div class="card">
-        <p class="small muted" style="margin:0 0 8px">G1 ends ~11:30 AM → G2 starts 3:30 PM. A suggested rhythm (flexible):</p>
+        <p class="small muted" style="margin:0 0 8px">G1 ends ~11:30 AM → G2 starts 3:30 PM. A suggested rhythm — flexible, not required:</p>
         <div class="tl">
           <div class="tlstep end"><div class="tt">Game 1 ends <span class="tk num">11:30</span></div><div class="ts">Field 7 · wrap up, grab bags</div></div>
           <div class="tlstep"><div class="tt">Lunch <span class="tk num">11:45–12:30</span></div><div class="ts">kid-friendly spot near the park</div></div>
           <div class="tlstep"><div class="tt">A/C + rest <span class="tk num">12:30–1:45</span></div><div class="ts">cool indoor break, hydrate</div></div>
           <div class="tlstep"><div class="tt">Snack + hydrate <span class="tk num">1:45</span></div><div class="ts">light snack, begin fluids</div></div>
-          <div class="tlstep"><div class="tt">Return to park <span class="tk num">2:45</span></div><div class="ts">parking fills · arrive early</div></div>
+          <div class="tlstep"><div class="tt">Back to fields <span class="tk num">2:30–2:45</span></div><div class="ts">parking fills · arrive early</div></div>
           <div class="tlstep off"><div class="tt">Game 2 <span class="tk num">3:30</span></div><div class="ts">Field 6 · report by 2:45</div></div>
         </div>
       </div>
@@ -443,8 +454,15 @@
 
       <div class="card">
         <div class="label" style="margin-bottom:4px">Eat — kid-friendly lunch</div>
+        <a class="tap" href="https://www.google.com/maps/dir/Chuck+Rogers+Park,11950+San+Jose+Blvd,Jacksonville,FL+32223/12601+San+Jose+Blvd+Jacksonville+FL+32223" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h16M4 19h16M4 11v4a5 5 0 0 0 8 3M4 11V8l4-4h9l3 3v4"/></svg></span><div class="tt"><div class="tl">V Pizza + Tap Garden</div><div class="ts">Playground on-site · pizza · wings</div></div><span class="dist">4 min<div class="d">1.4 mi</div></span></a>
         <a class="tap" href="https://www.google.com/maps/dir/Chuck+Rogers+Park,11950+San+Jose+Blvd,Jacksonville,FL+32223/9965+San+Jose+Blvd+Jacksonville+FL+32257" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h16M4 19h16M4 11v4a5 5 0 0 0 8 3M4 11V8l4-4h9l3 3v4"/></svg></span><div class="tt"><div class="tl">The Loop · Mandarin</div><div class="ts">Burgers · pizza · shakes</div></div><span class="dist">8 min<div class="d">3.3 mi</div></span></a>
         <a class="tap" href="https://www.google.com/maps/dir/Chuck+Rogers+Park,11950+San+Jose+Blvd,Jacksonville,FL+32223/11406+San+Jose+Blvd+Jacksonville+FL+32223" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h16M4 19h16M4 11v4a5 5 0 0 0 8 3M4 11V8l4-4h9l3 3v4"/></svg></span><div class="tt"><div class="tl">Mandarin Oaks Center</div><div class="ts">quick grab-and-go options</div></div><span class="dist">4 min<div class="d">1.1 mi</div></span></a>
+      </div>
+
+      <div class="card">
+        <div class="label" style="margin-bottom:4px">Cool off — indoor break</div>
+        <a class="tap" href="https://www.google.com/maps/dir/Chuck+Rogers+Park,11950+San+Jose+Blvd,Jacksonville,FL+32223/10490+San+Jose+Blvd+Jacksonville+FL+32257" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/><circle cx="12" cy="12" r="4"/></svg></span><div class="tt"><div class="tl">Target · Mandarin</div><div class="ts">A/C · essentials · air-conditioned</div></div><span class="dist">9 min<div class="d">2.7 mi</div></span></a>
+        <a class="tap" href="https://www.google.com/maps/dir/Chuck+Rogers+Park,11950+San+Jose+Blvd,Jacksonville,FL+32223/10111+San+Jose+Blvd+Jacksonville+FL+32257" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/><circle cx="12" cy="12" r="4"/></svg></span><div class="tt"><div class="tl">Tropical Smoothie Cafe</div><div class="ts">cool treat · smoothies</div></div><span class="dist">9 min<div class="d">3.2 mi</div></span></a>
       </div>
 
       <div class="card">
@@ -568,10 +586,12 @@ const NEEDS={
 };
 function refreshContext(){
   const now=new Date();
-  const days=Math.ceil((G1-now)/86400000);
+  // Calendar days to kickoff (Aug 22): Aug 18 → 4 days. Count date-to-date.
+  const startOfG1=new Date("2026-08-22T00:00:00");
+  const days=Math.max(0,Math.round((startOfG1-new Date(now.getFullYear(),now.getMonth(),now.getDate()))/86400000));
   let txt,chip,need='before',bg='linear-gradient(150deg,#0055A4,#003f7a)';
   if(now<new Date("2026-08-21T00:00")){
-    txt=(days>1?days+' DAYS TO KICKOFF':'TOMORROW · GAME DAY');
+    txt=(days>0?days+' DAYS TO KICKOFF':'TODAY · GAME DAY');
     chip='Travel Day · Friday'; need='before';
   } else if(now<new Date("2026-08-21T17:00")){
     txt='TRAVEL DAY'; chip='Jacksonville, FL'; need='friday';
@@ -587,10 +607,10 @@ function refreshContext(){
   } else if(now<new Date("2026-08-23T00:00")){
     txt='DAY 1 DONE'; chip='G2 complete · rest up'; need='friday';
   } else if(now<new Date("2026-08-23T10:30")){
-    txt='GAME 3 TODAY'; chip='10:30 AM · Field 5'; need='g3';
+    txt='FINAL DAY'; chip='G3 10:30 AM · Field 5'; need='g3';
     bg='linear-gradient(150deg,#2f6fc4,#1d4ed8)';
   } else if(now<new Date("2026-08-23T14:15")){
-    txt='FINAL STATUS'; chip='Awaiting bracket standings'; need='g3';
+    txt='FINAL DAY'; chip='Awaiting bracket standings'; need='g3';
   } else {
     txt='TOURNAMENT COMPLETE'; chip='Great weekend!'; need='before';
   }
