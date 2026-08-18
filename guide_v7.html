@@ -454,7 +454,12 @@ const TOURNAMENT = {
 const navs=document.querySelectorAll('.nav a');
 function go(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));document.getElementById('scr-'+s).classList.add('on');navs.forEach(a=>a.classList.toggle('on',a.dataset.goto===s));window.scrollTo(0,0);}
 navs.forEach(a=>a.addEventListener('click',e=>{e.preventDefault();go(a.dataset.goto);}));
-document.querySelectorAll('[data-goto]').forEach(el=>{if(!el.closest('.nav'))el.addEventListener('click',e=>{e.preventDefault();go(el.dataset.goto);});});
+// Delegated handler so ANY [data-goto] element — including ones injected later via
+// innerHTML (e.g. the "See what changed" link in the updated banner) — navigates.
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-goto]');
+  if(t&&!t.classList.contains('nav')){ e.preventDefault(); go(t.dataset.goto); }
+});
 
 // ---- HERO ----
 document.getElementById('heroKick').textContent=TOURNAMENT.tournament.kick;
