@@ -349,6 +349,12 @@ const TOURNAMENT = {
     bring:"Bring: canopy / chairs · no glass containers · dogs must be leashed"
   },
   weather: {
+    source: {
+      enabled: true,
+      provider: "open-meteo",
+      lat: 30.1544, lng: -81.6328,   // venue coordinates
+      timezone: "America/New_York"
+    },
     updated:"Updated Aug 18 · 7:30 AM ET",
     forecastUrl:"https://www.accuweather.com/en/us/jacksonville/32223/10-day-weather-forecast/13855_pc",
     mini:{ day:"Saturday", temp:"95°", feels:"feels 107°", storm:"storm 56%" },
@@ -661,6 +667,66 @@ function renderWeather(){
 }
 document.querySelectorAll('[data-wxopen]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();wxFull.classList.toggle('open');}));
 
+// ---- LIVE WEATHER (fetches fresh forecast for the game dates) ----
+function loadWeather(){
+  const src=TOURNAMENT.weather.source;
+  if(!src||!src.enabled) return; // keep static data as fallback
+  const url='https://api.open-meteo.com/v1/forecast'
+    +'?latitude='+src.lat+'&longitude='+src.lng
+    +'&daily=temperature_2m_max,apparent_temperature_max,precipitation_probability_max,precipitation_sum'
+    +'&temperature_unit=fahrenheit&precipitation_unit=inch&wind_speed_unit=mph'
+    +'&timezone='+encodeURIComponent(src.timezone||TOURNAMENT.timezone)
+    +'&forecast_days=8';
+  fetch(url).then(r=>r.json()).then(data=>{
+    const daily=data.daily||{};
+    const times=daily.time||[];
+    // Map each game's date (YYYY-MM-DD) to the matching forecast day
+    const gameDates=TOURNAMENT.games.map(g=>g.datetime.slice(0,10));
+    const byGame={};
+    gameDates.forEach((d,i)=>{ const idx=times.indexOf(d); byGame[TOURNAMENT.games[i].id]=idx>=0?idx:null; });
+    // Build day cards for unique game dates that have forecast data
+    const seen={}; const days=[];
+    TOURNAMENT.games.forEach(g=>{
+      const idx=byGame[g.id]; if(idx==null||seen[g.datetime.slice(0,10)])return; seen[g.datetime.slice(0,10)]=true;
+      const high=Math.round(daily.temperature_2m_max[idx]);
+      const feels=Math.round(daily.apparent_temperature_max[idx]);
+      const storm=Math.round(daily.precipitation_probability_max[idx]);
+      const rain=+(daily.precipitation_sum[idx]||0).toFixed(2);
+      const isSun=TOURNAMENT.games.find(x=>x.datetime.slice(0,10)===g.datetime.slice(0,10)&&x.id!==g.id)||g.datetime.slice(0,10)>=TOURNAMENT.games.find(x=>x.type!=='final').datetime.slice(0,10);
+      const dayName=new Date(g.datetime).toLocaleDateString('en-US',{weekday:'long',timeZone:src.timezone||TOURNAMENT.timezone});
+      const concern=feels>=100?'Extreme heat':storm>=70?'High storm risk':storm>=40?'Storms possible':'Mostly clear';
+      days.push({ label:dayName, high:high+'°', feels:'Feels '+feels+'°', storm:storm+'%', concern, className:dayName==='Sunday'?'sun':'sat', rain });
+    });
+    // Pick the next game's day for the mini line
+    const state=resolveTournamentState(TOURNAMENT,tzNow());
+    const nextGame=(state.nextMatch||TOURNAMENT.games[0]);
+    const idx=byGame[nextGame.id];
+    let mini=TOURNAMENT.weather.mini;
+    if(idx!=null&&daily.temperature_2m_max&&daily.apparent_temperature_max&&daily.precipitation_probability_max){
+      const t=Math.round(daily.temperature_2m_max[idx]),f=Math.round(daily.apparent_temperature_max[idx]),st=Math.round(daily.precipitation_probability_max[idx]);
+      const dayName=new Date(nextGame.datetime).toLocaleDateString('en-US',{weekday:'long',timeZone:src.timezone||TOURNAMENT.timezone});
+      mini={ day:dayName, temp:t+'°', feels:'feels '+f+'°', storm:'storm '+st+'%' };
+    }
+    // Build watch cells from the two most relevant concerns
+    const watch=[];
+    if(days.length){
+      const hottest=[...days].sort((a,b)=>parseInt(b.feels.replace(/\D/g,''))-parseInt(a.feels.replace(/\D/g,'')))[0];
+      const stormiest=[...days].sort((a,b)=>parseInt(b.storm)-parseInt(a.storm))[0];
+      watch.push({ title:'Extreme Heat · '+hottest.label.slice(0,3), value:hottest.feels.replace('Feels ','')+'F', sub:'feels like · stay hydrated', cls:'hot' });
+      watch.push({ title:'Storm Risk · '+stormiest.label.slice(0,3), value:stormiest.storm, sub:'chance · expect delays', cls:'storm' });
+    }
+    if(days.length){ TOURNAMENT.weather.days=days; }
+    TOURNAMENT.weather.mini=mini;
+    if(watch.length){ TOURNAMENT.weather.watch=watch; }
+    const now=new Date();
+    TOURNAMENT.weather.updated='Live · '+now.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZone:src.timezone||TOURNAMENT.timezone})+' ET';
+    renderWeather();
+    // Weather feeds the Next Match mini-line, so re-render it too (state key may be unchanged).
+    refreshAll();
+    renderNextMatch(resolveTournamentState(TOURNAMENT,tzNow()));
+  }).catch(()=>{ /* keep static fallback on failure */ });
+}
+
 // ---- SCHEDULE (uses resolver to highlight NOW / NEXT) ----
 function renderSchedule(state){
   const st=state||resolveTournamentState(TOURNAMENT,tzNow());
@@ -777,6 +843,10 @@ function resetPack(){if(confirm('Reset the packing checklist?')){localStorage.re
 renderVenue();renderBreak();renderNearby();renderContacts();renderRules();renderChanges();renderWeather();renderPack();
 lastStateKey=''; // force initial full render (schedule, countdown, next-match, context, weekend status)
 refreshAll();
+// Load the live forecast once on load; then refresh whenever the tab regains focus so
+// new daily reports appear without a manual reload.
+loadWeather();
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden) loadWeather(); });
 // Countdown ticks every second; full state (Next Match / context / schedule highlight /
 // weekend status) re-resolves every second too, but only re-renders when the resolved
 // state actually changes (cheap + consistent).
