@@ -7,21 +7,12 @@
 <title>Game Day — Savannah United 17/18B Premier</title>
 <style>
   :root{
-    --su:#0055A4;            /* Savannah United deep blue */
-    --su-dark:#003f7a;
-    --su-soft:#e8f0fb;
-    --link:#0a66c2;          /* bright actionable blue */
-    --bg:#eef1f6;            /* pale blue-gray page background */
-    --card:#ffffff;
-    --ink:#1d1d1f;
-    --muted:#6e6e73;
-    --line:#e3e6ec;
-    --green:#1a9e4a;
-    --green-bg:#e8f6ee;
-    --amber:#b76e00;
-    --amber-bg:#fff3d6;
-    --red:#d72d2d;
-    --red-bg:#fdecec;
+    --su:#0055A4; --su-dark:#003f7a; --su-soft:#e8f0fb;
+    --link:#0a66c2; --bg:#eef1f6; --card:#ffffff;
+    --ink:#1d1d1f; --muted:#6e6e73; --line:#e3e6ec;
+    --green:#1a9e4a; --green-bg:#e8f6ee;
+    --amber:#b76e00; --amber-bg:#fff3d6;
+    --red:#d72d2d; --red-bg:#fdecec;
     --shadow:0 1px 3px rgba(0,0,0,.06),0 4px 14px rgba(0,0,0,.05);
     --radius:16px;
   }
@@ -29,22 +20,26 @@
   html,body{margin:0;padding:0;background:var(--bg)}
   body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;color:var(--ink);line-height:1.45}
   .app{max-width:520px;margin:0 auto;background:var(--bg);min-height:100vh;padding-bottom:76px;position:relative}
-  /* condensed numerals for times/fields */
   .num{font-family:"SF Pro Display","Segoe UI",system-ui,sans-serif;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
 
-  /* HERO */
-  .hero{background:linear-gradient(160deg,var(--su) 0%,var(--su-dark) 100%);color:#fff;padding:22px 18px 18px;border-radius:0 0 22px 22px;position:relative;overflow:hidden}
+  .hero{background:linear-gradient(160deg,var(--su) 0%,var(--su-dark) 100%);color:#fff;padding:22px 18px 18px;position:relative;overflow:hidden}
   .hero .kick{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#cfe0f5;margin:0 0 3px;font-weight:600}
-  .hero h1{font-size:24px;margin:0;font-weight:800;letter-spacing:-.4px}
-  .hero .team{font-size:14px;color:#fff;opacity:.92;margin:3px 0 0;font-weight:600}
-  .hero .meta{font-size:12.5px;color:#cfe0f5;margin:8px 0 0;letter-spacing:.3px}
+  .hero h1{font-size:23px;margin:0;font-weight:800;letter-spacing:-.4px}
+  .hero .team{font-size:13.5px;color:#fff;opacity:.92;margin:3px 0 0;font-weight:600}
+  .hero .meta{font-size:12.5px;color:#cfe0f5;margin:7px 0 0;letter-spacing:.3px}
   .hero .crest{position:absolute;right:-18px;top:-18px;width:120px;height:120px;opacity:.10;pointer-events:none}
   .hero .crest svg{width:100%;height:100%}
 
   /* CONTEXT STRIP */
-  .context{background:var(--su);color:#fff;font-size:13px;padding:10px 18px;font-weight:600;display:flex;align-items:center;gap:8px}
-  .context .chip{background:rgba(255,255,255,.16);padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.3px}
+  .context{background:var(--su);color:#fff;font-size:13px;padding:10px 18px;font-weight:700;display:flex;align-items:center;gap:8px}
+  .context .chip{background:rgba(255,255,255,.16);padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.3px;white-space:nowrap}
   .context .carrow{margin-left:auto;color:#cfe0f5}
+
+  /* PROVENANCE LEGEND (always available, small) */
+  .legend{display:flex;gap:12px;flex-wrap:wrap;padding:8px 18px;background:var(--bg);font-size:10.5px;color:var(--muted);font-weight:600}
+  .legend span{display:flex;align-items:center;gap:5px}
+  .dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+  .dot.g{background:var(--green)}.dot.a{background:var(--amber)}.dot.b{background:var(--link)}
 
   /* NAV */
   .nav{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.96);backdrop-filter:saturate(180%) blur(12px);border-top:1px solid var(--line);z-index:50}
@@ -54,36 +49,36 @@
   .nav a.on{color:var(--su)}
   .nav a.on svg{stroke:var(--su)}
 
-  /* SCREENS */
-  .screen{display:none;padding:16px 14px 20px}
+  .screen{display:none;padding:14px 14px 20px}
   .screen.on{display:block}
   .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;margin-bottom:14px}
   .card h2{margin:0 0 10px;font-size:17px;font-weight:800;letter-spacing:-.2px}
-  .muted{color:var(--muted);font-size:13px}
-  .small{font-size:12px}
+  .muted{color:var(--muted);font-size:13px}.small{font-size:12px}
   .label{font-size:11px;text-transform:uppercase;letter-spacing:.8px;font-weight:700;color:var(--muted)}
   .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
   .section-title{font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--su);margin:18px 4px 8px;display:flex;align-items:center;gap:6px}
   .section-title svg{width:16px;height:16px;stroke:var(--su)}
 
-  /* NEXT MATCH HERO */
-  .next{border-radius:20px;overflow:hidden;background:var(--card);box-shadow:var(--shadow);margin-bottom:14px;border-top:5px solid var(--su)}
-  .next .head{background:var(--su-soft);padding:10px 16px;display:flex;justify-content:space-between;align-items:center}
+  /* NEXT MATCH DASHBOARD — dominant */
+  .next{border-radius:20px;overflow:hidden;background:var(--card);box-shadow:var(--shadow);margin-bottom:12px;border-top:5px solid var(--su)}
+  .next .head{background:var(--su-soft);padding:9px 16px;display:flex;justify-content:space-between;align-items:center}
   .next .head .who{font-size:12px;font-weight:800;color:var(--su);letter-spacing:.3px;text-transform:uppercase}
   .next .head .status{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
   .status.conf{background:var(--green-bg);color:var(--green)}
   .status.pend{background:var(--amber-bg);color:var(--amber)}
   .next .body{padding:16px 18px}
-  .next .day{font-size:13px;font-weight:700;color:var(--su);text-transform:uppercase;letter-spacing:.5px}
-  .next .time{font-size:46px;font-weight:800;letter-spacing:-2px;line-height:1;margin:2px 0}
-  .next .vs{font-size:15px;font-weight:600;margin:2px 0}
+  .next .day{font-size:13px;font-weight:800;color:var(--su);text-transform:uppercase;letter-spacing:.6px}
+  .next .time{font-size:54px;font-weight:800;letter-spacing:-2.5px;line-height:1;margin:2px 0}
+  .next .vs{font-size:17px;font-weight:700;margin:4px 0}
   .next .meta-line{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}
   .pill{font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;background:var(--su-soft);color:var(--su)}
   .pill.field{background:var(--su);color:#fff}
   .pill.away{background:var(--bg);color:var(--muted)}
-  .next .arrive{margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--muted)}
+  .next .arrive{margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:13px;color:var(--muted)}
   .next .arrive b{color:var(--ink)}
   .next .arrive .pend{color:var(--amber);font-weight:600}
+  .next .wx-mini{margin-top:10px;padding:10px 12px;background:var(--amber-bg);border-radius:10px;font-size:12.5px;font-weight:600;color:var(--amber);display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .next .wx-mini .exp{color:var(--link);font-weight:700;white-space:nowrap}
 
   /* BUTTONS */
   .btn-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px}
@@ -94,12 +89,41 @@
   .btn.big svg{width:26px;height:26px}
   .btn.big.ghost{background:var(--su-soft);color:var(--su)}
 
-  /* ALERT */
-  .alert{border-radius:14px;padding:12px 14px;margin-bottom:14px;font-size:13px;font-weight:600;display:flex;gap:10px;align-items:flex-start}
-  .alert svg{width:20px;height:20px;flex-shrink:0}
-  .alert.warn{background:var(--red-bg);color:var(--red)}
-  .alert.heat{background:var(--amber-bg);color:var(--amber)}
-  .alert.info{background:var(--su-soft);color:var(--su)}
+  /* WEEKEND FORECAST (collapsed) */
+  .wx-full{display:none}
+  .wx-full.open{display:block}
+  .wx{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .wxcard{border-radius:14px;padding:14px;color:#fff}
+  .wxcard.sat{background:linear-gradient(150deg,#2f6fc4,#1d4ed8)}
+  .wxcard.sun{background:linear-gradient(150deg,#5b6b8c,#3b4a6b)}
+  .wxcard .wd{font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;opacity:.85}
+  .wxcard .wt{font-size:34px;font-weight:800;letter-spacing:-1.5px;margin:2px 0 0}
+  .wxcard .wf{font-size:12px;font-weight:600;opacity:.9;margin-bottom:8px}
+  .wxcard .wrow{font-size:11.5px;display:flex;justify-content:space-between;padding:3px 0;border-top:1px solid rgba(255,255,255,.18)}
+  .wxcard .wrow b{font-weight:700}
+
+  /* WEATHER WATCH */
+  .watch{border-radius:14px;overflow:hidden;margin-bottom:14px;box-shadow:var(--shadow)}
+  .watch .wh{background:var(--su-dark);color:#fff;padding:9px 14px;font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;display:flex;align-items:center;gap:7px}
+  .watch .wh svg{width:16px;height:16px}
+  .watch .wb{display:grid;grid-template-columns:1fr 1fr;background:var(--card)}
+  .watch .wcell{padding:13px 14px}
+  .watch .wcell+.wcell{border-left:1px solid var(--line)}
+  .watch .wcell .wt{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.4px}
+  .watch .wcell .wv{font-size:24px;font-weight:800;letter-spacing:-1px;margin:2px 0}
+  .watch .wcell.hot .wv{color:var(--red)}
+  .watch .wcell.storm .wv{color:var(--amber)}
+  .watch .wcell .ws{font-size:11px;color:var(--muted)}
+  .watch .wfoot{background:var(--card);border-top:1px solid var(--line);padding:9px 14px;text-align:center}
+  .watch .wfoot a{color:var(--link);font-weight:700;text-decoration:none;font-size:12.5px}
+
+  /* NEED NOW CARD */
+  .need{border-radius:16px;padding:15px 16px;margin-bottom:14px;color:#fff;box-shadow:var(--shadow)}
+  .need .nh{font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;opacity:.85;display:flex;align-items:center;gap:7px;margin-bottom:9px}
+  .need .nh svg{width:15px;height:15px}
+  .need ul{margin:0;padding:0;list-style:none}
+  .need li{font-size:13.5px;font-weight:600;padding:4px 0;display:flex;align-items:center;gap:9px}
+  .need li::before{content:"";width:5px;height:5px;border-radius:50%;background:#fff;opacity:.6;flex-shrink:0}
 
   /* DAY CARDS */
   .daycard{border-radius:18px;overflow:hidden;background:var(--card);box-shadow:var(--shadow);margin-bottom:14px}
@@ -122,7 +146,12 @@
   .final .ftime{font-size:24px;font-weight:800;letter-spacing:-1px;margin:3px 0}
   .final .fnote{font-size:12px;color:var(--amber);margin-top:4px}
 
-  /* LIST / COMMAND */
+  /* OUR WEEKEND */
+  .ourwk{display:flex;align-items:center;gap:6px;justify-content:center;padding:12px;background:var(--su);border-radius:12px;color:#fff;margin-top:12px}
+  .ourwk .ow{font-size:13px;font-weight:800}
+  .ourwk .owl{font-size:10px;opacity:.85;font-weight:600}
+  .ourwk .arr{font-size:16px;opacity:.7}
+
   .tap{display:flex;align-items:center;gap:12px;padding:13px 4px;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
   .tap:last-child{border-bottom:none}
   .tap .ic{width:40px;height:40px;border-radius:12px;background:var(--su-soft);color:var(--su);display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -130,34 +159,31 @@
   .tap .tt{flex:1}
   .tap .tt .tl{font-size:14px;font-weight:700}
   .tap .tt .ts{font-size:12px;color:var(--muted)}
-  .tap .arr{color:var(--line)}
+  .tap .dist{font-size:12px;font-weight:700;color:var(--link);text-align:right;flex-shrink:0}
+  .tap .dist .d{display:block;font-size:9px;color:var(--muted);font-weight:600}
+
   .amenities{display:grid;grid-template-columns:1fr 1fr;gap:8px}
   .amenity{display:flex;align-items:center;gap:8px;background:var(--bg);border-radius:10px;padding:9px 11px;font-size:12.5px;font-weight:600}
   .amenity svg{width:17px;height:17px;color:var(--green);stroke:var(--green)}
   .amenity.no svg{color:var(--amber);stroke:var(--amber)}
 
-  /* WEATHER */
-  .wx{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .wxcard{border-radius:14px;padding:14px;color:#fff}
-  .wxcard.sat{background:linear-gradient(150deg,#2f6fc4,#1d4ed8)}
-  .wxcard.sun{background:linear-gradient(150deg,#5b6b8c,#3b4a6b)}
-  .wxcard .wd{font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;opacity:.85}
-  .wxcard .wt{font-size:34px;font-weight:800;letter-spacing:-1.5px;margin:2px 0 0}
-  .wxcard .wf{font-size:12px;font-weight:600;opacity:.9;margin-bottom:8px}
-  .wxcard .wrow{font-size:11.5px;display:flex;justify-content:space-between;padding:3px 0;border-top:1px solid rgba(255,255,255,.18)}
-  .wxcard .wrow b{font-weight:700}
-  .wxnote{background:var(--amber-bg);color:var(--amber);border-radius:12px;padding:11px 14px;font-size:13px;font-weight:600;margin-top:10px;display:flex;gap:9px;align-items:center}
-  .wxnote svg{width:18px;height:18px;flex-shrink:0}
+  /* BREAK TIMELINE */
+  .tl{position:relative;padding-left:26px;margin-top:6px}
+  .tl::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:var(--line)}
+  .tlstep{position:relative;padding:6px 0 6px 6px}
+  .tlstep::before{content:"";position:absolute;left:-22px;top:12px;width:10px;height:10px;border-radius:50%;background:var(--su);border:2px solid #fff;box-shadow:0 0 0 2px var(--su)}
+  .tlstep.off::before{background:var(--amber);box-shadow:0 0 0 2px var(--amber)}
+  .tlstep.end::before{background:var(--green);box-shadow:0 0 0 2px var(--green)}
+  .tlstep .tt{font-size:13px;font-weight:700}
+  .tlstep .ts{font-size:12px;color:var(--muted)}
+  .tlstep .tk{font-size:11px;font-weight:800;color:var(--su)}
 
-  /* BETWEEN GAMES */
-  .bg-rows{margin-top:4px}
   .bgrow{display:flex;gap:11px;align-items:flex-start;padding:9px 2px;border-bottom:1px dashed var(--line);font-size:13.5px}
   .bgrow:last-child{border-bottom:none}
   .bgrow .bic{width:28px;height:28px;border-radius:9px;background:var(--su-soft);color:var(--su);display:flex;align-items:center;justify-content:center;flex-shrink:0}
   .bgrow .bic svg{width:16px;height:16px}
   .bgrow b{font-weight:700}
 
-  /* CHECKLIST */
   .chkgrp{margin-bottom:14px}
   .chkgrp h4{margin:0 0 8px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--su)}
   .chk{display:flex;align-items:center;gap:11px;padding:9px 4px;border-bottom:1px solid var(--line);font-size:14px;cursor:pointer}
@@ -169,7 +195,6 @@
   .progress{height:8px;border-radius:6px;background:var(--line);overflow:hidden;margin:4px 0 12px}
   .progress i{display:block;height:100%;background:var(--green);transition:width .2s}
 
-  /* CONTACTS */
   .contact{display:flex;align-items:center;gap:12px;padding:11px 2px;border-bottom:1px solid var(--line)}
   .contact:last-child{border-bottom:none}
   .contact .ci{width:40px;height:40px;border-radius:50%;background:var(--su-soft);color:var(--su);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;flex-shrink:0}
@@ -178,7 +203,6 @@
   .contact .cn .crl{font-size:11.5px;color:var(--muted)}
   .contact a{background:var(--su);color:#fff;text-decoration:none;font-size:11px;font-weight:700;padding:6px 12px;border-radius:9px;flex-shrink:0}
 
-  /* RULES */
   .quickrules{display:grid;grid-template-columns:1fr 1fr;gap:8px}
   .qr{background:var(--bg);border-radius:10px;padding:10px 12px}
   .qr .qrv{font-size:14px;font-weight:800}
@@ -192,15 +216,19 @@
   .ruleline:last-child{border-bottom:none}
   .ruleline b{font-weight:700;color:var(--su)}
 
-  .updated-banner{background:var(--card);border-radius:12px;padding:11px 14px;margin-bottom:14px;box-shadow:var(--shadow);font-size:12.5px;display:flex;align-items:center;gap:9px}
+  .updated-banner{background:var(--card);border-radius:12px;padding:11px 14px;margin-bottom:12px;box-shadow:var(--shadow);font-size:12.5px;display:flex;align-items:center;gap:9px}
   .updated-banner svg{width:17px;height:17px;color:var(--link);stroke:var(--link);flex-shrink:0}
   .updated-banner a{color:var(--link);font-weight:700;text-decoration:none}
+
+  .fullguide{border-radius:14px;background:linear-gradient(150deg,var(--su),var(--su-dark));color:#fff;padding:16px;margin-bottom:14px;text-decoration:none;display:block}
+  .fullguide .fg1{font-size:14px;font-weight:800;margin-bottom:3px}
+  .fullguide .fg2{font-size:12px;opacity:.85;margin-bottom:10px}
+  .fullguide .fgb{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.16);padding:8px 14px;border-radius:10px;font-size:12px;font-weight:700}
 </style>
 </head>
 <body>
 <div class="app">
 
-  <!-- HERO -->
   <header class="hero">
     <div class="crest" aria-hidden="true">
       <svg viewBox="0 0 100 100"><path d="M50 2 92 22v28c0 26-18 42-42 48C26 92 8 76 8 50V22L50 2z" fill="#fff"/><circle cx="50" cy="48" r="17" fill="none" stroke="#0055A4" stroke-width="3"/><text x="50" y="55" text-anchor="middle" font-size="18" font-weight="bold" fill="#0055A4">SU</text></svg>
@@ -211,15 +239,17 @@
     <p class="meta">AUG 22–23 · JACKSONVILLE, FL</p>
   </header>
 
-  <!-- CONTEXT AWARE STRIP -->
   <div class="context" id="contextStrip">
-    <span id="ctxText">4 DAYS TO JACKSONVILLE</span>
-    <span class="chip" id="ctxChip">Fri · Travel</span>
+    <span id="ctxText">4 DAYS TO KICKOFF</span>
+    <span class="chip" id="ctxChip">Travel Day · Friday</span>
+  </div>
+  <div class="legend">
+    <span><span class="dot g"></span>Confirmed</span>
+    <span><span class="dot a"></span>Coach pending</span>
+    <span><span class="dot b"></span>Guide recommendation</span>
   </div>
 
-  <!-- SCREENS -->
   <main>
-
     <!-- ============ TODAY ============ -->
     <section class="screen on" id="scr-today">
 
@@ -228,7 +258,7 @@
         <span><b>Updated Aug 18.</b> Schedule revised: G1 10:30 · Fields 7/6/5 · Sunday final added &nbsp;<a href="#scr-more" data-goto="more">What changed?</a></span>
       </div>
 
-      <!-- NEXT MATCH -->
+      <!-- NEXT MATCH DASHBOARD -->
       <div class="next">
         <div class="head">
           <span class="who">Next Match</span>
@@ -243,67 +273,52 @@
             <span class="pill away" id="nextLoc">AWAY</span>
           </div>
           <div class="arrive">Player arrival <b id="nextArrive">9:45 AM</b> <span class="pend">*awaiting coach confirmation</span></div>
+          <div class="wx-mini">
+            <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></svg> Saturday 95° · feels 107° &nbsp;·&nbsp; storm 56%</span>
+            <span class="exp" data-wxopen>Weekend forecast ›</span>
+          </div>
           <div class="btn-row">
-            <a class="btn" href="https://www.google.com/maps/dir/Chuck+Rogers+Park,11950+San+Jose+Blvd,Jacksonville,FL+32223" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
-              Directions
-            </a>
-            <a class="btn ghost" href="https://docs.google.com/presentation/d/e/2PACX-1vQ3h1al3OLUWmrdBh2AW0WvUYH1N6rnsSs6o_IA5aiOd59b5DmzOC6jO6mei9PfJ_ACYOmxHqDd8V83/pub" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-4 9a3 3 0 0 0 2.6 1.5h6.8A3 3 0 0 0 18 18l-4-9V3"/></svg>
-              Field Map
-            </a>
-            <a class="btn ghost" href="tel:9128569442">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H6a3 3 0 0 0-3 3 16 16 0 0 0 16 16h3a2 2 0 0 0 2-2v-3l-4-2-2 2a12 12 0 0 1-6-6l2-2-2-4z"/></svg>
-              Team
-            </a>
+            <a class="btn" href="https://www.google.com/maps/dir/Chuck+Rogers+Park,11950+San+Jose+Blvd,Jacksonville,FL+32223" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>Directions</a>
+            <a class="btn ghost" href="https://docs.google.com/presentation/d/e/2PACX-1vQ3h1al3OLUWmrdBh2AW0WvUYH1N6rnsSs6o_IA5aiOd59b5DmzOC6jO6mei9PfJ_ACYOmxHqDd8V83/pub" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-4 9a3 3 0 0 0 2.6 1.5h6.8A3 3 0 0 0 18 18l-4-9V3"/></svg>Field Map</a>
+            <a class="btn ghost" href="https://playmetrics.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.6 8.6 0 0 1-3.4-.7L3 21l1.8-5.6A8.4 8.4 0 0 1 3 11.5a8.5 8.5 0 0 1 18 0z"/></svg>Message Team</a>
           </div>
         </div>
       </div>
 
-      <!-- WEATHER ALERT -->
-      <div class="alert heat">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/><circle cx="12" cy="12" r="4"/></svg>
-        <span><b>Hot + thunderstorms possible.</b> Sat feels 107° · Sun feels 102° with 88% storm chance.</span>
+      <!-- WHAT DO I NEED RIGHT NOW (contextual) -->
+      <div class="need" id="needCard">
+        <div class="nh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/><circle cx="12" cy="12" r="4"/></svg><span id="needTitle">Before Friday</span></div>
+        <ul id="needList"></ul>
       </div>
 
-      <!-- COMMAND CENTER -->
-      <div class="section-title"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Game Day Command Center</div>
-      <div class="card" style="padding:6px 14px">
-        <div class="tap"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg></span><div class="tt"><div class="tl">Chuck Rogers Park</div><div class="ts">11950 San Jose Blvd · Jacksonville, FL 32223</div></div><a class="arr" href="https://www.google.com/maps/dir/Chuck+Rogers+Park,11950+San+Jose+Blvd,Jacksonville,FL+32223" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
-      </div>
-      <div class="btn-row" style="grid-template-columns:1fr 1fr">
-        <a class="btn big" href="https://www.google.com/maps/dir/Chuck+Rogers+Park,11950+San+Jose+Blvd,Jacksonville,FL+32223" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>Navigate to Fields</a>
-        <a class="btn big ghost" href="https://docs.google.com/presentation/d/e/2PACX-1vQ3h1al3OLUWmrdBh2AW0WvUYH1N6rnsSs6o_IA5aiOd59b5DmzOC6jO6mei9PfJ_ACYOmxHqDd8V83/pub" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-4 9a3 3 0 0 0 2.6 1.5h6.8A3 3 0 0 0 18 18l-4-9V3"/></svg>Open Field Map</a>
-      </div>
-      <div class="btn-row" style="grid-template-columns:1fr 1fr;margin-top:8px">
-        <a class="btn big ghost" href="https://playmetrics.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.6 8.6 0 0 1-3.4-.7L3 21l1.8-5.6A8.4 8.4 0 0 1 3 11.5a8.5 8.5 0 0 1 18 0z"/></svg>Message Team</a>
-        <a class="btn big ghost" href="tel:9042575575"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H6a3 3 0 0 0-3 3 16 16 0 0 0 16 16h3a2 2 0 0 0 2-2v-3l-4-2-2 2a12 12 0 0 1-6-6l2-2-2-4z"/></svg>Tournament HQ</a>
+      <!-- WEEKEND FORECAST (collapsed) -->
+      <div class="wx-full" id="wxFull">
+        <div class="section-title"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1 0-8 5 5 0 0 1 9-3 4 4 0 0 1 1 7.9"/></svg>Weekend Forecast</div>
+        <div class="card" style="padding-bottom:14px">
+          <div class="wx">
+            <div class="wxcard sat">
+              <div class="wd">Saturday</div><div class="wt num">95°</div><div class="wf">Feels 107°</div>
+              <div class="wrow"><span>Storm</span><b>56%</b></div>
+              <div class="wrow"><span>Rain</span><b>0.09 in</b></div>
+            </div>
+            <div class="wxcard sun">
+              <div class="wd">Sunday</div><div class="wt num">93°</div><div class="wf">Feels 102°</div>
+              <div class="wrow"><span>Storm</span><b style="color:#ffd166">88%</b></div>
+              <div class="wrow"><span>Rain</span><b>0.40 in</b></div>
+            </div>
+          </div>
+          <p class="small muted" style="margin:10px 0 0;text-align:right">Updated Aug 18 · 7:30 AM ET &nbsp;·&nbsp; <a href="https://www.accuweather.com/en/us/jacksonville/32223/10-day-weather-forecast/13855_pc" target="_blank" rel="noopener" style="color:var(--link);font-weight:700;text-decoration:none">Full forecast</a></p>
+        </div>
       </div>
 
-      <!-- WEEKEND WEATHER -->
-      <div class="section-title"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1 0-8 5 5 0 0 1 9-3 4 4 0 0 1 1 7.9"/></svg>Weekend Weather</div>
-      <div class="card" style="padding-bottom:14px">
-        <div class="wx">
-          <div class="wxcard sat">
-            <div class="wd">Saturday</div>
-            <div class="wt num">95°</div>
-            <div class="wf">Feels 107°</div>
-            <div class="wrow"><span>Storms</span><b>56%</b></div>
-            <div class="wrow"><span>Rain</span><b>0.09 in</b></div>
-          </div>
-          <div class="wxcard sun">
-            <div class="wd">Sunday</div>
-            <div class="wt num">93°</div>
-            <div class="wf">Feels 102°</div>
-            <div class="wrow"><span>Storms</span><b style="color:#ffd166">88%</b></div>
-            <div class="wrow"><span>Rain</span><b>0.40 in</b></div>
-          </div>
+      <!-- WEATHER WATCH -->
+      <div class="watch">
+        <div class="wh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/><circle cx="12" cy="12" r="4"/></svg>Weather Watch</div>
+        <div class="wb">
+          <div class="wcell hot"><div class="wt">Extreme Heat · Sat</div><div class="wv">107°F</div><div class="ws">feels like · stay hydrated</div></div>
+          <div class="wcell storm"><div class="wt">Storm Risk · Sun</div><div class="wv">88%</div><div class="ws">chance · expect delays</div></div>
         </div>
-        <div class="wxnote">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/><circle cx="12" cy="12" r="4"/></svg>
-          <span><b>Heat + thunderstorms</b> — bring extra fluids, cooling towels, dry clothes and rain gear.</span>
-        </div>
-        <p class="small muted" style="margin:10px 0 0;text-align:right">Updated Aug 18 · 7:30 AM ET &nbsp;·&nbsp; <a href="https://www.accuweather.com/en/us/jacksonville/32223/10-day-weather-forecast/13855_pc" target="_blank" rel="noopener" style="color:var(--link);font-weight:700;text-decoration:none">Full forecast</a></p>
+        <div class="wfoot"><a href="https://www.accuweather.com/en/us/jacksonville/32223/10-day-weather-forecast/13855_pc" target="_blank" rel="noopener">View forecast ›</a></div>
       </div>
     </section>
 
@@ -318,14 +333,12 @@
           <div class="ghome">Away</div>
           <div class="grow"><span class="gtime num">10:30 AM</span><span class="pill field">Field 7</span></div>
           <div class="gvs">vs PC NFPL Dev 1</div>
-          <div class="gmeta"><span class="pill away">SU Away</span></div>
         </div>
         <div class="gap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l3 2"/></svg>5-hour break · G1 ends ~11:30 AM → G2 3:30 PM</div>
         <div class="g">
           <div class="ghome">Home</div>
           <div class="grow"><span class="gtime num">3:30 PM</span><span class="pill field">Field 6</span></div>
           <div class="gvs">vs JAX NFPL N1 Dev 1</div>
-          <div class="gmeta"><span class="pill away">SU Home</span></div>
         </div>
       </div>
 
@@ -335,7 +348,6 @@
           <div class="ghome">Home</div>
           <div class="grow"><span class="gtime num">10:30 AM</span><span class="pill field">Field 5</span></div>
           <div class="gvs">vs JFC NFPL Elite Blue</div>
-          <div class="gmeta"><span class="pill away">SU Home</span></div>
         </div>
         <div class="final">
           <div class="ftag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0z"/><path d="M7 6H5a2 2 0 0 0-2 2v2a3 3 0 0 0 3 3h3"/><path d="M17 6h2a2 2 0 0 1 2 2v2a3 3 0 0 1-3 3h-3"/></svg>Potential Final · Not Guaranteed</div>
@@ -345,10 +357,12 @@
         </div>
       </div>
 
-      <div class="alert info">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.5"/></svg>
-        <span><b>Player arrival:</b> 45 minutes before kickoff. Coach confirmation of the exact report time is still pending.</span>
+      <div class="ourwk">
+        <div><div class="ow num">7</div><div class="owl">SAT G1</div></div><span class="arr">→</span>
+        <div><div class="ow num">6</div><div class="owl">SAT G2</div></div><span class="arr">→</span>
+        <div><div class="ow num">5</div><div class="owl">SUN G3</div></div>
       </div>
+      <p class="small muted" style="text-align:center;margin:8px 0 0">Memorize it: 7 → 6 → 5</p>
     </section>
 
     <!-- ============ VENUE ============ -->
@@ -363,18 +377,17 @@
 
       <div class="section-title"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-4 9a3 3 0 0 0 2.6 1.5h6.8A3 3 0 0 0 18 18l-4-9V3"/></svg>Field Map</div>
       <div class="card">
-        <!-- Simplified field layout: 8-field strip, highlight 5/6/7 -->
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
           <div style="aspect-ratio:4/3;border-radius:10px;background:var(--bg);border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#9aa1ab">1</div>
           <div style="aspect-ratio:4/3;border-radius:10px;background:var(--bg);border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#9aa1ab">2</div>
           <div style="aspect-ratio:4/3;border-radius:10px;background:var(--bg);border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#9aa1ab">3</div>
           <div style="aspect-ratio:4/3;border-radius:10px;background:var(--bg);border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#9aa1ab">4</div>
-          <div style="aspect-ratio:4/3;border-radius:10px;background:var(--su-soft);border:3px solid var(--su);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;color:var(--su)">5</div>
-          <div style="aspect-ratio:4/3;border-radius:10px;background:var(--su-soft);border:3px solid var(--su);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;color:var(--su)">6</div>
-          <div style="aspect-ratio:4/3;border-radius:10px;background:var(--su-soft);border:3px solid var(--su);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;color:var(--su)">7</div>
+          <div style="aspect-ratio:4/3;border-radius:10px;background:var(--su);border:3px solid var(--su-dark);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#fff;line-height:1.1">5<span style="font-size:8px;font-weight:700;opacity:.85">SUN G3</span></div>
+          <div style="aspect-ratio:4/3;border-radius:10px;background:var(--su);border:3px solid var(--su-dark);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#fff;line-height:1.1">6<span style="font-size:8px;font-weight:700;opacity:.85">SAT G2</span></div>
+          <div style="aspect-ratio:4/3;border-radius:10px;background:var(--su);border:3px solid var(--su-dark);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#fff;line-height:1.1">7<span style="font-size:8px;font-weight:700;opacity:.85">SAT G1</span></div>
           <div style="aspect-ratio:4/3;border-radius:10px;background:var(--bg);border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#9aa1ab">8</div>
         </div>
-        <p class="small" style="margin:10px 0 0;text-align:center;color:var(--su);font-weight:700">Our fields: 5 · 6 · 7</p>
+        <p class="small" style="margin:10px 0 0;text-align:center;color:var(--su);font-weight:700">Our weekend: 7 → 6 → 5</p>
         <a class="btn ghost" style="margin-top:10px;flex-direction:row;gap:7px" href="https://docs.google.com/presentation/d/e/2PACX-1vQ3h1al3OLUWmrdBh2AW0WvUYH1N6rnsSs6o_IA5aiOd59b5DmzOC6jO6mei9PfJ_ACYOmxHqDd8V83/pub" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-4 9a3 3 0 0 0 2.6 1.5h6.8A3 3 0 0 0 18 18l-4-9V3"/></svg>Official field map</a>
       </div>
 
@@ -382,12 +395,10 @@
       <div class="card">
         <div class="tap"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13h16M5 20v-7M19 20v-7M5 13V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v7"/></svg></span><div class="tt"><div class="tl">Parking</div><div class="ts">Free on-site · arrive 30–45 min early (lots fill)</div></div></div>
         <div class="amenities" style="margin-top:12px">
-          <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg>Restrooms · Yes</div>
-          <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 22v-4M2 12h4M22 12h-4"/><circle cx="12" cy="12" r="6"/></svg>Concessions · Yes</div>
-          <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2"/></svg>Playground · Yes</div>
-          <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/><circle cx="12" cy="12" r="4"/></svg>Shade · Limited</div>
-          <div class="amenity no"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1 0-8 5 5 0 0 1 9-3 4 4 0 0 1 1 7.9"/></svg>Shelter · Picnic</div>
-          <div class="amenity no"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/><circle cx="12" cy="12" r="4"/></svg>Lighting · Security</div>
+          <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg>Restrooms</div>
+          <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 22v-4M2 12h4M22 12h-4"/><circle cx="12" cy="12" r="6"/></svg>Concessions</div>
+          <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2"/></svg>Playground</div>
+          <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/><circle cx="12" cy="12" r="4"/></svg>Shade: limited</div>
         </div>
         <p class="small muted" style="margin:12px 0 0">Bring: canopy / chairs · no glass containers · dogs must be leashed</p>
       </div>
@@ -400,7 +411,7 @@
         <button onclick="resetPack()" style="border:1px solid var(--line);background:var(--card);color:var(--muted);font-size:12px;font-weight:700;padding:6px 12px;border-radius:20px;cursor:pointer">Reset Checklist</button>
       </div>
       <div class="card" style="padding-bottom:10px">
-        <div class="row"><span class="muted small" id="packCount">0 of 27</span><span class="muted small">Saved on this phone</span></div>
+        <div class="row"><span class="muted small" id="packCount">0 of 22</span><span class="muted small">Saved on this phone</span></div>
         <div class="progress"><i id="packBar" style="width:0%"></i></div>
         <div id="packLists"></div>
       </div>
@@ -409,21 +420,43 @@
     <!-- ============ MORE ============ -->
     <section class="screen" id="scr-more">
 
+      <a class="fullguide" href="https://rrouleau-x.github.io/sporting-jax-guide/guide_v7.html">
+        <div class="fg1">Full Tournament Guide</div>
+        <div class="fg2">Everything in one detailed document — hotel, travel scenarios, full rules, itinerary.</div>
+        <span class="fgb"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></svg>Open full guide</span>
+      </a>
+
       <div class="section-title"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Between Games · Saturday</div>
       <div class="card">
-        <p class="small muted" style="margin:0 0 6px">G1 ends ~11:30 AM → G2 starts 3:30 PM. That's a long stretch for an 8-year-old.</p>
-        <div class="bg-rows">
-          <div class="bgrow"><span class="bic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M12 4v16"/><circle cx="12" cy="12" r="9"/></svg></span><span><b>Lunch</b> — plan a real meal for the break</span></div>
-          <div class="bgrow"><span class="bic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 18v-4a4 4 0 0 1 8 0v4M8 18h8"/><path d="M12 2v3"/></svg></span><span><b>Cool down</b> — get players into A/C or shade, it'll feel 107°</span></div>
-          <div class="bgrow"><span class="bic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c6-5 9-9 9-13a4 4 0 0 0-8-1 4 4 0 0 0-8 1c0 4 3 8 9 13z"/></svg></span><span><b>Rehydrate</b> — water + electrolytes all afternoon</span></div>
-          <div class="bgrow"><span class="bic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/><circle cx="12" cy="12" r="4"/></svg></span><span><b>Rest</b> — limit pool time before the 3:30 game</span></div>
+        <p class="small muted" style="margin:0 0 8px">G1 ends ~11:30 AM → G2 starts 3:30 PM. A suggested rhythm (flexible):</p>
+        <div class="tl">
+          <div class="tlstep end"><div class="tt">Game 1 ends <span class="tk num">11:30</span></div><div class="ts">Field 7 · wrap up, grab bags</div></div>
+          <div class="tlstep"><div class="tt">Lunch <span class="tk num">11:45–12:30</span></div><div class="ts">kid-friendly spot near the park</div></div>
+          <div class="tlstep"><div class="tt">A/C + rest <span class="tk num">12:30–1:45</span></div><div class="ts">cool indoor break, hydrate</div></div>
+          <div class="tlstep"><div class="tt">Snack + hydrate <span class="tk num">1:45</span></div><div class="ts">light snack, begin fluids</div></div>
+          <div class="tlstep"><div class="tt">Return to park <span class="tk num">2:45</span></div><div class="ts">parking fills · arrive early</div></div>
+          <div class="tlstep off"><div class="tt">Game 2 <span class="tk num">3:30</span></div><div class="ts">Field 6 · report by 2:45</div></div>
         </div>
       </div>
+
+      <div class="section-title"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h16M4 19h16M4 11v4a5 5 0 0 0 8 3M4 11V8l4-4h9l3 3v4"/></svg>Nearby · During the Break</div>
+
       <div class="card">
-        <div class="label" style="margin-bottom:8px">Near the fields</div>
-        <div class="tap"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h16M4 19h16M4 11v4a5 5 0 0 0 8 3M4 11V8l4-4h9l3 3v4"/></svg></span><div class="tt"><div class="tl">Academy Sports</div><div class="ts">9041 Southside Blvd · Jacksonville</div></div><a class="arr" href="https://www.google.com/maps/?q=Academy+Sports+Outdoors+Southside+Blvd+Jacksonville+FL" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
-        <div class="tap"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M9 14h6"/></svg></span><div class="tt"><div class="tl">Walgreens · Pharmacy</div><div class="ts">390 SR-13 S · Jacksonville</div></div><a class="arr" href="https://www.google.com/maps/?q=Walgreens+390+SR-13+S+Jacksonville+FL+32259" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
-        <div class="tap"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h16M4 16h16M4 8l4-3M20 8l-4-3M4 16l4 3M20 16l-4 3"/></svg></span><div class="tt"><div class="tl">CareSpot Urgent Care</div><div class="ts">70 Durbin Pavilion Dr · St. Johns · 904-295-0038</div></div><a class="arr" href="tel:9042950038"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+        <div class="label" style="margin-bottom:4px">Eat — kid-friendly lunch</div>
+        <a class="tap" href="https://www.google.com/maps/dir/Chuck+Rogers+Park,11950+San+Jose+Blvd,Jacksonville,FL+32223/9965+San+Jose+Blvd+Jacksonville+FL+32257" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h16M4 19h16M4 11v4a5 5 0 0 0 8 3M4 11V8l4-4h9l3 3v4"/></svg></span><div class="tt"><div class="tl">The Loop · Mandarin</div><div class="ts">Burgers · pizza · shakes</div></div><span class="dist">8 min<div class="d">3.3 mi</div></span></a>
+        <a class="tap" href="https://www.google.com/maps/dir/Chuck+Rogers+Park,11950+San+Jose+Blvd,Jacksonville,FL+32223/11406+San+Jose+Blvd+Jacksonville+FL+32223" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h16M4 19h16M4 11v4a5 5 0 0 0 8 3M4 11V8l4-4h9l3 3v4"/></svg></span><div class="tt"><div class="tl">Mandarin Oaks Center</div><div class="ts">quick grab-and-go options</div></div><span class="dist">4 min<div class="d">1.1 mi</div></span></a>
+      </div>
+
+      <div class="card">
+        <div class="label" style="margin-bottom:4px">Essentials</div>
+        <a class="tap" href="https://www.google.com/maps/dir/Chuck+Rogers+Park,11950+San+Jose+Blvd,Jacksonville,FL+32223/11406+San+Jose+Blvd+Jacksonville+FL+32223" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14"/></svg></span><div class="tt"><div class="tl">Publix · Mandarin Oaks</div><div class="ts">groceries, water, ice, snacks</div></div><span class="dist">4 min<div class="d">1.1 mi</div></span></a>
+        <a class="tap" href="https://www.google.com/maps/dir/Chuck+Rogers+Park,11950+San+Jose+Blvd,Jacksonville,FL+32223/10490+San+Jose+Blvd+Jacksonville+FL+32257" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg></span><div class="tt"><div class="tl">Target · Mandarin</div><div class="ts">clothes, essentials, AC break</div></div><span class="dist">9 min<div class="d">2.7 mi</div></span></a>
+      </div>
+
+      <div class="card">
+        <div class="label" style="margin-bottom:4px">Emergency</div>
+        <a class="tap" href="tel:9042950038"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H6a3 3 0 0 0-3 3 16 16 0 0 0 16 16h3a2 2 0 0 0 2-2v-3l-4-2-2 2a12 12 0 0 1-6-6l2-2-2-4z"/></svg></span><div class="tt"><div class="tl">CareSpot Urgent Care</div><div class="ts">St. Johns · 904-295-0038</div></div><span class="dist">call</span></a>
+        <a class="tap" href="https://www.google.com/maps/dir/Chuck+Rogers+Park,11950+San+Jose+Blvd,Jacksonville,FL+32223/9041+Southside+Blvd+Jacksonville+FL+32256" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M12 21 8 9l4-6 4 6z"/></svg></span><div class="tt"><div class="tl">Academy Sports</div><div class="ts">forgot gear · cleats, socks, bottles</div></div><span class="dist">~12 min</span></a>
       </div>
 
       <div class="section-title"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0z"/></svg>Need Help?</div>
@@ -479,11 +512,9 @@
         <p style="margin:0 0 6px"><b>Weather updated:</b> Sunday storm chance raised to 88% (was 59%) · ~0.40 in rain expected.</p>
         <p style="margin:0"><b>Venue confirmed:</b> Chuck Rogers Park · 11950 San Jose Blvd, Jacksonville, FL.</p>
       </div>
-
     </section>
   </main>
 
-  <!-- BOTTOM NAV -->
   <nav class="nav">
     <div class="nav-inner">
       <a href="#" data-goto="today" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>Today</a>
@@ -496,19 +527,13 @@
 </div>
 
 <script>
-// ===== DATA (verified, source of truth: content pipeline) =====
 const DATA = {
-  team:"Savannah United 17/18B Premier",
-  venue:{name:"Chuck Rogers Park",address:"11950 San Jose Blvd",city:"Jacksonville, FL 32223",
-    maps:"https://www.google.com/maps/dir/Chuck+Rogers+Park,11950+San+Jose+Blvd,Jacksonville,FL+32223",
-    fieldMap:"https://docs.google.com/presentation/d/e/2PACX-1vQ3h1al3OLUWmrdBh2AW0WvUYH1N6rnsSs6o_IA5aiOd59b5DmzOC6jO6mei9PfJ_ACYOmxHqDd8V83/pub"},
   games:[
-    {n:1,day:"Sat",date:"2026-08-22",time:"10:30 AM",field:"7",home:false,opp:"PC NFPL Dev 1",label:"Saturday · August 22",arrive:"9:45 AM",conf:true},
-    {n:2,day:"Sat",date:"2026-08-22",time:"3:30 PM",field:"6",home:true,opp:"JAX NFPL N1 Dev 1",label:"Saturday · August 22"},
-    {n:3,day:"Sun",date:"2026-08-23",time:"10:30 AM",field:"5",home:true,opp:"JFC NFPL Elite Blue",label:"Sunday · August 23"},
-    {n:4,day:"Sun",date:"2026-08-23",time:"2:15 PM",field:"5",home:null,opp:"Bracket A #1 vs #2",final:true,note:"Only if SU finishes top 2",label:"Sunday · August 23"}
-  ],
-  wx:{sat:{t:"95°",f:"Feels 107°",storm:"56%",rain:"0.09 in"},sun:{t:"93°",f:"Feels 102°",storm:"88%",rain:"0.40 in"}}
+    {n:1,day:"Sat",date:"2026-08-22",time:"10:30 AM",field:"7",home:false,opp:"PC NFPL Dev 1",arrive:"9:45 AM",label:"Saturday · August 22"},
+    {n:2,day:"Sat",date:"2026-08-22",time:"3:30 PM",field:"6",home:true,opp:"JAX NFPL N1 Dev 1"},
+    {n:3,day:"Sun",date:"2026-08-23",time:"10:30 AM",field:"5",home:true,opp:"JFC NFPL Elite Blue"},
+    {n:4,day:"Sun",date:"2026-08-23",time:"2:15 PM",field:"5",home:null,opp:"Bracket A #1 vs #2",final:true}
+  ]
 };
 
 // ===== NAV =====
@@ -525,38 +550,58 @@ document.querySelectorAll('[data-goto]').forEach(el=>{
   el.addEventListener('click',e=>{e.preventDefault();go(el.dataset.goto);});
 });
 
-// ===== CONTEXT-AWARE STRIP =====
-// Game 1 is the reference point: Sat Aug 22 10:30 AM. Tournament dates 22-23.
-const G1 = new Date("2026-08-22T10:30:00");
-const ctxStrip=document.getElementById('contextStrip'),ctxText=document.getElementById('ctxText'),ctxChip=document.getElementById('ctxChip');
+// ===== WEEKEND FORECAST EXPAND =====
+const wxOpen=document.querySelectorAll('[data-wxopen]');
+wxOpen.forEach(el=>el.addEventListener('click',e=>{e.preventDefault();document.getElementById('wxFull').classList.toggle('open');}));
+
+// ===== CONTEXT-AWARE (days to kickoff, need-now) =====
+const G1=new Date("2026-08-22T10:30:00");
+const ctxText=document.getElementById('ctxText'),ctxChip=document.getElementById('ctxChip');
+const needTitle=document.getElementById('needTitle'),needList=document.getElementById('needList');
+const needCard=document.getElementById('needCard');
+const NEEDS={
+  before:[["Charge phones","full guide"],["Fill water bottles","both days"],["Pack both kits","blue + white"],["Confirm cleats / shin guards","fit check"],["Check departure time","Fri afternoon"]],
+  friday:[["Fill water bottles","both days"],["Pack both kits","blue + white"],["Snacks + cooling towels","Sideline"],["Early bedtime","players"]],
+  g1:[["Blue/white kits","game day"],["Cleats + shin guards","essential"],["Water + electrolytes","bring plenty"],["Cooling towel","feels 107°"],["Field 7","SAT G1"]],
+  between:[["Eat lunch","11:45–12:30"],["Cool down","A/C break"],["Rehydrate","water + electrolytes"],["Return to park","~2:45"]],
+  g3:[["Field 5","SUN G3"],["Rain gear","88% storm chance"],["Both uniforms","matchup TBD"],["Check bracket","after game"]]
+};
 function refreshContext(){
   const now=new Date();
   const days=Math.ceil((G1-now)/86400000);
-  let txt,chip;
+  let txt,chip,need='before',bg='linear-gradient(150deg,#0055A4,#003f7a)';
   if(now<new Date("2026-08-21T00:00")){
-    txt=(days>1?days+' DAYS TO JACKSONVILLE':'TOMORROW · GAME DAY');
-    chip='Fri · Travel';
+    txt=(days>1?days+' DAYS TO KICKOFF':'TOMORROW · GAME DAY');
+    chip='Travel Day · Friday'; need='before';
   } else if(now<new Date("2026-08-21T17:00")){
-    txt='TRAVEL DAY'; chip='Jacksonville · ~2h 25m';
+    txt='TRAVEL DAY'; chip='Jacksonville, FL'; need='friday';
   } else if(now<G1){
-    txt='GAME DAY · TOMORROW'; chip='G1 · 10:30 AM';
+    txt='GAME DAY'; chip='Game 1 · 10:30 AM'; need='g1';
+    bg='linear-gradient(150deg,#2f6fc4,#1d4ed8)';
   } else if(now<new Date("2026-08-22T11:30")){
-    txt='GAME DAY'; chip='Game 1 · 10:30 AM · Field 7';
+    txt='GAME DAY'; chip='Game 1 live · Field 7'; need='g1';
+    bg='linear-gradient(150deg,#2f6fc4,#1d4ed8)';
   } else if(now<new Date("2026-08-22T15:30")){
-    txt='NEXT: GAME 2'; chip='3:30 PM · Field 6';
+    txt='BETWEEN GAMES'; chip='G2 3:30 · Field 6'; need='between';
+    bg='linear-gradient(150deg,#b76e00,#8a5200)';
   } else if(now<new Date("2026-08-23T00:00")){
-    txt='DAY 1 DONE'; chip='G2 complete · rest up';
+    txt='DAY 1 DONE'; chip='G2 complete · rest up'; need='friday';
   } else if(now<new Date("2026-08-23T10:30")){
-    txt='GAME 3 TODAY'; chip='10:30 AM · Field 5';
+    txt='GAME 3 TODAY'; chip='10:30 AM · Field 5'; need='g3';
+    bg='linear-gradient(150deg,#2f6fc4,#1d4ed8)';
   } else if(now<new Date("2026-08-23T14:15")){
-    txt='FINAL STATUS'; chip='Awaiting bracket standings';
+    txt='FINAL STATUS'; chip='Awaiting bracket standings'; need='g3';
   } else {
-    txt='TOURNAMENT COMPLETE'; chip='Great weekend!';
+    txt='TOURNAMENT COMPLETE'; chip='Great weekend!'; need='before';
   }
   ctxText.textContent=txt; ctxChip.textContent=chip;
+  // Need-now card
+  needTitle.textContent = need==='before'?'Before Friday':need==='friday'?'Today':need==='g1'?'Game 1':need==='between'?'Between Games':'Game 3';
+  needList.innerHTML=(NEEDS[need]||NEEDS.before).map(([a,b])=>'<li>'+a+' <span style="opacity:.75;font-weight:500">· '+b+'</span></li>').join('');
+  needCard.style.background=bg;
 }
 
-// ===== PACKING CHECKLIST (localStorage) =====
+// ===== PACKING (localStorage) =====
 const LISTS={
   "Player":[["Blue kit","Both kits"],["White kit","Both kits"],["Cleats",null],["Shin guards",null],["Water bottle",null],["Extra socks",null],["Warm-up gear",null],["Dry clothes",null],["Recovery shoes",null]],
   "Heat / Weather":[["Electrolytes",null],["Sunscreen SPF 50+",null],["Cooling towel",null],["Rain jacket",null],["Plastic bags",null],["Extra water",null]],
@@ -566,14 +611,12 @@ const LS='gd-pack-v1';
 function loadPack(){try{return JSON.parse(localStorage.getItem(LS))||{}}catch(e){return{}}}
 function savePack(o){localStorage.setItem(LS,JSON.stringify(o));}
 function renderPack(){
-  const pack=loadPack();
-  const wrap=document.getElementById('packLists');
+  const pack=loadPack();const wrap=document.getElementById('packLists');
   let html='',total=0,done=0;
   for(const [grp,items] of Object.entries(LISTS)){
     html+='<div class="chkgrp"><h4>'+grp+'</h4>';
     items.forEach(([name,sub])=>{
-      const id=grp+'::'+name;
-      const checked=!!pack[id]; if(checked)done++; total++;
+      const id=grp+'::'+name;const checked=!!pack[id];if(checked)done++;total++;
       html+='<div class="chk '+(checked?'done':'')+'" onclick="tog(\''+id.replace(/'/g,"\\'")+'\',this)"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span class="chkname">'+name+(sub?' <span class="muted small">('+sub+')</span>':'')+'</span></div>';
     });
     html+='</div>';
@@ -582,16 +625,10 @@ function renderPack(){
   document.getElementById('packCount').textContent=done+' of '+total;
   document.getElementById('packBar').style.width=(total?Math.round(done/total*100):0)+'%';
 }
-function tog(id,el){
-  const pack=loadPack(); pack[id]=!pack[id]; savePack(pack);
-  el.classList.toggle('done',!!pack[id]);
-  renderPack();
-}
+function tog(id,el){const pack=loadPack();pack[id]=!pack[id];savePack(pack);el.classList.toggle('done',!!pack[id]);renderPack();}
 function resetPack(){if(confirm('Reset the packing checklist?')){localStorage.removeItem(LS);renderPack();}}
 
-// ===== INIT =====
-refreshContext();
-renderPack();
+refreshContext();renderPack();
 setInterval(refreshContext,60000);
 </script>
 </body>
